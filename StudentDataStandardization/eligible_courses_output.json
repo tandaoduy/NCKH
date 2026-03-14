@@ -1,0 +1,802 @@
+[
+  {
+    "student_id": "SV0007",
+    "specialization_code": "CNPM",
+    "specialization_name": "Cong nghe phan mem",
+    "major_code": "CNTT",
+    "current_semester": 1,
+    "term_type": 1,
+    "learning_goal": "hoc_vuot",
+    "completed_courses": [
+      "85065",
+      "FLS314",
+      "POL307",
+      "SOT381",
+      "SSH313"
+    ],
+    "failed_courses": [],
+    "eligible_courses": [
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1",
+        "credits": 3,
+        "recommended_semester": 1,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "SOT301",
+        "course_name": "Nhập môn ngành Công nghệ thông tin",
+        "credits": 1,
+        "recommended_semester": 1,
+        "open_semester_type": 1,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "85066",
+        "course_name": "Giáo dục thể chất (Bơi lội)",
+        "credits": 1,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "85097",
+        "course_name": "Giáo dục thể chất (Bóng đá)",
+        "credits": 1,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "85098",
+        "course_name": "Giáo dục thể chất (Bóng chuyền)",
+        "credits": 1,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "85105",
+        "course_name": "Giáo dục thể chất (Cầu lông)",
+        "credits": 1,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "85108",
+        "course_name": "Giáo dục thể chất (Taekwondo)",
+        "credits": 1,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "851111",
+        "course_name": "Giáo dục thể chất (Aerobic)",
+        "credits": 1,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "FLS315",
+        "course_name": "Tiếng Anh B1.2",
+        "credits": 4,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "POL309",
+        "course_name": "Kinh tế Chính trị Mác - Lênin",
+        "credits": 2,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "SSH378",
+        "course_name": "Tư duy phản biện",
+        "credits": 3,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "BUA319",
+        "course_name": "Nhập môn Quản trị học",
+        "credits": 2,
+        "recommended_semester": 3,
+        "open_semester_type": 1,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "MKT372",
+        "course_name": "Nhập môn Marketing",
+        "credits": 2,
+        "recommended_semester": 3,
+        "open_semester_type": 1,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "PHY310",
+        "course_name": "Vật lý đại cương 1",
+        "credits": 3,
+        "recommended_semester": 3,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "PHY311",
+        "course_name": "T.Hành Vật lý đại cương 1",
+        "credits": 1,
+        "recommended_semester": 3,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [
+          "PHY310"
+        ],
+        "missing_prerequisites": [],
+        "eligibility": "eligible_if_coregistered",
+        "required_coregistration": [
+          "PHY310"
+        ]
+      },
+      {
+        "course_code": "POL308",
+        "course_name": "Chủ nghĩa xã hội khoa học",
+        "credits": 2,
+        "recommended_semester": 3,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "SSH379",
+        "course_name": "Ngôn ngữ học thuật",
+        "credits": 2,
+        "recommended_semester": 3,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "SSH381",
+        "course_name": "Thường thức mỹ thuật",
+        "credits": 2,
+        "recommended_semester": 3,
+        "open_semester_type": 12,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "MAT322",
+        "course_name": "Xác suất - Thống kê",
+        "credits": 3,
+        "recommended_semester": 4,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "INS336",
+        "course_name": "Hệ thống thông tin địa lý (GIS)",
+        "credits": 3,
+        "recommended_semester": 5,
+        "open_semester_type": 1,
+        "category": "specialization_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "INT6903",
+        "course_name": "Đồ án cở sở ngành",
+        "credits": 3,
+        "recommended_semester": 5,
+        "open_semester_type": 1,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "SOT355",
+        "course_name": "Phát triển ứng dụng Web",
+        "credits": 3,
+        "recommended_semester": 5,
+        "open_semester_type": 1,
+        "category": "specialization_required",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "INT6900",
+        "course_name": "Thực tập ngành nghề",
+        "credits": 3,
+        "recommended_semester": 7,
+        "open_semester_type": 1,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "SOT348",
+        "course_name": "TTập Ngành (6 tuần)",
+        "credits": 3,
+        "recommended_semester": 7,
+        "open_semester_type": 1,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      },
+      {
+        "course_code": "TRE312",
+        "course_name": "Thương mại điện tử (CNTT)",
+        "credits": 3,
+        "recommended_semester": 7,
+        "open_semester_type": 1,
+        "category": "specialization_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "eligibility": "eligible"
+      }
+    ],
+    "blocked_courses": [
+      {
+        "course_code": "INS325",
+        "course_name": "Hệ điều hành",
+        "credits": 3,
+        "recommended_semester": 2,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [
+          "NEC321"
+        ],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      },
+      {
+        "course_code": "MAT328",
+        "course_name": "Toán 2",
+        "credits": 2,
+        "recommended_semester": 2,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "MAT327"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "NEC321",
+        "course_name": "Kiến trúc máy tính",
+        "credits": 3,
+        "recommended_semester": 2,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      },
+      {
+        "course_code": "SOT315",
+        "course_name": "Nhập môn lập trình",
+        "credits": 3,
+        "recommended_semester": 2,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      },
+      {
+        "course_code": "INS326",
+        "course_name": "Cấu trúc dữ liệu và giải thuật",
+        "credits": 3,
+        "recommended_semester": 3,
+        "open_semester_type": 1,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [
+          "SOT320"
+        ],
+        "missing_prerequisites": [
+          "SOT315"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "INS330",
+        "course_name": "Cơ sở dữ liệu",
+        "credits": 3,
+        "recommended_semester": 3,
+        "open_semester_type": 1,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT315"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT320",
+        "course_name": "Kỹ thuật lập trình (2LT + 1LT)",
+        "credits": 3,
+        "recommended_semester": 3,
+        "open_semester_type": 1,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [
+          "INS326"
+        ],
+        "missing_prerequisites": [
+          "SOT315"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "INS339",
+        "course_name": "Hệ quản trị cơ sở dữ liệu",
+        "credits": 3,
+        "recommended_semester": 4,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "INS330"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "NEC331",
+        "course_name": "Lập trình Java",
+        "credits": 3,
+        "recommended_semester": 4,
+        "open_semester_type": 2,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT315"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "POL310",
+        "course_name": "Lịch sử Đảng Cộng sản Việt Nam",
+        "credits": 2,
+        "recommended_semester": 4,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "POL308",
+          "POL309"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT331",
+        "course_name": "Lập trình hướng đối tượng",
+        "credits": 3,
+        "recommended_semester": 4,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT315"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT336",
+        "course_name": "Kỹ thuật đồ họa",
+        "credits": 3,
+        "recommended_semester": 4,
+        "open_semester_type": 2,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT315"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT341",
+        "course_name": "Xử lý ảnh",
+        "credits": 3,
+        "recommended_semester": 4,
+        "open_semester_type": 2,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT315"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT345",
+        "course_name": "Lập trình thiết bị nhúng",
+        "credits": 3,
+        "recommended_semester": 4,
+        "open_semester_type": 2,
+        "category": "major_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "NEC321",
+          "SOT315"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT347",
+        "course_name": "Thiết kế Web",
+        "credits": 3,
+        "recommended_semester": 4,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT315"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT375",
+        "course_name": "Tiếng Anh chuyên ngành (CN thông tin)",
+        "credits": 3,
+        "recommended_semester": 4,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      },
+      {
+        "course_code": "INS335",
+        "course_name": "Thống kê máy tính",
+        "credits": 3,
+        "recommended_semester": 5,
+        "open_semester_type": 1,
+        "category": "specialization_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "MAT322"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "INS360",
+        "course_name": "Phân tích thiết kế hệ thống thông tin",
+        "credits": 3,
+        "recommended_semester": 5,
+        "open_semester_type": 1,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "INS330"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "INT6220",
+        "course_name": "Phát triển phần mềm hướng đối tượng",
+        "credits": 3,
+        "recommended_semester": 5,
+        "open_semester_type": 1,
+        "category": "specialization_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT331"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "NEC329",
+        "course_name": "Mạng máy tính",
+        "credits": 3,
+        "recommended_semester": 5,
+        "open_semester_type": 1,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "INS325",
+          "NEC321"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "POL333",
+        "course_name": "Tư tưởng Hồ Chí Minh",
+        "credits": 2,
+        "recommended_semester": 5,
+        "open_semester_type": 12,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "POL308",
+          "POL309"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "INT6207",
+        "course_name": "IoT và Ứng dụng",
+        "credits": 3,
+        "recommended_semester": 6,
+        "open_semester_type": 2,
+        "category": "specialization_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      },
+      {
+        "course_code": "SOT332",
+        "course_name": "Toán rời rạc",
+        "credits": 3,
+        "recommended_semester": 6,
+        "open_semester_type": 2,
+        "category": "specialization_required",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      },
+      {
+        "course_code": "SOT349",
+        "course_name": "Công nghệ phần mềm",
+        "credits": 3,
+        "recommended_semester": 6,
+        "open_semester_type": 2,
+        "category": "specialization_required",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      },
+      {
+        "course_code": "SOT352",
+        "course_name": "Quản lý dự án phần mềm",
+        "credits": 3,
+        "recommended_semester": 6,
+        "open_semester_type": 2,
+        "category": "specialization_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      },
+      {
+        "course_code": "SOT379",
+        "course_name": "Lập trình thiết bị di động",
+        "credits": 4,
+        "recommended_semester": 6,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT320",
+          "SOT331"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT380",
+        "course_name": "Kiến trúc và thiết kế phần mềm",
+        "credits": 3,
+        "recommended_semester": 6,
+        "open_semester_type": 2,
+        "category": "specialization_required",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT320",
+          "SOT331"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "INT6209",
+        "course_name": "Các chủ đề nâng cao trong công nghệ phần mềm",
+        "credits": 3,
+        "recommended_semester": 7,
+        "open_semester_type": 1,
+        "category": "specialization_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT349"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "NEC326",
+        "course_name": "An toàn và bảo mật thông tin",
+        "credits": 3,
+        "recommended_semester": 7,
+        "open_semester_type": 1,
+        "category": "specialization_required",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "NEC329",
+          "SOT320"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT344",
+        "course_name": "Trí tuệ nhân tạo",
+        "credits": 3,
+        "recommended_semester": 7,
+        "open_semester_type": 1,
+        "category": "specialization_required",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "INS326",
+          "SOT315",
+          "SOT320"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT357",
+        "course_name": "Kiểm thử phần mềm",
+        "credits": 3,
+        "recommended_semester": 7,
+        "open_semester_type": 1,
+        "category": "specialization_required",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "SOT315",
+          "SOT349"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "SOT366",
+        "course_name": "Phát triển phần mềm mã nguồn mở",
+        "credits": 3,
+        "recommended_semester": 7,
+        "open_semester_type": 1,
+        "category": "specialization_elective",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [
+          "INS330",
+          "SOT320",
+          "SOT347"
+        ],
+        "reason": "Chua dat hoc phan tien quyet"
+      },
+      {
+        "course_code": "INT6901",
+        "course_name": "Đồ án tốt nghiệp(CNTT)",
+        "credits": 10,
+        "recommended_semester": 8,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      },
+      {
+        "course_code": "INT6902",
+        "course_name": "Chuyên đề tốt nghiệp (CNTT)",
+        "credits": 5,
+        "recommended_semester": 8,
+        "open_semester_type": 2,
+        "category": "major_core",
+        "retake": false,
+        "corequisites": [],
+        "missing_prerequisites": [],
+        "reason": "Mon khong mo trong dot hoc hien tai"
+      }
+    ]
+  }
+]
