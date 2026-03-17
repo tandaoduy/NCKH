@@ -1,0 +1,137 @@
+[
+    {
+        "mã sinh viên": "SV0012",
+        "tên sinh viên": "Đào Văn Kiên",
+        "chuyên ngành": "Công Nghệ Thông Tin",
+        "học kỳ đăng ký": 5,
+        "tổng số môn có thể đăng ký": 18,
+        "danh sách môn": [
+            {
+                "mã môn học": "MAT327",
+                "tên môn học": "Toán 1",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 1,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "85065",
+                "tên môn học": "Giáo dục thể chất (Chạy)",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 1,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "POL309",
+                "tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 2,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "85066",
+                "tên môn học": "Giáo dục thể chất (Bơi lội)",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 2,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "85097",
+                "tên môn học": "Giáo dục thể chất (Bóng đá)",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 2,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "85098",
+                "tên môn học": "Giáo dục thể chất (Bóng chuyền)",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 2,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "85105",
+                "tên môn học": "Giáo dục thể chất (Cầu lông)",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 2,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "85108",
+                "tên môn học": "Giáo dục thể chất (Taekwondo)",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 2,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "851111",
+                "tên môn học": "Giáo dục thể chất (Aerobic)",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 2,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "BUA319",
+                "tên môn học": "Nhập môn Quản trị học",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 3,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "MKT372",
+                "tên môn học": "Nhập môn Marketing",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 3,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "PHY310",
+                "tên môn học": "Vật lý đại cương 1",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 3,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "PHY311",
+                "tên môn học": "T.Hành Vật lý đại cương 1",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 3,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "POL308",
+                "tên môn học": "Chủ nghĩa xã hội khoa học",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 3,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "SSH379",
+                "tên môn học": "Ngôn ngữ học thuật",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 3,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "SSH381",
+                "tên môn học": "Thường thức mỹ thuật",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 3,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "INS360",
+                "tên môn học": "Phân tích thiết kế hệ thống thông tin",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 5,
+                "thuộc chuyên ngành": []
+            },
+            {
+                "mã môn học": "INT6903",
+                "tên môn học": "Đồ án cơ sở ngành",
+                "là môn học lại": false,
+                "học kỳ đề xuất": 5,
+                "thuộc chuyên ngành": []
+            }
+        ]
+    }
+]
