@@ -6,19 +6,19 @@ from rdflib.namespace import RDF  # type: ignore
 
 BASE_URI = "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#"
 
-PROP_courseCode = URIRef(BASE_URI + "courseCode")
-PROP_courseName = URIRef(BASE_URI + "courseName")
-PROP_hasPrerequisiteCourse = URIRef(BASE_URI + "hasPrerequisiteCourse")
-PROP_openSemesterType = URIRef(BASE_URI + "openSemesterType")
-PROP_recommendedInSemester = URIRef(BASE_URI + "recommendedInSemester")
-PROP_specializationName = URIRef(BASE_URI + "specializationName")
-PROP_isRequiredForSpecialization = URIRef(BASE_URI + "isRequiredForSpecialization")
-PROP_isElectiveForSpecialization = URIRef(BASE_URI + "isElectiveForSpecialization")
-PROP_offeredInSpecialization = URIRef(BASE_URI + "offeredInSpecialization")
-CLASS_Specialization = URIRef(BASE_URI + "Specialization")
+PROP_courseCode: Any = URIRef(BASE_URI + "courseCode")
+PROP_courseName: Any = URIRef(BASE_URI + "courseName")
+PROP_hasPrerequisiteCourse: Any = URIRef(BASE_URI + "hasPrerequisiteCourse")
+PROP_openSemesterType: Any = URIRef(BASE_URI + "openSemesterType")
+PROP_recommendedInSemester: Any = URIRef(BASE_URI + "recommendedInSemester")
+PROP_specializationName: Any = URIRef(BASE_URI + "specializationName")
+PROP_isRequiredForSpecialization: Any = URIRef(BASE_URI + "isRequiredForSpecialization")
+PROP_isElectiveForSpecialization: Any = URIRef(BASE_URI + "isElectiveForSpecialization")
+PROP_offeredInSpecialization: Any = URIRef(BASE_URI + "offeredInSpecialization")
+CLASS_Specialization: Any = URIRef(BASE_URI + "Specialization")
 
 def main() -> None:
-    json_path = r"d:\NTU\CNTT\NCKH\Code\StudentDataStandardization\danh_sach_sinh_vien.json"
+    json_path = r"d:\NTU\CNTT\NCKH\Code\StudentDataStandardization\DanhSachSinhVien.json"
     rdf_path = r"d:\NTU\CNTT\NCKH\Code\owl\ontology_v17.rdf"
     output_path = r"d:\NTU\CNTT\NCKH\Code\StudentDataStandardization\DanhSachMonHoc.json"
     
@@ -50,7 +50,7 @@ def main() -> None:
         return
         
     target_student = cast(Dict[str, Any], target_student_raw)
-    g = Graph()
+    g: Any = Graph()
     g.parse(rdf_path, format="xml")
     
     # 1. Trích xuất thông tin môn học và chuyên ngành
@@ -82,7 +82,7 @@ def main() -> None:
         open_sem_val = int(open_sem) if open_sem is not None else 3
         
         # Học kỳ khuyến nghị
-        recommended_sem_val = 99
+        recommended_sem_val = 99999
         sem_uri = g.value(course, PROP_recommendedInSemester)
         if sem_uri is not None:
             sem_str = str(sem_uri).split('#')[-1] 
@@ -139,7 +139,13 @@ def main() -> None:
                     continue
                 if c.get("Trạng thái") == "Đạt":
                     passed_courses.add(m)
-                else:
+                    
+    ds_chua_dat = target_student.get("danh sách môn chưa đạt", [])
+    if isinstance(ds_chua_dat, list):
+        for c in ds_chua_dat:
+            if isinstance(c, dict):
+                m = c.get("mã môn học")
+                if m and isinstance(m, str):
                     failed_courses.add(m)
             
     valid_courses: List[Dict[str, Any]] = []
@@ -195,7 +201,20 @@ def main() -> None:
     print(f"KẾT QUẢ GỢI Ý MÔN HỌC")
     print(f"Mã SV: {target_student_id}")
     print(f"Họ tên: {target_student.get('tên sinh viên', '')}")
-    print(f"Chuyên ngành: {student_spec}")
+    print(f"Năm vào học: {target_student.get('năm vào học', '')}")
+    
+    student_major = target_student.get("ngành", "Công Nghệ Thông Tin")
+    print(f"Ngành: {student_major}")
+    
+    spec_display = student_spec if student_spec else 'Chưa chọn chuyên ngành'
+    print(f"Chuyên ngành: {spec_display}")
+    
+    print(f"Mục tiêu học tập: {target_student.get('mục tiêu học tập', 'Đúng hạn')}")
+    print(f"Số tín chỉ đã tích lũy: {target_student.get('số tín chỉ đã tích lũy', 0)}")
+    print(f"Số tín chỉ đăng ký tối đa: {target_student.get('số tín chỉ đăng ký tối đa', 27)}")
+    print(f"Học kỳ hiện tại: {current_sem}")
+    print(f"Học kỳ dự kiến đăng ký tiếp theo: {next_sem}")
+    
     print(f"Tổng số môn hợp lệ có thể đăng ký: {len(valid_courses)}")
     for idx, course in enumerate(valid_courses, 1):
         is_retake_str = course.get('là môn học lại', False)

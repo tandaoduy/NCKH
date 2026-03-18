@@ -4692,6 +4692,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#85065">
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CoreCourse"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#GeneralEducationCourse"/>
         <TrainingProgramOntology:isRequiredForMajor rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester1"/>
         <TrainingProgramOntology:courseCode>85065</TrainingProgramOntology:courseCode>
