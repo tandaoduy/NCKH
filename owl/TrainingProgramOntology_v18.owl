@@ -10620,7 +10620,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0001"/>
-        <Literal>giam_tai</Literal>
+        <Literal>Giảm tải</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10650,7 +10650,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0002"/>
-        <Literal>dung_han</Literal>
+        <Literal>Đúng hạn</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10680,7 +10680,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0003"/>
-        <Literal>dung_han</Literal>
+        <Literal>Đúng hạn</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10710,7 +10710,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0004"/>
-        <Literal>giam_tai</Literal>
+        <Literal>Giảm tải</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10740,7 +10740,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0005"/>
-        <Literal>hoc_vuot</Literal>
+        <Literal>Học vượt</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10770,7 +10770,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0006"/>
-        <Literal>dung_han</Literal>
+        <Literal>Đúng hạn</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10800,7 +10800,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0007"/>
-        <Literal>hoc_vuot</Literal>
+        <Literal>Học vượt</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10830,7 +10830,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0008"/>
-        <Literal>dung_han</Literal>
+        <Literal>Đúng hạn</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10860,7 +10860,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0009"/>
-        <Literal>giam_tai</Literal>
+        <Literal>Giảm tải</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10890,7 +10890,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0010"/>
-        <Literal>hoc_vuot</Literal>
+        <Literal>Học vượt</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10920,7 +10920,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0011"/>
-        <Literal>dung_han</Literal>
+        <Literal>Đúng hạn</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10950,7 +10950,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0012"/>
-        <Literal>hoc_vuot</Literal>
+        <Literal>Học vượt</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -10980,7 +10980,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0013"/>
-        <Literal>giam_tai</Literal>
+        <Literal>Giảm tải</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -11010,7 +11010,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0014"/>
-        <Literal>dung_han</Literal>
+        <Literal>Đúng hạn</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>
@@ -11040,7 +11040,7 @@
     <DataPropertyAssertion>
         <DataProperty IRI="#learningGoal"/>
         <NamedIndividual IRI="#SV0015"/>
-        <Literal>giam_tai</Literal>
+        <Literal>Giảm tải</Literal>
     </DataPropertyAssertion>
     <DataPropertyAssertion>
         <DataProperty IRI="#studentID"/>

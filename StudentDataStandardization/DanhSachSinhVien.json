@@ -3,10 +3,13 @@
         "mã sinh viên": "SV0001",
         "tên sinh viên": "Nguyễn Trường Sinh",
         "năm vào học": 2023,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Giảm tải",
         "số tín chỉ đã tích lũy": 21,
+        "số tín chỉ đăng ký tối đa": 27,
         "học kỳ hiện tại": 2,
-        "mục tiêu học tập": "Đúng hạn",
+        "học kỳ dự kiến đăng ký tiếp theo": 3,
         "danh sách môn đã học": {
             "INS326": "Cấu trúc dữ liệu và giải thuật",
             "INS330": "Cơ sở dữ liệu",
@@ -87,16 +90,33 @@
                 "điểm": 4.7,
                 "Trạng thái": "Chưa đạt"
             }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1"
+            },
+            {
+                "mã môn học": "SOT332",
+                "Tên môn học": "Toán rời rạc"
+            }
         ]
     },
     {
         "mã sinh viên": "SV0002",
         "tên sinh viên": "Trường Thịnh Giã",
         "năm vào học": 2021,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
-        "số tín chỉ đã tích lũy": 81,
-        "học kỳ hiện tại": 6,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Công nghệ phần mềm",
         "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 81,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 6,
+        "học kỳ dự kiến đăng ký tiếp theo": 7,
         "danh sách môn đã học": {
             "85065": "Giáo dục thể chất (Chạy)",
             "INS326": "Cấu trúc dữ liệu và giải thuật",
@@ -289,16 +309,20 @@
                 "điểm": 7.9,
                 "Trạng thái": "Đạt"
             }
-        ]
+        ],
+        "danh sách môn chưa đạt": []
     },
     {
         "mã sinh viên": "SV0003",
         "tên sinh viên": "Trần Tiến Phát",
         "năm vào học": 2025,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
-        "số tín chỉ đã tích lũy": 4,
-        "học kỳ hiện tại": 1,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
         "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 4,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 1,
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
         "danh sách môn đã học": {
             "POL307": "Triết học Mâc-Lênin",
             "SOT301": "Nhập môn ngành Công nghệ thông tin"
@@ -316,16 +340,20 @@
                 "điểm": 8.0,
                 "Trạng thái": "Đạt"
             }
-        ]
+        ],
+        "danh sách môn chưa đạt": []
     },
     {
         "mã sinh viên": "SV0004",
         "tên sinh viên": "Từ Công Tiến",
         "năm vào học": 2023,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Giảm tải",
         "số tín chỉ đã tích lũy": 30,
+        "số tín chỉ đăng ký tối đa": 27,
         "học kỳ hiện tại": 3,
-        "mục tiêu học tập": "Đúng hạn",
+        "học kỳ dự kiến đăng ký tiếp theo": 4,
         "danh sách môn đã học": {
             "FLS314": "Tiếng Anh B1.1",
             "FLS315": "Tiếng Anh B1.2",
@@ -434,16 +462,37 @@
                 "điểm": 7.2,
                 "Trạng thái": "Đạt"
             }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng"
+            },
+            {
+                "mã môn học": "SOT332",
+                "Tên môn học": "Toán rời rạc"
+            }
         ]
     },
     {
         "mã sinh viên": "SV0005",
         "tên sinh viên": "Võ Trường Sơn",
         "năm vào học": 2024,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Hệ Thống Thông Tin",
+        "mục tiêu học tập": "Học vượt",
         "số tín chỉ đã tích lũy": 57,
+        "số tín chỉ đăng ký tối đa": 27,
         "học kỳ hiện tại": 5,
-        "mục tiêu học tập": "Đúng hạn",
+        "học kỳ dự kiến đăng ký tiếp theo": 6,
         "danh sách môn đã học": {
             "INS325": "Hệ điều hành",
             "INS326": "Cấu trúc dữ liệu và giải thuật",
@@ -580,16 +629,20 @@
                 "điểm": 7.8,
                 "Trạng thái": "Đạt"
             }
-        ]
+        ],
+        "danh sách môn chưa đạt": []
     },
     {
         "mã sinh viên": "SV0006",
         "tên sinh viên": "Nguyễn Hoàng Ly",
         "năm vào học": 2022,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
-        "số tín chỉ đã tích lũy": 45,
-        "học kỳ hiện tại": 5,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Truyền thông và Mạng máy tính",
         "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 45,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 5,
+        "học kỳ dự kiến đăng ký tiếp theo": 6,
         "danh sách môn đã học": {
             "INS325": "Hệ điều hành",
             "INS326": "Cấu trúc dữ liệu và giải thuật",
@@ -698,16 +751,20 @@
                 "điểm": 7.1,
                 "Trạng thái": "Đạt"
             }
-        ]
+        ],
+        "danh sách môn chưa đạt": []
     },
     {
         "mã sinh viên": "SV0007",
         "tên sinh viên": "Vương Anh Minh",
         "năm vào học": 2025,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Học vượt",
         "số tín chỉ đã tích lũy": 12,
+        "số tín chỉ đăng ký tối đa": 27,
         "học kỳ hiện tại": 1,
-        "mục tiêu học tập": "Đúng hạn",
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
         "danh sách môn đã học": {
             "85065": "Giáo dục thể chất (Chạy)",
             "FLS314": "Tiếng Anh B1.1",
@@ -746,16 +803,20 @@
                 "điểm": 8.1,
                 "Trạng thái": "Đạt"
             }
-        ]
+        ],
+        "danh sách môn chưa đạt": []
     },
     {
         "mã sinh viên": "SV0008",
         "tên sinh viên": "Trần Anh Tuấn",
         "năm vào học": 2023,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
-        "số tín chỉ đã tích lũy": 28,
-        "học kỳ hiện tại": 3,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
         "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 28,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 3,
+        "học kỳ dự kiến đăng ký tiếp theo": 4,
         "danh sách môn đã học": {
             "FLS314": "Tiếng Anh B1.1",
             "FLS315": "Tiếng Anh B1.2",
@@ -836,16 +897,25 @@
                 "điểm": 7.8,
                 "Trạng thái": "Đạt"
             }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu"
+            }
         ]
     },
     {
         "mã sinh viên": "SV0009",
         "tên sinh viên": "Nguyễn Minh Đức",
         "năm vào học": 2022,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Công nghệ phần mềm",
+        "mục tiêu học tập": "Giảm tải",
         "số tín chỉ đã tích lũy": 42,
+        "số tín chỉ đăng ký tối đa": 27,
         "học kỳ hiện tại": 5,
-        "mục tiêu học tập": "Đúng hạn",
+        "học kỳ dự kiến đăng ký tiếp theo": 6,
         "danh sách môn đã học": {
             "FLS314": "Tiếng Anh B1.1",
             "FLS315": "Tiếng Anh B1.2",
@@ -961,16 +1031,25 @@
                 "điểm": 7.7,
                 "Trạng thái": "Đạt"
             }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)"
+            }
         ]
     },
     {
         "mã sinh viên": "SV0010",
         "tên sinh viên": "Trần Minh Viễn",
         "năm vào học": 2024,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Học vượt",
         "số tín chỉ đã tích lũy": 33,
+        "số tín chỉ đăng ký tối đa": 27,
         "học kỳ hiện tại": 4,
-        "mục tiêu học tập": "Đúng hạn",
+        "học kỳ dự kiến đăng ký tiếp theo": 5,
         "danh sách môn đã học": {
             "FLS314": "Tiếng Anh B1.1",
             "FLS315": "Tiếng Anh B1.2",
@@ -1065,16 +1144,20 @@
                 "điểm": 7.6,
                 "Trạng thái": "Đạt"
             }
-        ]
+        ],
+        "danh sách môn chưa đạt": []
     },
     {
         "mã sinh viên": "SV0011",
         "tên sinh viên": "Lại Văn Minh",
         "năm vào học": 2021,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
-        "số tín chỉ đã tích lũy": 72,
-        "học kỳ hiện tại": 7,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Hệ Thống Thông Tin",
         "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 72,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 7,
+        "học kỳ dự kiến đăng ký tiếp theo": 8,
         "danh sách môn đã học": {
             "FLS314": "Tiếng Anh B1.1",
             "FLS315": "Tiếng Anh B1.2",
@@ -1246,16 +1329,20 @@
                 "điểm": 7.9,
                 "Trạng thái": "Đạt"
             }
-        ]
+        ],
+        "danh sách môn chưa đạt": []
     },
     {
         "mã sinh viên": "SV0012",
         "tên sinh viên": "Đào Văn Kiên",
         "năm vào học": 2023,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Học vượt",
         "số tín chỉ đã tích lũy": 36,
+        "số tín chỉ đăng ký tối đa": 27,
         "học kỳ hiện tại": 4,
-        "mục tiêu học tập": "Đúng hạn",
+        "học kỳ dự kiến đăng ký tiếp theo": 5,
         "danh sách môn đã học": {
             "FLS314": "Tiếng Anh B1.1",
             "FLS315": "Tiếng Anh B1.2",
@@ -1357,16 +1444,20 @@
                 "điểm": 7.7,
                 "Trạng thái": "Đạt"
             }
-        ]
+        ],
+        "danh sách môn chưa đạt": []
     },
     {
         "mã sinh viên": "SV0013",
         "tên sinh viên": "Võ Minh Anh",
         "năm vào học": 2024,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Giảm tải",
         "số tín chỉ đã tích lũy": 18,
+        "số tín chỉ đăng ký tối đa": 27,
         "học kỳ hiện tại": 2,
-        "mục tiêu học tập": "Đúng hạn",
+        "học kỳ dự kiến đăng ký tiếp theo": 3,
         "danh sách môn đã học": {
             "FLS314": "Tiếng Anh B1.1",
             "FLS315": "Tiếng Anh B1.2",
@@ -1426,16 +1517,25 @@
                 "điểm": 7.4,
                 "Trạng thái": "Đạt"
             }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2"
+            }
         ]
     },
     {
         "mã sinh viên": "SV0014",
         "tên sinh viên": "Nguyễn Khả Ngân",
         "năm vào học": 2022,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
-        "số tín chỉ đã tích lũy": 54,
-        "học kỳ hiện tại": 6,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Hệ Thống Thông Tin",
         "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 54,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 6,
+        "học kỳ dự kiến đăng ký tiếp theo": 7,
         "danh sách môn đã học": {
             "FLS314": "Tiếng Anh B1.1",
             "FLS315": "Tiếng Anh B1.2",
@@ -1572,16 +1672,20 @@
                 "điểm": 7.8,
                 "Trạng thái": "Đạt"
             }
-        ]
+        ],
+        "danh sách môn chưa đạt": []
     },
     {
         "mã sinh viên": "SV0015",
         "tên sinh viên": "Trịnh Vân Anh",
         "năm vào học": 2025,
-        "chuyên ngành chọn": "Công Nghệ Thông Tin",
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Giảm tải",
         "số tín chỉ đã tích lũy": 14,
+        "số tín chỉ đăng ký tối đa": 27,
         "học kỳ hiện tại": 1,
-        "mục tiêu học tập": "Đúng hạn",
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
         "danh sách môn đã học": {
             "FLS314": "Tiếng Anh B1.1",
             "MAT327": "Toán 1",
@@ -1626,6 +1730,16 @@
                 "Tên môn học": "Pháp luật đại cương",
                 "điểm": 7.9,
                 "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin"
             }
         ]
     }
