@@ -397,6 +397,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#PhysicalEducationCourse -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#PhysicalEducationCourse">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#RegularStudent -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#RegularStudent">
@@ -4692,7 +4700,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#85065">
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CoreCourse"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
-        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#GeneralEducationCourse"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#PhysicalEducationCourse"/>
         <TrainingProgramOntology:isRequiredForMajor rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester1"/>
         <TrainingProgramOntology:courseCode>85065</TrainingProgramOntology:courseCode>
@@ -4708,7 +4716,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#85066">
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#ElectiveCourse"/>
-        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#GeneralEducationCourse"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#PhysicalEducationCourse"/>
         <TrainingProgramOntology:isElectiveForMajor rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester2"/>
         <TrainingProgramOntology:courseCode>85066</TrainingProgramOntology:courseCode>
@@ -4724,7 +4732,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#85097">
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#ElectiveCourse"/>
-        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#GeneralEducationCourse"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#PhysicalEducationCourse"/>
         <TrainingProgramOntology:isElectiveForMajor rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester2"/>
         <TrainingProgramOntology:courseCode>85097</TrainingProgramOntology:courseCode>
@@ -4740,7 +4748,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#85098">
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#ElectiveCourse"/>
-        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#GeneralEducationCourse"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#PhysicalEducationCourse"/>
         <TrainingProgramOntology:isElectiveForMajor rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester2"/>
         <TrainingProgramOntology:courseCode>85098</TrainingProgramOntology:courseCode>
@@ -4756,7 +4764,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#85105">
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#ElectiveCourse"/>
-        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#GeneralEducationCourse"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#PhysicalEducationCourse"/>
         <TrainingProgramOntology:isElectiveForMajor rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester2"/>
         <TrainingProgramOntology:courseCode>85105</TrainingProgramOntology:courseCode>
@@ -4772,7 +4780,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#85108">
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#ElectiveCourse"/>
-        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#GeneralEducationCourse"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#PhysicalEducationCourse"/>
         <TrainingProgramOntology:isElectiveForMajor rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester2"/>
         <TrainingProgramOntology:courseCode>85108</TrainingProgramOntology:courseCode>
@@ -4788,7 +4796,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#851111">
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#ElectiveCourse"/>
-        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#GeneralEducationCourse"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#PhysicalEducationCourse"/>
         <TrainingProgramOntology:isElectiveForMajor rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester2"/>
         <TrainingProgramOntology:courseCode>851111</TrainingProgramOntology:courseCode>

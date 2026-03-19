@@ -323,30 +323,55 @@ def query_chuyen_nganh_bat_buoc(g: Graph) -> List[Dict]:
     return _query_course_group(g, "CoreCourse", "isRequiredForSpecialization", "Bắt buộc chuyên ngành")
 
 
+def query_the_chat_bat_buoc(g: Graph) -> List[Dict]:
+    return _query_course_group(g, "PhysicalEducationCourse", "isRequiredForMajor", "Bắt buộc thể chất")
+
+
+def query_the_chat_tu_chon(g: Graph) -> List[Dict]:
+    return _query_course_group(g, "PhysicalEducationCourse", "isElectiveForMajor", "Tự chọn thể chất")
+
+
 # -----------------------------------------------------------------------
 # In ket qua dang bang
 # -----------------------------------------------------------------------
 
-def _print_section(title: str) -> None:
-    print("\n" + "=" * 65)
-    print("  " + title)
-    print("=" * 65)
+def _print_section(title: str, output_lines: Optional[List[str]] = None) -> None:
+    line1 = "\n" + "=" * 65
+    line2 = "  " + title
+    line3 = "=" * 65
+    print(line1); print(line2); print(line3)
+    if output_lines is not None:
+        output_lines.extend([line1, line2, line3])
 
 
-def _print_table(rows: List[Dict]) -> None:
+def _print_table(rows: List[Dict], output_lines: Optional[List[str]] = None) -> None:
     if not rows:
-        print("  (Khong co ket qua)")
+        line = "  (Không có kết quả)"
+        print(line)
+        if output_lines is not None:
+            output_lines.append(line)
         return
     headers: List[str] = list(rows[0].keys())
     widths: Dict[str, int] = {
         h: int(max(len(h), max(len(str(r[h])) for r in rows)))
         for h in headers
     }
-    print("  " + "  ".join(h.ljust(widths[h]) for h in headers))
-    print("  " + "  ".join("-" * widths[h] for h in headers))
+    header_line = "  " + "  ".join(h.ljust(widths[h]) for h in headers)
+    sep_line = "  " + "  ".join("-" * widths[h] for h in headers)
+    print(header_line)
+    print(sep_line)
+    if output_lines is not None:
+        output_lines.append(header_line)
+        output_lines.append(sep_line)
     for r in rows:
-        print("  " + "  ".join(str(r[h]).ljust(widths[h]) for h in headers))
-    print(f"\n  Tong: {len(rows)} ban ghi")
+        row_line = "  " + "  ".join(str(r[h]).ljust(widths[h]) for h in headers)
+        print(row_line)
+        if output_lines is not None:
+            output_lines.append(row_line)
+    tail_line = f"\n  Tổng: {len(rows)} bản ghi"
+    print(tail_line)
+    if output_lines is not None:
+        output_lines.append(tail_line)
 
 
 # -----------------------------------------------------------------------
@@ -406,8 +431,21 @@ def main() -> None:
     _print_section("QUERY 9 - Mon tu chon co so nganh")
     _print_table(query_co_so_nganh_tu_chon(g))
 
-    _print_section("QUERY 10 - Mon bat buoc chuyen nganh")
-    _print_table(query_chuyen_nganh_bat_buoc(g))
+    output_lines: List[str] = []
+
+    _print_section("QUERY 10 - Môn bắt buộc chuyên ngành", output_lines)
+    _print_table(query_chuyen_nganh_bat_buoc(g), output_lines)
+
+    _print_section("QUERY 11 - Môn bắt buộc thể chất", output_lines)
+    _print_table(query_the_chat_bat_buoc(g), output_lines)
+
+    _print_section("QUERY 12 - Môn tự chọn thể chất", output_lines)
+    _print_table(query_the_chat_tu_chon(g), output_lines)
+
+    output_file = os.path.join(os.path.dirname(__file__), "Output_TestSPARQL.txt")
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write("\n".join(output_lines))
+    print(f"\nĐã lưu kết quả ra file: {output_file}")
 
 
 if __name__ == "__main__":

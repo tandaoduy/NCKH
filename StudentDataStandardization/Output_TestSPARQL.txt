@@ -1,0 +1,52 @@
+
+=================================================================
+  QUERY 10 - Môn bắt buộc chuyên ngành
+=================================================================
+  tenNhom                        loaiMon                maMon    tenMon                                       soTinChi
+  -----------------------------  ---------------------  -------  -------------------------------------------  --------
+  Công nghệ phần mềm             Bắt buộc chuyên ngành  NEC326   An toàn và bảo mật thông tin                 3       
+  Công nghệ phần mềm             Bắt buộc chuyên ngành  SOT332   Toán rời rạc                                 3       
+  Công nghệ phần mềm             Bắt buộc chuyên ngành  SOT344   Trí tuệ nhân tạo                             3       
+  Công nghệ phần mềm             Bắt buộc chuyên ngành  SOT349   Công nghệ phần mềm                           3       
+  Công nghệ phần mềm             Bắt buộc chuyên ngành  SOT355   Phát triển ứng dụng Web                      3       
+  Công nghệ phần mềm             Bắt buộc chuyên ngành  SOT357   Kiểm thử phần mềm                            3       
+  Công nghệ phần mềm             Bắt buộc chuyên ngành  SOT380   Kiến trúc và thiết kế phần mềm               3       
+  Hệ Thống Thông Tin             Bắt buộc chuyên ngành  INS305   Hệ hỗ trợ quyết định                         3       
+  Hệ Thống Thông Tin             Bắt buộc chuyên ngành  INS361   Cơ sở dữ liệu phân tán                       3       
+  Hệ Thống Thông Tin             Bắt buộc chuyên ngành  INS362   Khai phá dữ liệu                             3       
+  Hệ Thống Thông Tin             Bắt buộc chuyên ngành  INT6204  Hệ thống hoạch định nguồn lực doanh nghiệp  3       
+  Hệ Thống Thông Tin             Bắt buộc chuyên ngành  NEC326   An toàn và bảo mật thông tin                 3       
+  Hệ Thống Thông Tin             Bắt buộc chuyên ngành  SOT332   Toán rời rạc                                 3       
+  Hệ Thống Thông Tin             Bắt buộc chuyên ngành  SOT355   Phát triển ứng dụng Web                      3       
+  Truyền thông và Mạng máy tính  Bắt buộc chuyên ngành  INT6201  Học sâu ứng dụng                             3       
+  Truyền thông và Mạng máy tính  Bắt buộc chuyên ngành  INT6205  Linux server và quản trị mạng                3       
+  Truyền thông và Mạng máy tính  Bắt buộc chuyên ngành  INT6206  Lý thuyết đồ thị trong Hệ thống mạng         3       
+  Truyền thông và Mạng máy tính  Bắt buộc chuyên ngành  NEC324   Mạng không dây và di động                    3       
+  Truyền thông và Mạng máy tính  Bắt buộc chuyên ngành  NEC327   Nguyên lý máy học                            3       
+  Truyền thông và Mạng máy tính  Bắt buộc chuyên ngành  NEC350   Thiết kế và cài đặt mạng                     3       
+  Truyền thông và Mạng máy tính  Bắt buộc chuyên ngành  NEC355   An toàn mạng                                 3       
+
+  Tổng: 21 bản ghi
+
+=================================================================
+  QUERY 11 - Môn bắt buộc thể chất
+=================================================================
+  tenNhom              loaiMon            maMon  tenMon                    soTinChi
+  -------------------  -----------------  -----  ------------------------  --------
+  Công Nghệ Thông Tin  Bắt buộc thể chất  85065  Giáo dục thể chất (Chạy)  1       
+
+  Tổng: 1 bản ghi
+
+=================================================================
+  QUERY 12 - Môn tự chọn thể chất
+=================================================================
+  tenNhom              loaiMon           maMon   tenMon                           soTinChi
+  -------------------  ----------------  ------  -------------------------------  --------
+  Công Nghệ Thông Tin  Tự chọn thể chất  85066   Giáo dục thể chất (Bơi lội)      1       
+  Công Nghệ Thông Tin  Tự chọn thể chất  85097   Giáo dục thể chất (Bóng đá)      1       
+  Công Nghệ Thông Tin  Tự chọn thể chất  85098   Giáo dục thể chất (Bóng chuyền)  1       
+  Công Nghệ Thông Tin  Tự chọn thể chất  85105   Giáo dục thể chất (Cầu lông)     1       
+  Công Nghệ Thông Tin  Tự chọn thể chất  85108   Giáo dục thể chất (Taekwondo)    1       
+  Công Nghệ Thông Tin  Tự chọn thể chất  851111  Giáo dục thể chất (Aerobic)      1       
+
+  Tổng: 6 bản ghi

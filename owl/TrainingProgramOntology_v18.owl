@@ -46,6 +46,9 @@
         <Class IRI="#Major"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#PhysicalEducationCourse"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#RegularStudent"/>
     </Declaration>
     <Declaration>
@@ -1138,6 +1141,10 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#GraduationCourse"/>
+        <Class IRI="#Course"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PhysicalEducationCourse"/>
         <Class IRI="#Course"/>
     </SubClassOf>
     <SubClassOf>
@@ -2941,6 +2948,10 @@
         <NamedIndividual IRI="#85065"/>
     </ClassAssertion>
     <ClassAssertion>
+        <Class IRI="#PhysicalEducationCourse"/>
+        <NamedIndividual IRI="#85065"/>
+    </ClassAssertion>
+    <ClassAssertion>
         <Class IRI="#Course"/>
         <NamedIndividual IRI="#85066"/>
     </ClassAssertion>
@@ -2949,7 +2960,7 @@
         <NamedIndividual IRI="#85066"/>
     </ClassAssertion>
     <ClassAssertion>
-        <Class IRI="#GeneralEducationCourse"/>
+        <Class IRI="#PhysicalEducationCourse"/>
         <NamedIndividual IRI="#85066"/>
     </ClassAssertion>
     <ClassAssertion>
@@ -2961,7 +2972,7 @@
         <NamedIndividual IRI="#85097"/>
     </ClassAssertion>
     <ClassAssertion>
-        <Class IRI="#GeneralEducationCourse"/>
+        <Class IRI="#PhysicalEducationCourse"/>
         <NamedIndividual IRI="#85097"/>
     </ClassAssertion>
     <ClassAssertion>
@@ -2973,7 +2984,7 @@
         <NamedIndividual IRI="#85098"/>
     </ClassAssertion>
     <ClassAssertion>
-        <Class IRI="#GeneralEducationCourse"/>
+        <Class IRI="#PhysicalEducationCourse"/>
         <NamedIndividual IRI="#85098"/>
     </ClassAssertion>
     <ClassAssertion>
@@ -2985,7 +2996,7 @@
         <NamedIndividual IRI="#85105"/>
     </ClassAssertion>
     <ClassAssertion>
-        <Class IRI="#GeneralEducationCourse"/>
+        <Class IRI="#PhysicalEducationCourse"/>
         <NamedIndividual IRI="#85105"/>
     </ClassAssertion>
     <ClassAssertion>
@@ -2997,7 +3008,7 @@
         <NamedIndividual IRI="#85108"/>
     </ClassAssertion>
     <ClassAssertion>
-        <Class IRI="#GeneralEducationCourse"/>
+        <Class IRI="#PhysicalEducationCourse"/>
         <NamedIndividual IRI="#85108"/>
     </ClassAssertion>
     <ClassAssertion>
@@ -3009,7 +3020,7 @@
         <NamedIndividual IRI="#851111"/>
     </ClassAssertion>
     <ClassAssertion>
-        <Class IRI="#GeneralEducationCourse"/>
+        <Class IRI="#PhysicalEducationCourse"/>
         <NamedIndividual IRI="#851111"/>
     </ClassAssertion>
     <ObjectPropertyAssertion>
