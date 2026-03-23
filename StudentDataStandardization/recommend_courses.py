@@ -3,9 +3,9 @@ import ast
 import csv
 import json
 import os
+import random
 import sys
 import io
-import random
 import unicodedata
 from datetime import datetime
 from typing import Dict, Any, List, Set, Optional, cast
@@ -68,7 +68,6 @@ def main(target_student_id: Optional[str] = None) -> None:
         return
 
     run_ts = datetime.now().strftime('%Y%m%d_%H%M%S')
-    output_path = rf"d:\NTU\CNTT\NCKH\Code\StudentDataStandardization\DanhSachMonHoc_{target_student_id}_{run_ts}.json"
     report_path = rf"d:\NTU\CNTT\NCKH\Code\StudentDataStandardization\recommend_courses_report_{target_student_id}_{run_ts}.txt"
 
     print(f"\nĐang đọc dữ liệu hồ sơ sinh viên từ {json_path}...")
@@ -295,13 +294,14 @@ def main(target_student_id: Optional[str] = None) -> None:
     if not isinstance(student_spec, str):
         student_spec = ""
     student_spec = student_spec.strip()
+    study_goal_value = str(target_student.get('mục tiêu học tập', '')).strip().lower()
 
     print(f"\nSinh viên {target_student.get('tên sinh viên', '')} đang ở học kỳ {current_sem}, chuẩn bị đăng ký cho học kỳ {next_sem} (Loại học kỳ: {'Lẻ' if sem_type == 1 else 'Chẵn'})")
     print(f"Chuyên ngành đã đăng ký: {student_spec if student_spec else 'Chưa chọn'}")
     
     passed_courses: Set[str] = set()
     failed_courses: Set[str] = set()
-    
+
     diem_tung_mon = target_student.get("điểm từng môn", [])
     if isinstance(diem_tung_mon, list):
         for c in diem_tung_mon:
@@ -310,15 +310,37 @@ def main(target_student_id: Optional[str] = None) -> None:
                 if not m or not isinstance(m, str):
                     continue
                 if c.get("Trạng thái") == "Đạt":
-                    passed_courses.add(m)
-                    
+                    passed_courses.add(m.strip())
+
+    # Dữ liệu thực tế có thể lệch mã ở "điểm từng môn"; bổ sung nguồn từ "danh sách môn đã học"
+    ds_da_hoc = target_student.get("danh sách môn đã học", {})
+    if isinstance(ds_da_hoc, dict):
+        for code in ds_da_hoc.keys():
+            if isinstance(code, str) and code.strip():
+                passed_courses.add(code.strip())
+    elif isinstance(ds_da_hoc, list):
+        for item in ds_da_hoc:
+            if not isinstance(item, dict):
+                continue
+            code = item.get("mã môn học")
+            if isinstance(code, str) and code.strip():
+                passed_courses.add(code.strip())
+
     ds_chua_dat = target_student.get("danh sách môn chưa đạt", [])
     if isinstance(ds_chua_dat, list):
         for c in ds_chua_dat:
             if isinstance(c, dict):
                 m = c.get("mã môn học")
                 if m and isinstance(m, str):
-                    failed_courses.add(m)
+                    failed_courses.add(m.strip())
+
+    # Tránh trường hợp một mã vừa nằm trong đã học vừa nằm trong chưa đạt
+    passed_courses -= failed_courses
+
+    internship_course_codes = {'INT6900', 'SOT348'}
+
+    def _normalize_text(v: str) -> str:
+        return ''.join(ch for ch in unicodedata.normalize('NFKD', v.lower().strip()) if not unicodedata.combining(ch))
             
     valid_courses: List[Dict[str, Any]] = []
     
@@ -343,9 +365,22 @@ def main(target_student_id: Optional[str] = None) -> None:
         open_sem_info = info.get('openSemesterType', 3)
         sem_ok = (open_sem_info in (3, 12) or open_sem_info == sem_type)
 
-        # Kiểm tra môn học có được đề xuất từ học kỳ này trở về trước không (tính cả học lại các kỳ trước)
+        # Kiểm tra học kỳ khuyến nghị:
+        # - Học vượt: cho phép cả môn kỳ khuyến nghị tương lai nếu đủ tiên quyết và mở đúng kỳ
+        # - Mục tiêu khác: giữ điều kiện môn khuyến nghị từ kỳ hiện tại trở về trước
         rec_sem_info = info.get('recommended_sem', 99)
-        recommended_ok = (rec_sem_info <= next_sem)
+        recommended_ok = True if study_goal_value == 'học vượt' else (rec_sem_info <= next_sem)
+
+        # Ràng buộc cứng theo yêu cầu nghiệp vụ
+        # 1) Môn có kỳ khuyến nghị 8: chỉ gợi ý khi đăng ký kỳ 8
+        # 2) Môn thực tập ngành: chỉ gợi ý khi đăng ký kỳ 7
+        course_name_norm = _normalize_text(str(info.get('name', '')))
+        is_internship_course = (code in internship_course_codes) or ('thuc tap nganh' in course_name_norm)
+        forced_semester_ok = True
+        if rec_sem_info == 8:
+            forced_semester_ok = (next_sem == 8)
+        if is_internship_course:
+            forced_semester_ok = (next_sem == 7)
 
         # Môn trượt có thể đăng ký học lại nếu được mở
         is_retake = (code in failed_courses)
@@ -371,7 +406,7 @@ def main(target_student_id: Optional[str] = None) -> None:
         if info.get('credit', 0) > REGISTER_MAX_CREDITS:
             continue
 
-        if prereqs_met and sem_ok and (recommended_ok or is_retake) and spec_ok:
+        if prereqs_met and sem_ok and (recommended_ok or is_retake) and spec_ok and forced_semester_ok:
             debt_score = 1 if is_retake else 0
             link_score = dependency_count.get(code, 0)
             delay_score = max(0, current_sem - rec_sem_info)
@@ -381,12 +416,11 @@ def main(target_student_id: Optional[str] = None) -> None:
             rec_gap = abs(next_sem - rec_sem_info) if rec_sem_info < 999 else 999
             rec_proximity_score = max(0, 10 - rec_gap)
 
-            study_goal = str(target_student.get('mục tiêu học tập', '')).strip().lower()
-            if study_goal == 'đúng hạn':
+            if study_goal_value == 'đúng hạn':
                 goal_score = 30
-            elif study_goal == 'giảm tải':
+            elif study_goal_value == 'giảm tải':
                 goal_score = 20
-            elif study_goal == 'học vượt':
+            elif study_goal_value == 'học vượt':
                 goal_score = 10
             else:
                 goal_score = 0
@@ -462,13 +496,6 @@ def main(target_student_id: Optional[str] = None) -> None:
     for code, info in course_data.items():
         info['elective_category'] = categorize_elective(code, info)
     
-    # Kiểm tra sinh viên đã chọn từ danh mục nào
-    elective_selected = {'general': 0, 'physical': 0, 'foundation': 0, 'specialization': 0}
-    for code in passed_courses:
-        cat = course_data.get(code, {}).get('elective_category')
-        if cat:
-            elective_selected[cat] += 1
-    
     # Chia nhóm: bắt buộc / core cơ sở ngành (tự chọn) / đại cương tự chọn / thể chất tự chọn / còn lại
     required_courses = []
     required_foundation_courses = []
@@ -514,163 +541,112 @@ def main(target_student_id: Optional[str] = None) -> None:
             # Trường hợp cùng không phải tự chọn và không bắt buộc
             other_courses.append(c)
 
-    # Áp dụng ràng buộc danh mục tự chọn
-    study_goal = str(target_student.get('mục tiêu học tập', '')).strip().lower()
+    ELECTIVE_QUOTA_KEYS = ('general', 'physical', 'foundation', 'specialization')
 
-    # Random hóa thứ tự môn tự chọn để công bằng cho các môn cùng mức ưu tiên
-    random.shuffle(elective_foundation_courses)
-    random.shuffle(general_electives)
-    random.shuffle(physical_electives)
-    random.shuffle(specialization_electives)
-    
-    selected_candidates = list(required_courses) + required_foundation_courses
-    
-    # Kỳ 1 không có tự chọn, từ kỳ 2 trở đi mỗi kỳ có thể chọn từ 2 danh mục tự chọn khác nhau
-    if next_sem > 1:
-        # Danh sách các danh mục tự chọn có sẵn với ưu tiên: cơ sở ngành, đại cương, thể chất, chuyên ngành
-        available_categories = []
-        
-        # 1. Tự chọn cơ sở ngành: chỉ chọn 1, không chọn lại các kỳ sau (trừ rớt)
-        if elective_selected['foundation'] == 0 and len(elective_foundation_courses) > 0:
-            selected_foundation = random.choice(elective_foundation_courses)
-            available_categories.append(selected_foundation)
-        
-        # 2. Tự chọn đại cương: chỉ chọn 1, không chọn lại các kỳ sau (trừ rớt)
-        if elective_selected['general'] == 0 and len(general_electives) > 0:
-            # Trong general_electives đã shuffle để đảm bảo công bằng, chọn 1 trong top ưu tiên
-            general_electives.sort(key=lambda x: x.get('điểm tổng ưu tiên', 0), reverse=True)
-            top_general = [g for g in general_electives if g.get('điểm tổng ưu tiên', 0) == general_electives[0].get('điểm tổng ưu tiên', 0)]
-            selected_general = random.choice(top_general)
-            available_categories.append(selected_general)
-        
-        # 3. Tự chọn thể chất: chọn 2 (mỗi kỳ 1, trừ nếu "học vượt" có thể 2 cùng kỳ)
-        if elective_selected['physical'] < 2 and len(physical_electives) > 0:
-            if study_goal == 'học vượt':
-                phys_select_count = min(2 - elective_selected['physical'], len(physical_electives))
-            else:
-                phys_select_count = 1
-            available_categories.extend(physical_electives[:phys_select_count])
-        
-        # 4. Tự chọn chuyên ngành: chọn 3, bắt đầu từ kỳ 5, nếu "học vượt" có thể 2 cùng kỳ
-        # Đặc biệt: cho phép chọn từ các kỳ khác nhau (từ kỳ 5+), không chỉ kỳ hiện tại
-        if next_sem >= 5 and elective_selected['specialization'] < 3:
-            # Tìm thêm các môn chuyên ngành từ tất cả các kỳ >= 5
-            all_specialization_options = []
-            for code_spec, info_spec in course_data.items():
-                if code_spec in passed_courses:
-                    continue
-                
-                is_required_spec = (
-                    info_spec.get('is_required_specialization', False) or
-                    info_spec.get('is_required_major', False)
-                )
-                if is_required_spec:
-                    continue
-                
-                # Kiểm tra xem có phải môn tự chọn chuyên ngành không
-                is_elec_spec = (
-                    info_spec.get('is_elective_specialization', False) or
-                    info_spec.get('is_elective_major', False)
-                )
-                if not is_elec_spec:
-                    continue
-                
-                # Kiểm tra tiên quyết
-                prereqs_spec = info_spec.get('prereqs', [])
-                prereqs_met_spec = True
-                for p in prereqs_spec:
-                    if p in passed_courses:
-                        continue
-                    if p in failed_courses:
-                        prereqs_met_spec = False
-                        break
-                    prereqs_met_spec = False
-                    break
-                
-                if not prereqs_met_spec:
-                    continue
-                
-                # Kiểm tra học kỳ mở
-                open_sem_spec = info_spec.get('openSemesterType', 3)
-                sem_ok_spec = (open_sem_spec in (3, 12) or open_sem_spec == sem_type)
-                if not sem_ok_spec:
-                    continue
-                
-                # Kiểm tra định hướng chuyên ngành
-                specs_spec = info_spec.get('specializations', [])
-                spec_ok_spec = True
-                if student_spec and specs_spec:
-                    def _normalize(v: str) -> str:
-                        return ''.join(ch for ch in unicodedata.normalize('NFKD', v.lower().strip()) if not unicodedata.combining(ch))
-                    normalized_student_spec = _normalize(student_spec)
-                    normalized_specs = [_normalize(s) for s in specs_spec if isinstance(s, str)]
-                    if specs_spec and normalized_student_spec not in normalized_specs:
-                        spec_ok_spec = False
-                
-                if not spec_ok_spec:
-                    continue
-                
-                rec_sem_spec = info_spec.get('recommended_sem', 99)
-                # Chỉ lấy môn từ kỳ 5 trở đi
-                if rec_sem_spec < 5:
-                    continue
-                
-                # Tính điểm ưu tiên
-                rec_gap_spec = abs(next_sem - rec_sem_spec) if rec_sem_spec < 999 else 999
-                rec_proximity_score_spec = max(0, 10 - rec_gap_spec)
-                
-                if study_goal == 'đúng hạn':
-                    goal_score_spec = 30
-                elif study_goal == 'giảm tải':
-                    goal_score_spec = 20
-                elif study_goal == 'học vượt':
-                    goal_score_spec = 10
-                else:
-                    goal_score_spec = 0
-                
-                delay_score_spec = max(0, current_sem - rec_sem_spec)
-                link_score_spec = dependency_count.get(code_spec, 0)
-                heuristic_H_spec = delay_score_spec * WEIGHT_DELAY + link_score_spec * WEIGHT_LINK
-                
-                priority_score_spec = heuristic_H_spec + (rec_proximity_score_spec * 10) + goal_score_spec
-                
-                all_specialization_options.append({
-                    "mã môn học": code_spec,
-                    "tên môn học": info_spec.get('name', ''),
-                    "là môn học lại": False,
-                    "học kỳ đề xuất": rec_sem_spec,
-                    "thuộc chuyên ngành": specs_spec,
-                    "tín chỉ": info_spec.get('credit', 0),
-                    "corequisites": info_spec.get('corequisites', []),
-                    "điểm nợ môn": 0,
-                    "điểm kết nối": link_score_spec,
-                    "điểm trễ": delay_score_spec,
-                    "điểm ưu tiên": heuristic_H_spec,
-                    "mở đúng kỳ": 1,
-                    "độ gần kỳ đề xuất": rec_proximity_score_spec,
-                    "điểm mục tiêu": goal_score_spec,
-                    "điểm tổng ưu tiên": priority_score_spec,
-                    "lý do": ['môn tự chọn, phù hợp chuyên ngành']
-                })
-            
-            # Randomize và sắp xếp để ưu tiên đồng thời công bằng với các điểm bằng nhau
-            random.shuffle(all_specialization_options)
-            all_specialization_options.sort(key=lambda x: x.get('điểm tổng ưu tiên', 0), reverse=True)
-            if study_goal == 'học vượt':
-                spec_select_count = min(3 - elective_selected['specialization'], len(all_specialization_options))
-            else:
-                spec_select_count = min(1, 3 - elective_selected['specialization'], len(all_specialization_options))
-            
-            available_categories.extend(all_specialization_options[:spec_select_count])
-        
-        # Chọn tối đa 2 danh mục tự chọn từ danh sách có sẵn
-        selected_candidates.extend(available_categories[:2])
-    
-    # Thêm các môn khác (không là bắt buộc, không là tự chọn)
-    selected_candidates.extend(other_courses)
+    elective_target_counts: Dict[str, int] = {
+        'general': 1,
+        'physical': 2,
+        'foundation': 1,
+        'specialization': 3,
+    }
 
-    eligible_codes = {c['mã môn học'] for c in selected_candidates}
-    course_index = {c['mã môn học']: c for c in selected_candidates}
+    if study_goal_value == 'học vượt':
+        # Với mục tiêu học vượt: có thể gợi ý 2-3 môn tự chọn chuyên ngành
+        elective_target_counts['specialization'] = 3
+
+    # Với mục tiêu đúng hạn/giảm tải: tổ hợp cuối cùng chỉ lấy tối đa 1 môn tự chọn
+    strict_single_elective_in_final = study_goal_value in ('đúng hạn', 'giảm tải')
+
+    # Đếm số môn tự chọn đã hoàn thành theo nhóm để tính quota còn thiếu
+    completed_elective_counts: Dict[str, int] = {k: 0 for k in ELECTIVE_QUOTA_KEYS}
+    for code_ in passed_courses:
+        info_done = course_data.get(code_, {})
+        done_cat = info_done.get('elective_category')
+        if done_cat in ELECTIVE_QUOTA_KEYS:
+            completed_elective_counts[str(done_cat)] += 1
+
+    remaining_elective_counts: Dict[str, int] = {
+        k: max(0, elective_target_counts.get(k, 0) - completed_elective_counts.get(k, 0))
+        for k in ELECTIVE_QUOTA_KEYS
+    }
+
+    def elective_category_of_code(code_: str) -> Optional[str]:
+        info = course_data.get(code_, {})
+        cat = info.get('elective_category')
+        if cat in ELECTIVE_QUOTA_KEYS:
+            return str(cat)
+        return None
+
+    # Tập môn hợp lệ đưa vào beam: chỉ giữ môn tự chọn ở các nhóm còn thiếu quota
+    selected_candidates_raw = (
+        list(required_courses)
+        + list(required_foundation_courses)
+        + list(elective_foundation_courses)
+        + list(general_electives)
+        + list(physical_electives)
+        + list(specialization_electives)
+        + list(other_courses)
+    )
+
+    selected_candidates: List[Dict[str, Any]] = []
+    for item in selected_candidates_raw:
+        code_ = item.get('mã môn học', '')
+        cat = elective_category_of_code(code_)
+        if cat is not None and remaining_elective_counts.get(cat, 0) <= 0:
+            continue
+        selected_candidates.append(item)
+
+    # Khử trùng lặp theo mã môn cho tập hợp lệ (dùng để in báo cáo đầu vào)
+    unique_candidates: Dict[str, Dict[str, Any]] = {}
+    for item in selected_candidates:
+        unique_candidates[item['mã môn học']] = item
+    selected_candidates = list(unique_candidates.values())
+
+    # Yêu cầu nghiệp vụ: tập môn hợp lệ phải in ra đầy đủ (không random ở bước này)
+    eligible_courses = list(selected_candidates)
+
+    # Random chỉ áp dụng cho tổ hợp cuối cùng (beam search)
+    beam_candidates = list(selected_candidates)
+
+    # Random hóa chọn môn tự chọn khi chỉ còn thiếu 1 môn nhưng có nhiều môn hợp lệ
+    # để tránh luôn ra cùng một môn ở tổ hợp cuối.
+    if strict_single_elective_in_final:
+        elective_pool = [
+            c for c in beam_candidates
+            if elective_category_of_code(c.get('mã môn học', '')) is not None
+        ]
+        specialization_pool = [
+            c for c in elective_pool
+            if elective_category_of_code(c.get('mã môn học', '')) == 'specialization'
+        ]
+        if len(elective_pool) > 1:
+            # Ưu tiên tự chọn chuyên ngành nếu có
+            pool_to_choose = specialization_pool if len(specialization_pool) > 0 else elective_pool
+            chosen_elective = random.choice(pool_to_choose)
+            beam_candidates = [
+                c for c in beam_candidates
+                if elective_category_of_code(c.get('mã môn học', '')) is None
+            ] + [chosen_elective]
+    else:
+        for cat_key in ELECTIVE_QUOTA_KEYS:
+            remain = remaining_elective_counts.get(cat_key, 0)
+            if remain <= 0:
+                continue
+            cat_pool = [
+                c for c in beam_candidates
+                if elective_category_of_code(c.get('mã môn học', '')) == cat_key
+            ]
+            if len(cat_pool) > remain:
+                chosen_cat_courses = random.sample(cat_pool, remain)
+                beam_candidates = [
+                    c for c in beam_candidates
+                    if elective_category_of_code(c.get('mã môn học', '')) != cat_key
+                ] + chosen_cat_courses
+
+    random.shuffle(beam_candidates)
+
+    eligible_codes = {c['mã môn học'] for c in beam_candidates}
+    course_index = {c['mã môn học']: c for c in beam_candidates}
 
     student_max_credit = REGISTER_MAX_CREDITS
     student_request_max = target_student.get('số tín chỉ đăng ký tối đa', REGISTER_MAX_CREDITS)
@@ -695,6 +671,31 @@ def main(target_student_id: Optional[str] = None) -> None:
                     stack.append(co)
         return bundle
 
+    def add_elective_counts(base_counts: Dict[str, int], codes: Set[str]) -> Dict[str, int]:
+        new_counts = dict(base_counts)
+        for code_ in codes:
+            cat = elective_category_of_code(code_)
+            if cat is None:
+                continue
+            new_counts[cat] = new_counts.get(cat, 0) + 1
+        return new_counts
+
+    def within_elective_quota(counts: Dict[str, int]) -> bool:
+        for key in ELECTIVE_QUOTA_KEYS:
+            if counts.get(key, 0) > remaining_elective_counts.get(key, 0):
+                return False
+        if strict_single_elective_in_final and sum(counts.get(k, 0) for k in ELECTIVE_QUOTA_KEYS) > 1:
+            return False
+        return True
+
+    def quota_fill_score(counts: Dict[str, int]) -> int:
+        if strict_single_elective_in_final:
+            return min(sum(counts.get(k, 0) for k in ELECTIVE_QUOTA_KEYS), 1)
+        score = 0
+        for key in ELECTIVE_QUOTA_KEYS:
+            score += min(counts.get(key, 0), remaining_elective_counts.get(key, 0))
+        return score
+
     # Beam Search để chọn tổ hợp khóa học tốt nhất
     beam_width = 8
 
@@ -705,7 +706,9 @@ def main(target_student_id: Optional[str] = None) -> None:
         'selected_codes': set(),
         'selected_courses': [],
         'credit': 0,
-        'score': 0.0
+        'score': 0.0,
+        'elective_counts': {k: 0 for k in ELECTIVE_QUOTA_KEYS},
+        'tie_break': random.random(),
     }
 
     beam = [initial_state]
@@ -716,15 +719,19 @@ def main(target_student_id: Optional[str] = None) -> None:
         improved = False
 
         for state in beam:
-            remaining = [c for c in selected_candidates if c['mã môn học'] not in state['selected_codes']]
+            remaining = [c for c in beam_candidates if c['mã môn học'] not in state['selected_codes']]
+            random.shuffle(remaining)
             for c in remaining:
                 bundle_codes = resolve_coreq_bundle(c['mã môn học'])
                 if bundle_codes is None:
                     continue
                 bundle_codes = {x for x in bundle_codes if x not in state['selected_codes']}
                 bundle_credit = sum(course_data.get(x, {}).get('credit', 0) for x in bundle_codes)
+                next_elective_counts = add_elective_counts(state.get('elective_counts', {}), bundle_codes)
 
                 if state['credit'] + bundle_credit > student_max_credit:
+                    continue
+                if not within_elective_quota(next_elective_counts):
                     continue
 
                 next_credit = state['credit'] + bundle_credit
@@ -742,7 +749,9 @@ def main(target_student_id: Optional[str] = None) -> None:
                     'selected_codes': next_selected_codes,
                     'selected_courses': next_selected_courses,
                     'credit': next_credit,
-                    'score': next_score
+                    'score': next_score,
+                    'elective_counts': next_elective_counts,
+                    'tie_break': random.random(),
                 }
 
                 new_beam.append(next_state)
@@ -754,23 +763,39 @@ def main(target_student_id: Optional[str] = None) -> None:
         # Thêm cả các state cũ để Beam không bị mất tùy chọn không thêm
         new_beam.extend(beam)
 
-        # Giữ beam_width phương án tốt nhất theo điểm + credit (ưu tiên nhiều credit khi bằng điểm)
-        beam = sorted(new_beam, key=lambda x: (x['score'], x['credit']), reverse=True)[:beam_width]
+        # Giữ beam_width phương án tốt nhất theo mức độ đáp ứng quota tự chọn + điểm + credit
+        beam = sorted(
+            new_beam,
+            key=lambda x: (quota_fill_score(x.get('elective_counts', {})), x['score'], x['credit'], x.get('tie_break', 0.0)),
+            reverse=True
+        )[:beam_width]
 
-        # Cập nhật best_state: luôn chọn phương án có điểm cao nhất
-        top_state = max(beam, key=lambda x: (x['score'], x['credit']))
-        if top_state['score'] > best_state['score'] or (
-            top_state['score'] == best_state['score'] and top_state['credit'] > best_state['credit']
+        # Cập nhật best_state: ưu tiên đáp ứng quota tự chọn, sau đó mới đến điểm và tín chỉ
+        top_state = max(beam, key=lambda x: (quota_fill_score(x.get('elective_counts', {})), x['score'], x['credit'], x.get('tie_break', 0.0)))
+        if (
+            quota_fill_score(top_state.get('elective_counts', {})) > quota_fill_score(best_state.get('elective_counts', {}))
+            or (
+                quota_fill_score(top_state.get('elective_counts', {})) == quota_fill_score(best_state.get('elective_counts', {}))
+                and (
+                    top_state['score'] > best_state['score']
+                    or (top_state['score'] == best_state['score'] and top_state['credit'] > best_state['credit'])
+                )
+            )
         ):
             best_state = top_state
-
-    # Chọn danh sách môn hợp lệ ban đầu trước khi Beam chọn tổ hợp
-    eligible_courses = list(selected_candidates)
 
     # Chọn kết quả ban đầu từ beam
     selected_codes = set(best_state['selected_codes'])
     selected_courses = list(best_state['selected_courses'])
     total_credit = best_state['credit']
+
+    # Chống trùng trong kết quả cuối nếu có do quá trình mở rộng state
+    unique_selected: Dict[str, Dict[str, Any]] = {}
+    for c in selected_courses:
+        unique_selected[c['mã môn học']] = c
+    selected_courses = list(unique_selected.values())
+    selected_codes = {c['mã môn học'] for c in selected_courses}
+    total_credit = sum(c.get('tín chỉ', 0) for c in selected_courses)
 
     # Cứng chắc: bắt buộc tổng tín chỉ tổ hợp không vượt 27
     if total_credit > student_max_credit:
@@ -778,142 +803,9 @@ def main(target_student_id: Optional[str] = None) -> None:
         total_credit = sum(c.get('tín chỉ', 0) for c in selected_courses)
         selected_codes = {c['mã môn học'] for c in selected_courses}
 
-    # Bổ sung các môn hợp lệ tiếp theo nếu vẫn còn dư tín chỉ
-    for c in sorted(selected_candidates, key=lambda x: x.get('điểm tổng ưu tiên', 0), reverse=True):
-        if c['mã môn học'] in selected_codes:
-            continue
-
-        bundle_codes = resolve_coreq_bundle(c['mã môn học'])
-        if bundle_codes is None:
-            continue
-
-        bundle_codes = [b for b in bundle_codes if b not in selected_codes]
-        bundle_credit = sum(course_data.get(b, {}).get('credit', 0) for b in bundle_codes)
-
-        if total_credit + bundle_credit > student_max_credit:
-            continue
-
-        for b in bundle_codes:
-            selected_codes.add(b)
-            sc = course_index.get(b)
-            if sc is not None:
-                selected_courses.append(sc)
-
-        total_credit += bundle_credit
-
-    # Bước đảm bảo cuối: nếu vì lý do logic có sai sót thì cắt bớt môn cho <= 27 tín chỉ
-    if total_credit > student_max_credit:
-        selected_courses = sorted(selected_courses, key=lambda c: c.get('điểm tổng ưu tiên', 0), reverse=True)
-        adjusted = []
-        sum_credit = 0
-        for c in selected_courses:
-            c_credit = c.get('tín chỉ', 0)
-            if sum_credit + c_credit <= student_max_credit:
-                adjusted.append(c)
-                sum_credit += c_credit
-        selected_courses = adjusted
-        total_credit = sum_credit
-
-    valid_courses = selected_courses
-
-    # Thu thập và lọc theo yêu cầu: 1 đại cương/cơ sở, 2 thể chất, 3 chuyên ngành
-    required_course_codes = set(c['mã môn học'] for c in required_courses)
-
-    def is_general_core(c):
-        info = course_data.get(c['mã môn học'], {})
-        return info.get('is_general_education_course', False) or info.get('is_foundation_course', False)
-
-    def is_physical(c):
-        info = course_data.get(c['mã môn học'], {})
-        return info.get('is_physical_education_course', False)
-
-    def is_specialization_elective(c):
-        info = course_data.get(c['mã môn học'], {})
-        return info.get('is_elective_specialization', False)
-
-    def open_ok(c):
-        info = course_data.get(c['mã môn học'], {})
-        open_sem_val = info.get('openSemesterType', 3)
-        return open_sem_val in (3, 12) or open_sem_val == sem_type
-
-    def rec_ok(c):
-        rec_sem = c.get('học kỳ đề xuất', 99)
-        if isinstance(rec_sem, int):
-            if str(target_student.get('mục tiêu học tập', '')).strip().lower() == 'học vượt':
-                return True
-            return rec_sem <= next_sem
-        return False
-
-    def pick_top(candidates, count, distinct_key=None):
-        selected = []
-        seen_keys = set()
-        for c in sorted(candidates, key=lambda x: x.get('điểm tổng ưu tiên', 0), reverse=True):
-            if len(selected) >= count:
-                break
-            if c['mã môn học'] in [x['mã môn học'] for x in selected]:
-                continue
-            if not open_ok(c):
-                continue
-            if not rec_ok(c):
-                continue
-            if distinct_key:
-                key_val = c.get(distinct_key)
-                if key_val in seen_keys:
-                    continue
-                seen_keys.add(key_val)
-            selected.append(c)
-
-        return selected
-
-    final_courses = []
-    final_credit = 0
-
-    def add_course(c):
-        nonlocal final_credit
-        if c['mã môn học'] in {x['mã môn học'] for x in final_courses}:
-            return False
-        c_credit = c.get('tín chỉ', 0)
-        if final_credit + c_credit > student_max_credit:
-            return False
-        final_courses.append(c)
-        final_credit += c_credit
-        return True
-
-    # luôn giữ môn bắt buộc (đã sắp xếp theo score)
-    for c in sorted(required_courses, key=lambda x: x.get('điểm tổng ưu tiên', 0), reverse=True):
-        add_course(c)
-
-    # 1 môn đại cương/cơ sở ngành
-    general_core_candidates = [c for c in selected_courses if is_general_core(c) and c['mã môn học'] not in {x['mã môn học'] for x in final_courses}]
-    if general_core_candidates:
-        add_course(general_core_candidates[0])
-
-    # 2 môn thể chất, ưu tiên khác kỳ đề xuất
-    physical_pool = [c for c in selected_courses if is_physical(c) and c['mã môn học'] not in {x['mã môn học'] for x in final_courses}]
-    physical_picked = pick_top(physical_pool, 2, distinct_key='học kỳ đề xuất')
-    if len(physical_picked) < 2:
-        for c in physical_pool:
-            if len(physical_picked) >= 2:
-                break
-            if c not in physical_picked:
-                physical_picked.append(c)
-    for c in physical_picked:
-        add_course(c)
-
-    # 3 môn tự chọn chuyên ngành (ưu tiên khuyến nghị và mở kỳ)
-    spec_pool = [c for c in selected_courses if is_specialization_elective(c) and c['mã môn học'] not in {x['mã môn học'] for x in final_courses}]
-    spec_picked = pick_top(spec_pool, 3)
-    for c in spec_picked:
-        add_course(c)
-
-    # Bổ sung nếu còn dư tín chỉ và chưa đủ nguồn
-    for c in sorted(selected_courses, key=lambda x: x.get('điểm tổng ưu tiên', 0), reverse=True):
-        if len(final_courses) >= len(selected_courses):
-            break
-        add_course(c)
-
-    valid_courses = final_courses
-    total_credit = final_credit
+    # Kết quả cuối lấy trực tiếp từ beam search (đã ràng buộc quota tự chọn còn thiếu)
+    valid_courses = sorted(selected_courses, key=lambda c: c.get('điểm tổng ưu tiên', 0), reverse=True)
+    total_credit = sum(c.get('tín chỉ', 0) for c in valid_courses)
 
     # Chuẩn bị giá trị in báo cáo
     student_major = target_student.get("ngành", "Công Nghệ Thông Tin")
@@ -953,72 +845,60 @@ def main(target_student_id: Optional[str] = None) -> None:
 
         report.write('3. Giải thích quy trình beam search đã dùng\n')
         report.write('- Beam width = 8\n')
-        report.write('- Mỗi state lưu selected_codes, credit, score\n')
+        report.write('- Mỗi state lưu selected_codes, credit, score, elective_counts\n')
         report.write('- Mỗi lần mở rộng thêm 1 môn hoặc bundle corequisite nếu không vượt max credit\n')
-        report.write('- Giữ lại top 8 state theo (score, credit)\n')
+        report.write('- Ràng buộc cứng: môn kỳ khuyến nghị 8 chỉ gợi ý ở kỳ 8; môn thực tập ngành chỉ gợi ý ở kỳ 7\n')
+        report.write(f"- Quota tự chọn theo nhóm (mục tiêu): đại cương={elective_target_counts['general']}, thể chất={elective_target_counts['physical']}, cơ sở ngành={elective_target_counts['foundation']}, chuyên ngành={elective_target_counts['specialization']}\n")
+        report.write(f"- Đã hoàn thành: đại cương={completed_elective_counts['general']}, thể chất={completed_elective_counts['physical']}, cơ sở ngành={completed_elective_counts['foundation']}, chuyên ngành={completed_elective_counts['specialization']}\n")
+        report.write(f"- Quota còn thiếu để gợi ý: đại cương={remaining_elective_counts['general']}, thể chất={remaining_elective_counts['physical']}, cơ sở ngành={remaining_elective_counts['foundation']}, chuyên ngành={remaining_elective_counts['specialization']}\n")
+        if strict_single_elective_in_final:
+            report.write('- Ràng buộc theo mục tiêu học: tổ hợp cuối cùng tối đa 1 môn tự chọn\n')
+        report.write('- Giữ lại top 8 state theo (đáp ứng quota tự chọn, score, credit)\n')
         report.write('- Kết thúc khi không thể mở rộng thêm\n')
-        report.write('- Chọn best_state (score cao nhất, ưu credit cao nếu hòa)\n')
+        report.write('- Chọn best_state (đáp ứng quota cao nhất, ưu score và credit nếu hòa)\n')
 
     print(f"\nĐã lưu báo cáo chi tiết vào: {report_path}\n")
 
-    student_result: Dict[str, Any] = {
-        "mã sinh viên": target_student_id,
-        "tên sinh viên": target_student.get("tên sinh viên", ""),
-        "năm vào học": target_student.get("năm vào học", ""),
-        "ngành": target_student.get("ngành", ""),
-        "chuyên ngành": student_spec,
-        "mục tiêu học tập": target_student.get("mục tiêu học tập", ""),
-        "số tín chỉ đã tích lũy": target_student.get("số tín chỉ đã tích lũy", 0),
-        "số tín chỉ đăng ký tối đa": target_student.get("số tín chỉ đăng ký tối đa", REGISTER_MAX_CREDITS),
-        "học kỳ hiện tại": current_sem,
-        "học kỳ đăng ký": next_sem,
-        "tổng số môn có thể đăng ký": len(valid_courses),
-        "tổng tín chỉ đăng ký": total_credit,
-        "danh sách môn": valid_courses
-    }
-    
-    # In ra màn hình kết quả
-    print(f"KẾT QUẢ GỢI Ý MÔN HỌC")
-    print(f"Mã SV: {target_student_id}")
-    print(f"Họ tên: {target_student.get('tên sinh viên', '')}")
-    print(f"Năm vào học: {target_student.get('năm vào học', '')}")
-    
+    # In ra màn hình kết quả (gọn, in một lần để tránh lỗi hiển thị terminal)
     student_major = target_student.get("ngành", "Công Nghệ Thông Tin")
-    print(f"Ngành: {student_major}")
-    
     spec_display = student_spec if student_spec else 'Chưa chọn chuyên ngành'
-    print(f"Chuyên ngành: {spec_display}")
-    
-    print(f"Mục tiêu học tập: {target_student.get('mục tiêu học tập', 'Đúng hạn')}")
-    print(f"Số tín chỉ đã tích lũy: {target_student.get('số tín chỉ đã tích lũy', 0)}")
-    print(f"Số tín chỉ đăng ký tối đa: {target_student.get('số tín chỉ đăng ký tối đa', 27)}")
-    print(f"Học kỳ hiện tại: {current_sem}")
-    print(f"Học kỳ dự kiến đăng ký tiếp theo: {next_sem}")
-    print(f"Tổng số môn hợp lệ có thể đăng ký: {len(valid_courses)}")
     total_selected_credits = sum(c.get('tín chỉ', 0) for c in valid_courses)
-    print(f"Tổng số tín chỉ của các môn đã liệt kê: {total_selected_credits}")
+
+    output_lines: List[str] = [
+        "KẾT QUẢ GỢI Ý MÔN HỌC",
+        f"Mã SV: {target_student_id}",
+        f"Họ tên: {target_student.get('tên sinh viên', '')}",
+        f"Năm vào học: {target_student.get('năm vào học', '')}",
+        f"Ngành: {student_major}",
+        f"Chuyên ngành: {spec_display}",
+        f"Mục tiêu học tập: {target_student.get('mục tiêu học tập', 'Đúng hạn')}",
+        f"Số tín chỉ đã tích lũy: {target_student.get('số tín chỉ đã tích lũy', 0)}",
+        f"Số tín chỉ đăng ký tối đa: {target_student.get('số tín chỉ đăng ký tối đa', 27)}",
+        f"Học kỳ hiện tại: {current_sem}",
+        f"Học kỳ dự kiến đăng ký tiếp theo: {next_sem}",
+        f"Tổng số môn hợp lệ có thể đăng ký: {len(valid_courses)}",
+        f"Tổng số tín chỉ của các môn đã liệt kê: {total_selected_credits}",
+    ]
 
     for idx, course in enumerate(valid_courses, 1):
-        is_retake_str = course.get('là môn học lại', False)
         rec_sem_str = course.get('học kỳ đề xuất', 99)
-        status_str = "Học lại" if is_retake_str else f"Kỳ {rec_sem_str}"
-
-        spec_list: List[str] = course.get('thuộc chuyên ngành', [])
-        spec_str = f"Chuyên ngành: {', '.join(spec_list)}" if spec_list else "Đại cương/Cơ sở"
-
+        status_str = "Học lại" if course.get('là môn học lại', False) else f"Kỳ {rec_sem_str}"
         coda = course.get('mã môn học', '')
         name = course.get('tên môn học', '')
         tinchi = course.get('tín chỉ', 0)
-        h_score = course.get('điểm ưu tiên', 0)
         total_score = course.get('điểm tổng ưu tiên', 0)
-        reasons = course.get('lý do', [])
-        reason_str = ', '.join(reasons) if reasons else 'Không rõ'
+        output_lines.append(f"{idx}. {coda} | {name} | {tinchi} tín chỉ | {status_str} | H_total={total_score}")
+        reason_str = ', '.join(course.get('lý do', [])) if course.get('lý do', []) else 'Không rõ'
+        output_lines.append(f"   Lý do: {reason_str}")
 
-        print(f"{idx}. {coda}  {name}  {tinchi} tín chỉ  {status_str}  {spec_str}  [H={h_score}] [H_total={total_score}]  Lý do: {reason_str}")
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump([student_result], f, ensure_ascii=False, indent=4)
-        
-    print(f"\nĐã lưu chi tiết vào file: {output_path}")
+    selected_elective_categories = [
+        elective_category_of_code(c.get('mã môn học', ''))
+        for c in valid_courses
+        if elective_category_of_code(c.get('mã môn học', '')) is not None
+    ]
+  
+    print("\n" + "\n".join(output_lines))
+
 
 if __name__ == "__main__":
     main()  
