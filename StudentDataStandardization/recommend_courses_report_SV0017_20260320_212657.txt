@@ -1,0 +1,43 @@
+=== BÁO CÁO GỢI Ý KẾ HOẠCH HỌC TẬP ===
+Mã sinh viên: SV0017
+Tên: Nguyễn Trung Quân
+Ngành: Công Nghệ Thông Tin
+Chuyên ngành: Chưa chọn chuyên ngành
+Học kỳ hiện tại: 1, học kỳ đăng ký: 2
+Mục tiêu học: Đúng hạn
+---
+1. Tập môn hợp lệ (đầu vào)
+Mỗi môn: [H = debt*1000 + doPhu*20 + doTre*50] + [H_total thêm open/rec/goal] 
+- SOT381 Tin học đại cương A (LT+TH) (3 TIC) H=1060, H_total=1230, Lý do: môn học lại, môn bắt buộc, mở đúng học kỳ hiện tại
+- MAT327 Toán 1 (3 TIC) H=1020, H_total=1190, Lý do: môn học lại, môn bắt buộc, mở đúng học kỳ hiện tại
+- SSH313 Pháp luật đại cương (2 TIC) H=1000, H_total=1170, Lý do: môn học lại, môn bắt buộc, mở đúng học kỳ hiện tại
+- SOT315 Nhập môn lập trình (3 TIC) H=260, H_total=440, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+- NEC321 Kiến trúc máy tính (3 TIC) H=60, H_total=240, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+- POL309 Kinh tế Chính trị Mác - Lênin (2 TIC) H=40, H_total=220, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+- INS325 Hệ điều hành (3 TIC) H=20, H_total=200, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+- FLS314 Tiếng Anh B1.1 (4 TIC) H=20, H_total=190, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại
+- SSH378 Tư duy phản biện (3 TIC) H=0, H_total=180, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+- 85066 Giáo dục thể chất (Bơi lội) (1 TIC) H=0, H_total=180, Lý do: môn tự chọn, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+---
+2. Tổ hợp môn cuối cùng (beam search chọn)
+Tổng số môn hợp lệ có thể đăng ký: 10
+Tổng số tín chỉ của các môn đã liệt kê: 27
+Tổng tín chỉ: 27
+* SOT381 Tin học đại cương A (LT+TH) (3 TIC) H_total=1230, Lý do: môn học lại, môn bắt buộc, mở đúng học kỳ hiện tại
+* MAT327 Toán 1 (3 TIC) H_total=1190, Lý do: môn học lại, môn bắt buộc, mở đúng học kỳ hiện tại
+* SSH313 Pháp luật đại cương (2 TIC) H_total=1170, Lý do: môn học lại, môn bắt buộc, mở đúng học kỳ hiện tại
+* SOT315 Nhập môn lập trình (3 TIC) H_total=440, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+* NEC321 Kiến trúc máy tính (3 TIC) H_total=240, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+* POL309 Kinh tế Chính trị Mác - Lênin (2 TIC) H_total=220, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+* INS325 Hệ điều hành (3 TIC) H_total=200, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+* FLS314 Tiếng Anh B1.1 (4 TIC) H_total=190, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại
+* SSH378 Tư duy phản biện (3 TIC) H_total=180, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+* 85066 Giáo dục thể chất (Bơi lội) (1 TIC) H_total=180, Lý do: môn tự chọn, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+---
+3. Giải thích quy trình beam search đã dùng
+- Beam width = 8
+- Mỗi state lưu selected_codes, credit, score
+- Mỗi lần mở rộng thêm 1 môn hoặc bundle corequisite nếu không vượt max credit
+- Giữ lại top 8 state theo (score, credit)
+- Kết thúc khi không thể mở rộng thêm
+- Chọn best_state (score cao nhất, ưu credit cao nếu hòa)

@@ -5409,11 +5409,6 @@
         <NamedIndividual IRI="#Semester7"/>
     </ObjectPropertyAssertion>
     <ObjectPropertyAssertion>
-        <ObjectProperty IRI="#hasPrerequisiteCourse"/>
-        <NamedIndividual IRI="#INT6205"/>
-        <NamedIndividual IRI="#NEC329"/>
-    </ObjectPropertyAssertion>
-    <ObjectPropertyAssertion>
         <ObjectProperty IRI="#isRequiredForSpecialization"/>
         <NamedIndividual IRI="#INT6205"/>
         <NamedIndividual IRI="#TTMMT"/>
@@ -5932,6 +5927,11 @@
         <ObjectProperty IRI="#hasPrerequisiteCourse"/>
         <NamedIndividual IRI="#POL308"/>
         <NamedIndividual IRI="#POL307"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#hasPrerequisiteCourse"/>
+        <NamedIndividual IRI="#POL308"/>
+        <NamedIndividual IRI="#POL309"/>
     </ObjectPropertyAssertion>
     <ObjectPropertyAssertion>
         <ObjectProperty IRI="#isRequiredForMajor"/>

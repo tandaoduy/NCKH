@@ -3048,7 +3048,6 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6205">
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CoreCourse"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
-        <TrainingProgramOntology:hasPrerequisiteCourse rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#NEC329"/>
         <TrainingProgramOntology:isRequiredForSpecialization rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#TTMMT"/>
         <TrainingProgramOntology:offeredInSpecialization rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#TTMMT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester5"/>
@@ -3580,6 +3579,7 @@
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#GeneralEducationCourse"/>
         <TrainingProgramOntology:hasPrerequisiteCourse rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#POL307"/>
+        <TrainingProgramOntology:hasPrerequisiteCourse rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#POL309"/>
         <TrainingProgramOntology:isRequiredForMajor rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"/>
         <TrainingProgramOntology:recommendedInSemester rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester3"/>
         <TrainingProgramOntology:courseCode>POL308</TrainingProgramOntology:courseCode>
