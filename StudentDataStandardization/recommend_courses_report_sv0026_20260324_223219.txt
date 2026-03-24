@@ -1,0 +1,39 @@
+=== BÁO CÁO GỢI Ý KẾ HOẠCH HỌC TẬP ===
+Mã sinh viên: sv0026
+Tên: Lê Hoàng Minh Khang
+Ngành: Công Nghệ Thông Tin
+Chuyên ngành: Công nghệ phần mềm
+Học kỳ hiện tại: 5, học kỳ đăng ký: 6
+Mục tiêu học: học vượt
+---
+1. Tập môn hợp lệ (đầu vào)
+Mỗi môn: [H = debt*1000 + doPhu*20 + doTre*50] + [H_total thêm open/rec/goal] 
+- SOT349 Công nghệ phần mềm (3 TIC) H=40, H_total=200, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+- SOT332 Toán rời rạc (3 TIC) H=0, H_total=160, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+- SOT380 Kiến trúc và thiết kế phần mềm (3 TIC) H=0, H_total=160, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+- SOT379 Lập trình thiết bị di động (4 TIC) H=0, H_total=160, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+- INT6207 IoT và Ứng dụng (3 TIC) H=0, H_total=160, Lý do: môn tự chọn, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+- SOT352 Quản lý dự án phần mềm (3 TIC) H=0, H_total=160, Lý do: môn tự chọn, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+---
+2. Tổ hợp môn cuối cùng (beam search chọn)
+Tổng số môn hợp lệ có thể đăng ký: 6
+Tổng số tín chỉ của các môn đã liệt kê: 19
+Tổng tín chỉ: 19
+* SOT349 Công nghệ phần mềm (3 TIC) H_total=200, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+* INT6207 IoT và Ứng dụng (3 TIC) H_total=160, Lý do: môn tự chọn, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+* SOT352 Quản lý dự án phần mềm (3 TIC) H_total=160, Lý do: môn tự chọn, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+* SOT379 Lập trình thiết bị di động (4 TIC) H_total=160, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị
+* SOT380 Kiến trúc và thiết kế phần mềm (3 TIC) H_total=160, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+* SOT332 Toán rời rạc (3 TIC) H_total=160, Lý do: môn bắt buộc, mở đúng học kỳ hiện tại, đúng học kỳ khuyến nghị, phù hợp chuyên ngành
+---
+3. Giải thích quy trình beam search đã dùng
+- Beam width = 8
+- Mỗi state lưu selected_codes, credit, score, elective_counts
+- Mỗi lần mở rộng thêm 1 môn hoặc bundle corequisite nếu không vượt max credit
+- Ràng buộc cứng: môn kỳ khuyến nghị 8 chỉ gợi ý ở kỳ 8; môn thực tập ngành chỉ gợi ý ở kỳ 7
+- Quota tự chọn theo nhóm (mục tiêu): đại cương=1, thể chất=2, cơ sở ngành=1, chuyên ngành=3
+- Đã hoàn thành: đại cương=1, thể chất=2, cơ sở ngành=1, chuyên ngành=1
+- Quota còn thiếu để gợi ý: đại cương=0, thể chất=0, cơ sở ngành=0, chuyên ngành=2
+- Giữ lại top 8 state theo (đáp ứng quota tự chọn, score, credit)
+- Kết thúc khi không thể mở rộng thêm
+- Chọn best_state (đáp ứng quota cao nhất, ưu score và credit nếu hòa)

@@ -53,9 +53,64 @@ WEIGHT_DEBT = 1000      # W_debt
 WEIGHT_LINK = 20        # W_link (môn có nhiều môn phụ thuộc hơn thì ưu tiên)
 WEIGHT_DELAY = 50       # W_delay (môn trễ kỳ đề xuất sẽ ưu tiên)
 
-def main(target_student_id: Optional[str] = None) -> None:
-    json_path = r"d:\NTU\CNTT\NCKH\Code\StudentDataStandardization\DanhSachSinhVien.json"
-    rdf_path = r"d:\NTU\CNTT\NCKH\Code\owl\ontology_v18.rdf"
+STUDENT_ID_KEYS = ["mã sinh viên", "mã sinh vien", "ma sinh vien", "student_id", "id"]
+
+
+def normalize_text(value: str) -> str:
+    return ''.join(
+        ch for ch in unicodedata.normalize('NFKD', value.lower().strip())
+        if not unicodedata.combining(ch)
+    )
+
+
+def normalize_course_code(value: str) -> str:
+    return value.strip().upper()
+
+
+def safe_int(value: Any, default: int) -> int:
+    try:
+        if isinstance(value, int):
+            return value
+        if isinstance(value, float):
+            return int(value)
+        s = str(value).strip()
+        if not s:
+            return default
+        if '.' in s:
+            return int(float(s))
+        return int(s)
+    except Exception:
+        return default
+
+
+def resolve_default_paths() -> Dict[str, str]:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    workspace_root = os.path.dirname(script_dir)
+    return {
+        'json': os.path.join(script_dir, 'DanhSachSinhVien.json'),
+        'csv': os.path.join(script_dir, 'DanhSachSinhVien.csv'),
+        'rdf': os.path.join(workspace_root, 'owl', 'ontology_v18.rdf'),
+        'output_dir': script_dir,
+    }
+
+
+def normalize_student_id(value: str) -> str:
+    v = value.strip().lower()
+    return v.replace('sv', '')
+
+
+def main(
+    target_student_id: Optional[str] = None,
+    json_path: Optional[str] = None,
+    rdf_path: Optional[str] = None,
+    csv_path: Optional[str] = None,
+    output_dir: Optional[str] = None,
+) -> None:
+    defaults = resolve_default_paths()
+    json_path = json_path or defaults['json']
+    rdf_path = rdf_path or defaults['rdf']
+    csv_path = csv_path or defaults['csv']
+    output_dir = output_dir or defaults['output_dir']
 
     # Yêu cầu người dùng nhập mã sinh viên nếu chưa có
     if target_student_id:
@@ -67,8 +122,14 @@ def main(target_student_id: Optional[str] = None) -> None:
         print("Vui lòng nhập mã sinh viên hợp lệ!")
         return
 
+    if not os.path.exists(rdf_path):
+        print(f"Không tìm thấy file ontology RDF: {rdf_path}")
+        return
+
+    os.makedirs(output_dir, exist_ok=True)
+
     run_ts = datetime.now().strftime('%Y%m%d_%H%M%S')
-    report_path = rf"d:\NTU\CNTT\NCKH\Code\StudentDataStandardization\recommend_courses_report_{target_student_id}_{run_ts}.txt"
+    report_path = os.path.join(output_dir, f"recommend_courses_report_{target_student_id}_{run_ts}.txt")
 
     print(f"\nĐang đọc dữ liệu hồ sơ sinh viên từ {json_path}...")
     if not os.path.exists(json_path):
@@ -77,43 +138,42 @@ def main(target_student_id: Optional[str] = None) -> None:
         
     with open(json_path, 'r', encoding='utf-8') as f:
         students = json.load(f)
+    if not isinstance(students, list):
+        print("Dữ liệu JSON không đúng định dạng danh sách sinh viên.")
+        return
         
     # Tìm sinh viên
     target_student_raw = None
-    normalized_target_id = target_student_id.strip().lower()
+    normalized_target_id = normalize_student_id(target_student_id)
 
-    if isinstance(students, list):
-        for s in students:
-            if not isinstance(s, dict):
-                continue
-            student_code = None
-            # hỗ trợ nhiều key trong JSON khác nhau
-            for key in ["mã sinh viên", "mã sinh vien", "ma sinh vien", "student_id", "id"]:
-                if key in s and s.get(key) is not None:
-                    student_code = str(s.get(key)).strip()
-                    break
-            if not student_code:
-                continue
-
-            if student_code.strip().lower() == normalized_target_id or student_code.strip().lower().replace("sv", "") == normalized_target_id.replace("sv", ""):
-                target_student_raw = s
+    for s in students:
+        if not isinstance(s, dict):
+            continue
+        student_code = None
+        for key in STUDENT_ID_KEYS:
+            if key in s and s.get(key) is not None:
+                student_code = str(s.get(key)).strip()
                 break
+        if not student_code:
+            continue
+        if normalize_student_id(student_code) == normalized_target_id:
+            target_student_raw = s
+            break
 
     if target_student_raw is None:
         # Fallback: đọc từ CSV nếu JSON không có
-        csv_path = r"d:\NTU\CNTT\NCKH\Code\StudentDataStandardization\DanhSachSinhVien.csv"
         if os.path.exists(csv_path):
             with open(csv_path, newline='', encoding='utf-8') as fcsv:
                 reader = csv.DictReader(fcsv)
                 for row in reader:
                     row_code = None
-                    for key in ['mã sinh viên', 'mã sinh vien', 'ma sinh vien', 'student_id', 'id']:
+                    for key in STUDENT_ID_KEYS:
                         if row.get(key):
                             row_code = str(row.get(key)).strip()
                             break
                     if not row_code:
                         continue
-                    if row_code.lower() == normalized_target_id or row_code.lower().replace('sv','') == normalized_target_id.replace('sv',''):
+                    if normalize_student_id(row_code) == normalized_target_id:
                         target_student_raw = dict(row)
                         break
             if target_student_raw is not None:
@@ -138,17 +198,20 @@ def main(target_student_id: Optional[str] = None) -> None:
         if target_student_raw is None:
             print(f"Không tìm thấy sinh viên với mã '{target_student_id}'. Vui lòng kiểm tra lại mã và dữ liệu JSON/CSV.")
             print("Các mã sinh viên khả dụng (một số):")
-            if isinstance(students, list):
-                cnt = 0
-                for s in students:
-                    if not isinstance(s, dict):
-                        continue
-                    candidate = s.get("mã sinh viên") or s.get("mã sinh vien") or s.get("ma sinh vien") or s.get("student_id") or s.get("id")
-                    if candidate:
-                        print(" -", candidate)
-                        cnt += 1
-                        if cnt >= 20:
-                            break
+            cnt = 0
+            for s in students:
+                if not isinstance(s, dict):
+                    continue
+                candidate = None
+                for key in STUDENT_ID_KEYS:
+                    if s.get(key):
+                        candidate = s.get(key)
+                        break
+                if candidate:
+                    print(" -", candidate)
+                    cnt += 1
+                    if cnt >= 20:
+                        break
             return
         
     target_student = cast(Dict[str, Any], target_student_raw)
@@ -169,7 +232,9 @@ def main(target_student_id: Optional[str] = None) -> None:
         code_val_node = g.value(course, PROP_courseCode)
         if code_val_node is None:
             continue
-        code = str(code_val_node)
+        code = normalize_course_code(str(code_val_node))
+        if not code:
+            continue
         
         name_val = g.value(course, PROP_courseName)
         name = str(name_val) if name_val is not None else code
@@ -178,10 +243,12 @@ def main(target_student_id: Optional[str] = None) -> None:
         for p in g.objects(course, PROP_hasPrerequisiteCourse):
             p_code = g.value(p, PROP_courseCode)
             if p_code is not None:
-                prereqs.append(str(p_code))
+                normalized_pr = normalize_course_code(str(p_code))
+                if normalized_pr:
+                    prereqs.append(normalized_pr)
                 
         open_sem = g.value(course, PROP_openSemesterType)
-        open_sem_val = int(open_sem) if open_sem is not None else 3
+        open_sem_val = safe_int(open_sem, 3)
         
         # Học kỳ khuyến nghị
         recommended_sem_val = 99999
@@ -224,7 +291,9 @@ def main(target_student_id: Optional[str] = None) -> None:
             if isinstance(co, URIRef):
                 coreq_code = g.value(co, PROP_courseCode)
                 if coreq_code is not None:
-                    coreqs.append(str(coreq_code))
+                    normalized_coreq = normalize_course_code(str(coreq_code))
+                    if normalized_coreq:
+                        coreqs.append(normalized_coreq)
 
         # Lấy tín chỉ
         credits_val = g.value(course, PROP_hasCredit)
@@ -283,9 +352,8 @@ def main(target_student_id: Optional[str] = None) -> None:
                 dependency_count[pr] += 1
 
     # 2. Xử lý cho sinh viên được chọn
-    current_sem = target_student.get("học kỳ hiện tại", 1)
-    if not isinstance(current_sem, int):
-        current_sem = 1
+    current_sem = safe_int(target_student.get("học kỳ hiện tại", 1), 1)
+    current_sem = max(1, current_sem)
         
     next_sem = current_sem + 1
     sem_type = 1 if next_sem % 2 != 0 else 2
@@ -294,7 +362,17 @@ def main(target_student_id: Optional[str] = None) -> None:
     if not isinstance(student_spec, str):
         student_spec = ""
     student_spec = student_spec.strip()
-    study_goal_value = str(target_student.get('mục tiêu học tập', '')).strip().lower()
+    normalized_student_spec = normalize_text(student_spec) if student_spec else ""
+    raw_study_goal = str(target_student.get('mục tiêu học tập', '')).strip()
+    normalized_study_goal = normalize_text(raw_study_goal)
+    study_goal_mapping = {
+        'dung han': 'đúng hạn',
+        'giam tai': 'giảm tải',
+        'hoc vuot': 'học vượt',
+    }
+    study_goal_value = study_goal_mapping.get(normalized_study_goal, 'đúng hạn')
+
+    rng = random.Random(f"{target_student_id}-{current_sem}-{next_sem}")
 
     print(f"\nSinh viên {target_student.get('tên sinh viên', '')} đang ở học kỳ {current_sem}, chuẩn bị đăng ký cho học kỳ {next_sem} (Loại học kỳ: {'Lẻ' if sem_type == 1 else 'Chẵn'})")
     print(f"Chuyên ngành đã đăng ký: {student_spec if student_spec else 'Chưa chọn'}")
@@ -310,14 +388,14 @@ def main(target_student_id: Optional[str] = None) -> None:
                 if not m or not isinstance(m, str):
                     continue
                 if c.get("Trạng thái") == "Đạt":
-                    passed_courses.add(m.strip())
+                    passed_courses.add(normalize_course_code(m))
 
     # Dữ liệu thực tế có thể lệch mã ở "điểm từng môn"; bổ sung nguồn từ "danh sách môn đã học"
     ds_da_hoc = target_student.get("danh sách môn đã học", {})
     if isinstance(ds_da_hoc, dict):
         for code in ds_da_hoc.keys():
             if isinstance(code, str) and code.strip():
-                passed_courses.add(code.strip())
+                passed_courses.add(normalize_course_code(code))
     elif isinstance(ds_da_hoc, list):
         for item in ds_da_hoc:
             if not isinstance(item, dict):
@@ -332,15 +410,24 @@ def main(target_student_id: Optional[str] = None) -> None:
             if isinstance(c, dict):
                 m = c.get("mã môn học")
                 if m and isinstance(m, str):
-                    failed_courses.add(m.strip())
+                    failed_courses.add(normalize_course_code(m))
 
     # Tránh trường hợp một mã vừa nằm trong đã học vừa nằm trong chưa đạt
     passed_courses -= failed_courses
 
     internship_course_codes = {'INT6900', 'SOT348'}
 
-    def _normalize_text(v: str) -> str:
-        return ''.join(ch for ch in unicodedata.normalize('NFKD', v.lower().strip()) if not unicodedata.combining(ch))
+    unknown_passed = sorted([code for code in passed_courses if code not in course_data])
+    unknown_failed = sorted([code for code in failed_courses if code not in course_data])
+    if unknown_passed or unknown_failed:
+        print("Cảnh báo: có mã môn trong hồ sơ sinh viên không tồn tại trong ontology.")
+        if unknown_passed:
+            print(" - Không khớp (đã học):", ', '.join(unknown_passed[:10]))
+        if unknown_failed:
+            print(" - Không khớp (chưa đạt):", ', '.join(unknown_failed[:10]))
+
+    passed_courses = {code for code in passed_courses if code in course_data}
+    failed_courses = {code for code in failed_courses if code in course_data}
             
     valid_courses: List[Dict[str, Any]] = []
     
@@ -374,7 +461,7 @@ def main(target_student_id: Optional[str] = None) -> None:
         # Ràng buộc cứng theo yêu cầu nghiệp vụ
         # 1) Môn có kỳ khuyến nghị 8: chỉ gợi ý khi đăng ký kỳ 8
         # 2) Môn thực tập ngành: chỉ gợi ý khi đăng ký kỳ 7
-        course_name_norm = _normalize_text(str(info.get('name', '')))
+        course_name_norm = normalize_text(str(info.get('name', '')))
         is_internship_course = (code in internship_course_codes) or ('thuc tap nganh' in course_name_norm)
         forced_semester_ok = True
         if rec_sem_info == 8:
@@ -389,11 +476,7 @@ def main(target_student_id: Optional[str] = None) -> None:
         spec_ok = True
         specs: List[str] = info.get('specializations', [])
         if student_spec:
-            def _normalize(v: str) -> str:
-                return ''.join(ch for ch in unicodedata.normalize('NFKD', v.lower().strip()) if not unicodedata.combining(ch))
-
-            normalized_student_spec = _normalize(student_spec)
-            normalized_specs = [_normalize(s) for s in specs if isinstance(s, str)]
+            normalized_specs = [normalize_text(s) for s in specs if isinstance(s, str)]
 
             if specs and normalized_student_spec not in normalized_specs:
                 spec_ok = False
@@ -441,7 +524,7 @@ def main(target_student_id: Optional[str] = None) -> None:
                 reasons.append('mở đúng học kỳ hiện tại')
             if rec_gap == 0:
                 reasons.append('đúng học kỳ khuyến nghị')
-            if student_spec and student_spec in specs:
+            if student_spec and normalized_student_spec in [normalize_text(s) for s in specs if isinstance(s, str)]:
                 reasons.append('phù hợp chuyên ngành')
 
             valid_courses.append({
@@ -622,7 +705,7 @@ def main(target_student_id: Optional[str] = None) -> None:
         if len(elective_pool) > 1:
             # Ưu tiên tự chọn chuyên ngành nếu có
             pool_to_choose = specialization_pool if len(specialization_pool) > 0 else elective_pool
-            chosen_elective = random.choice(pool_to_choose)
+            chosen_elective = rng.choice(pool_to_choose)
             beam_candidates = [
                 c for c in beam_candidates
                 if elective_category_of_code(c.get('mã môn học', '')) is None
@@ -637,21 +720,20 @@ def main(target_student_id: Optional[str] = None) -> None:
                 if elective_category_of_code(c.get('mã môn học', '')) == cat_key
             ]
             if len(cat_pool) > remain:
-                chosen_cat_courses = random.sample(cat_pool, remain)
+                chosen_cat_courses = rng.sample(cat_pool, remain)
                 beam_candidates = [
                     c for c in beam_candidates
                     if elective_category_of_code(c.get('mã môn học', '')) != cat_key
                 ] + chosen_cat_courses
 
-    random.shuffle(beam_candidates)
+    rng.shuffle(beam_candidates)
 
     eligible_codes = {c['mã môn học'] for c in beam_candidates}
     course_index = {c['mã môn học']: c for c in beam_candidates}
 
     student_max_credit = REGISTER_MAX_CREDITS
-    student_request_max = target_student.get('số tín chỉ đăng ký tối đa', REGISTER_MAX_CREDITS)
-    if isinstance(student_request_max, int):
-        student_max_credit = min(REGISTER_MAX_CREDITS, student_request_max)
+    student_request_max = safe_int(target_student.get('số tín chỉ đăng ký tối đa', REGISTER_MAX_CREDITS), REGISTER_MAX_CREDITS)
+    student_max_credit = min(REGISTER_MAX_CREDITS, max(REGISTER_MIN_CREDITS, student_request_max))
 
     def resolve_coreq_bundle(code_: str) -> Optional[Set[str]]:
         bundle = set()
@@ -699,16 +781,13 @@ def main(target_student_id: Optional[str] = None) -> None:
     # Beam Search để chọn tổ hợp khóa học tốt nhất
     beam_width = 8
 
-    def state_score(state: Dict[str, Any]) -> float:
-        return state['score']
-
     initial_state = {
         'selected_codes': set(),
         'selected_courses': [],
         'credit': 0,
         'score': 0.0,
         'elective_counts': {k: 0 for k in ELECTIVE_QUOTA_KEYS},
-        'tie_break': random.random(),
+        'tie_break': rng.random(),
     }
 
     beam = [initial_state]
@@ -720,7 +799,7 @@ def main(target_student_id: Optional[str] = None) -> None:
 
         for state in beam:
             remaining = [c for c in beam_candidates if c['mã môn học'] not in state['selected_codes']]
-            random.shuffle(remaining)
+            rng.shuffle(remaining)
             for c in remaining:
                 bundle_codes = resolve_coreq_bundle(c['mã môn học'])
                 if bundle_codes is None:
@@ -751,7 +830,7 @@ def main(target_student_id: Optional[str] = None) -> None:
                     'credit': next_credit,
                     'score': next_score,
                     'elective_counts': next_elective_counts,
-                    'tie_break': random.random(),
+                    'tie_break': rng.random(),
                 }
 
                 new_beam.append(next_state)
@@ -785,7 +864,6 @@ def main(target_student_id: Optional[str] = None) -> None:
             best_state = top_state
 
     # Chọn kết quả ban đầu từ beam
-    selected_codes = set(best_state['selected_codes'])
     selected_courses = list(best_state['selected_courses'])
     total_credit = best_state['credit']
 
@@ -794,14 +872,49 @@ def main(target_student_id: Optional[str] = None) -> None:
     for c in selected_courses:
         unique_selected[c['mã môn học']] = c
     selected_courses = list(unique_selected.values())
-    selected_codes = {c['mã môn học'] for c in selected_courses}
     total_credit = sum(c.get('tín chỉ', 0) for c in selected_courses)
 
     # Cứng chắc: bắt buộc tổng tín chỉ tổ hợp không vượt 27
     if total_credit > student_max_credit:
         selected_courses = [c for c in selected_courses if c.get('tín chỉ', 0) <= student_max_credit]
         total_credit = sum(c.get('tín chỉ', 0) for c in selected_courses)
-        selected_codes = {c['mã môn học'] for c in selected_courses}
+
+    # Nếu dưới ngưỡng tối thiểu, bổ sung greedily từ ứng viên còn lại (vẫn giữ mọi ràng buộc)
+    selected_codes = {c['mã môn học'] for c in selected_courses}
+    selected_elective_counts = {k: 0 for k in ELECTIVE_QUOTA_KEYS}
+    for code_ in selected_codes:
+        cat = elective_category_of_code(code_)
+        if cat is not None:
+            selected_elective_counts[cat] += 1
+
+    if total_credit < REGISTER_MIN_CREDITS:
+        remaining_sorted = sorted(
+            [c for c in beam_candidates if c['mã môn học'] not in selected_codes],
+            key=lambda x: x.get('điểm tổng ưu tiên', 0),
+            reverse=True,
+        )
+        for c in remaining_sorted:
+            if total_credit >= REGISTER_MIN_CREDITS:
+                break
+            bundle_codes = resolve_coreq_bundle(c['mã môn học'])
+            if bundle_codes is None:
+                continue
+            bundle_codes = {x for x in bundle_codes if x not in selected_codes}
+            if not bundle_codes:
+                continue
+            bundle_credit = sum(course_data.get(x, {}).get('credit', 0) for x in bundle_codes)
+            next_elective_counts = add_elective_counts(selected_elective_counts, bundle_codes)
+            if total_credit + bundle_credit > student_max_credit:
+                continue
+            if not within_elective_quota(next_elective_counts):
+                continue
+            for code_ in bundle_codes:
+                course_item = course_index.get(code_)
+                if course_item is not None:
+                    selected_courses.append(course_item)
+                    selected_codes.add(code_)
+            selected_elective_counts = next_elective_counts
+            total_credit += bundle_credit
 
     # Kết quả cuối lấy trực tiếp từ beam search (đã ràng buộc quota tự chọn còn thiếu)
     valid_courses = sorted(selected_courses, key=lambda c: c.get('điểm tổng ưu tiên', 0), reverse=True)
@@ -820,7 +933,7 @@ def main(target_student_id: Optional[str] = None) -> None:
         report.write(f"Ngành: {student_major}\n")
         report.write(f"Chuyên ngành: {spec_display}\n")
         report.write(f"Học kỳ hiện tại: {current_sem}, học kỳ đăng ký: {next_sem}\n")
-        report.write(f"Mục tiêu học: {target_student.get('mục tiêu học tập', 'Đúng hạn')}\n")
+        report.write(f"Mục tiêu học: {study_goal_value}\n")
         report.write('---\n')
 
         report.write('1. Tập môn hợp lệ (đầu vào)\n')
@@ -871,7 +984,7 @@ def main(target_student_id: Optional[str] = None) -> None:
         f"Năm vào học: {target_student.get('năm vào học', '')}",
         f"Ngành: {student_major}",
         f"Chuyên ngành: {spec_display}",
-        f"Mục tiêu học tập: {target_student.get('mục tiêu học tập', 'Đúng hạn')}",
+        f"Mục tiêu học tập: {study_goal_value}",
         f"Số tín chỉ đã tích lũy: {target_student.get('số tín chỉ đã tích lũy', 0)}",
         f"Số tín chỉ đăng ký tối đa: {target_student.get('số tín chỉ đăng ký tối đa', 27)}",
         f"Học kỳ hiện tại: {current_sem}",
@@ -891,14 +1004,22 @@ def main(target_student_id: Optional[str] = None) -> None:
         reason_str = ', '.join(course.get('lý do', [])) if course.get('lý do', []) else 'Không rõ'
         output_lines.append(f"   Lý do: {reason_str}")
 
-    selected_elective_categories = [
-        elective_category_of_code(c.get('mã môn học', ''))
-        for c in valid_courses
-        if elective_category_of_code(c.get('mã môn học', '')) is not None
-    ]
-  
     print("\n" + "\n".join(output_lines))
 
 
 if __name__ == "__main__":
-    main()  
+    parser = argparse.ArgumentParser(description="Gợi ý môn học đăng ký theo ontology và hồ sơ sinh viên")
+    parser.add_argument("--student-id", dest="student_id", default=None, help="Mã sinh viên cần tra cứu")
+    parser.add_argument("--json", dest="json_path", default=None, help="Đường dẫn file JSON danh sách sinh viên")
+    parser.add_argument("--csv", dest="csv_path", default=None, help="Đường dẫn file CSV danh sách sinh viên (fallback)")
+    parser.add_argument("--rdf", dest="rdf_path", default=None, help="Đường dẫn file ontology RDF")
+    parser.add_argument("--output-dir", dest="output_dir", default=None, help="Thư mục xuất báo cáo")
+
+    args = parser.parse_args()
+    main(
+        target_student_id=args.student_id,
+        json_path=args.json_path,
+        rdf_path=args.rdf_path,
+        csv_path=args.csv_path,
+        output_dir=args.output_dir,
+    )
