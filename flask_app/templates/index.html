@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Trang Chủ - Gợi Ý Kế Hoạch Học Tập{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h2>Hệ Thống Gợi Ý Kế Hoạch Học Tập Cá Nhân Hóa</h2>
+    <p>Dựa trên Ontology Chương Trình Đào Tạo & Hồ Sơ Sinh Viên</p>
+</div>
+
+<div class="home-content">
+    <section class="info-section">
+        <h3>Các Tính Năng Chính</h3>
+        <div class="features">
+            <div class="feature-card">
+                <h4>Phân Tích Dữ Liệu</h4>
+                <p>Phân tích hồ sơ sinh viên: môn đã học, môn chưa đạt, điểm số</p>
+            </div>
+            <div class="feature-card">
+                <h4>Xử Lý Logic</h4>
+                <p>Kiểm tra tiên quyết, song hành, kỳ mở, kỳ khuyến nghị</p>
+            </div>
+            <div class="feature-card">
+                <h4>Tối Ưu Tổ Hợp</h4>
+                <p>Dùng Beam Search để tìm kế hoạch tốt nhất trong ràng buộc</p>
+            </div>
+            <div class="feature-card">
+                <h4>Giải Thích Quyết Định</h4>
+                <p>Hiểu rõ tại sao môn được chọn, công thức heuristic</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="quick-start">
+        <h3>Bắt Đầu Nhanh</h3>
+        <ol>
+            <li>Chọn sinh viên từ danh sách hoặc nhập mã SV</li>
+            <li>Kiểm tra thông tin hồ sơ (năm vào học, mục tiêu, kỳ hiện tại)</li>
+            <li>Nhấn nút "Tạo Kế Hoạch Học Tập"</li>
+            <li>Xem kết quả: danh sách môn, tơ hợp đề xuất, giải thích</li>
+        </ol>
+        <a href="/students" class="btn btn-primary">Bắt Đầu →</a>
+    </section>
+</div>
+{% endblock %}

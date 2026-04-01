@@ -1,0 +1,608 @@
+{% extends "base.html" %}
+
+{% block title %}Quản Lý Sinh Viên - Gợi Ý Kế Hoạch Học Tập{% endblock %}
+
+{% block content %}
+<div class="students-container">
+    <h2>Quản Lý Kế Hoạch Học Tập Sinh Viên</h2>
+
+    <!-- Step 1: Student Selection -->
+    <section class="student-selection">
+        <h3>Bước 1: Chọn hoặc tìm sinh viên</h3>
+        <div class="selection-form">
+            <div class="form-group">
+                <label>Tìm kiếm mã sinh viên:</label>
+                <div class="search-row">
+                    <input type="text" id="studentSearch" placeholder="VD: SV0001" class="form-input">
+                    <button onclick="searchStudent()" class="btn btn-primary">Tìm</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Hoặc chọn từ danh sách:</label>
+                <select id="studentSelect" class="form-select" onchange="onStudentSelected()">
+                    <option value="">-- Chọn sinh viên --</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 2: Student Profile -->
+    <section class="student-profile" id="studentProfileSection" style="display: none;">
+        <h3>Bước 2: Thông tin sinh viên</h3>
+        <div class="profile-card">
+            <div class="profile-grid">
+                <div class="profile-item">
+                    <label>Mã sinh viên:</label>
+                    <span id="profileStudentId">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Tên sinh viên:</label>
+                    <span id="profileName">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Ngành học:</label>
+                    <span id="profileMajor">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Chuyên ngành:</label>
+                    <span id="profileSpecialization">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Mục tiêu học tập:</label>
+                    <span id="profileGoal">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Học kỳ hiện tại:</label>
+                    <span id="profileSemester">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Tín chỉ tích lũy:</label>
+                    <span id="profileCredits">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Tín chỉ tối đa đăng ký:</label>
+                    <span id="profileMaxCredits">-</span>
+                </div>
+                <div class="profile-item">
+                    <label>Năm vào học:</label>
+                    <span id="profileYearAdmitted">-</span>
+                </div>
+            </div>
+
+            <div class="courses-summary">
+                <div class="summary-box">
+                    <h4>Môn đã học: <span id="passedCoursesCount">0 môn</span></h4>
+                    <div class="course-list" id="passedCoursesList"></div>
+                </div>
+                <div class="summary-box">
+                    <h4>Môn chưa đạt: <span id="failedCoursesCount">0 môn</span></h4>
+                    <div class="course-list" id="failedCoursesList"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step 3: Generate Recommendation -->
+    <section class="recommendation-action" id="recommendationActionSection" style="display: none;">
+        <h3>Bước 3: Tạo kế hoạch học tập</h3>
+        <button onclick="generateRecommendation()" class="btn btn-primary" id="generateBtn">
+            Tạo kế hoạch học tập
+        </button>
+        <div id="loadingSpinner" style="display: none;" class="loading-spinner">
+            <p>⏳ Đang xử lý... Vui lòng chờ...</p>
+        </div>
+    </section>
+
+    <!-- Step 4: Recommendation Results -->
+    <section class="recommendation-results" id="resultsSection" style="display: none;">
+        <h3>Bước 4: Kết quả gợi ý kế hoạch</h3>
+
+        <div class="results-summary">
+            <div class="summary-stat">
+                <div class="stat-value" id="resultTotalCourses">0</div>
+                <div class="stat-label">Môn được gợi ý</div>
+            </div>
+            <div class="summary-stat">
+                <div class="stat-value" id="resultTotalCredits">0</div>
+                <div class="stat-label">Tín chỉ</div>
+            </div>
+            <div class="summary-stat">
+                <div class="stat-value" id="resultNextSemester">0</div>
+                <div class="stat-label">Học kỳ tiếp</div>
+            </div>
+        </div>
+
+        <div class="recommended-courses">
+            <h4>Danh sách được gợi ý</h4>
+            <table class="courses-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã Môn</th>
+                        <th>Tên Môn</th>
+                        <th>Tín Chỉ</th>
+                        <th>Lý Do</th>
+                    </tr>
+                </thead>
+                <tbody id="recommendedCoursesList">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="action-buttons">
+            <button onclick="resetForm()" class="btn btn-secondary">Chọn sinh viên khác</button>
+        </div>
+    </section>
+
+    <!-- Error Message -->
+    <div id="errorMessage" class="error-message" style="display: none;"></div>
+</div>
+
+<script>
+    // Store current student data
+    let currentStudent = null;
+    let currentRecommendation = null;
+
+    // Load student list on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        loadStudentList();
+    });
+
+    // Load all students into select dropdown
+    function loadStudentList() {
+        fetch('/api/students')
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('studentSelect');
+                const students = data.data || [];
+
+                students.forEach(student => {
+                    const option = document.createElement('option');
+                    option.value = student.student_id;
+                    option.textContent = `${student.student_id} - ${student.name}`;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                showError('Lỗi tải danh sách sinh viên: ' + error);
+                console.error('Error:', error);
+            });
+    }
+
+    // Search student by ID
+    function searchStudent() {
+        const studentId = document.getElementById('studentSearch').value.trim();
+        if (!studentId) {
+            showError('Vui lòng nhập mã sinh viên');
+            return;
+        }
+        loadStudent(studentId);
+    }
+
+    // Handle student selection from dropdown
+    function onStudentSelected() {
+        const studentId = document.getElementById('studentSelect').value;
+        if (studentId) {
+            loadStudent(studentId);
+        }
+    }
+
+    // Load student profile
+    function loadStudent(studentId) {
+        fetch(`/api/students/${studentId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    currentStudent = data.data;
+                    displayStudentProfile(currentStudent);
+                    hideError();
+                } else {
+                    showError(data.error || 'Không tìm thấy sinh viên');
+                }
+            })
+            .catch(error => {
+                showError('Lỗi tải thông tin sinh viên: ' + error);
+                console.error('Error:', error);
+            });
+    }
+
+    // Display student profile
+    function displayStudentProfile(student) {
+        document.getElementById('profileStudentId').textContent = student.student_id;
+        document.getElementById('profileName').textContent = student.name;
+        document.getElementById('profileMajor').textContent = student.major;
+        document.getElementById('profileSpecialization').textContent = student.specialization;
+        document.getElementById('profileGoal').textContent = student.study_goal;
+        document.getElementById('profileSemester').textContent = student.current_semester;
+        document.getElementById('profileCredits').textContent = student.total_credits_accumulated;
+        document.getElementById('profileMaxCredits').textContent = student.max_credits_to_register;
+
+        // Display passed courses
+        const passedList = student.passed_courses || [];
+        document.getElementById('passedCoursesCount').textContent = `${passedList.length} môn`;
+        document.getElementById('passedCoursesList').innerHTML = passedList.slice(0, 10)
+            .map(c => `<span class="course-badge">${c}</span>`)
+            .join('');
+
+        // Display failed courses
+        const failedList = student.failed_courses || [];
+        document.getElementById('failedCoursesCount').textContent = `${failedList.length} môn`;
+        document.getElementById('failedCoursesList').innerHTML = failedList
+            .map(c => `<span class="course-badge failed">${c}</span>`)
+            .join('');
+
+        // Show sections
+        document.getElementById('studentProfileSection').style.display = 'block';
+        document.getElementById('recommendationActionSection').style.display = 'block';
+        document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    // Generate recommendation
+    function generateRecommendation() {
+        if (!currentStudent) {
+            showError('Vui lòng chọn sinh viên');
+            return;
+        }
+
+        document.getElementById('generateBtn').disabled = true;
+        document.getElementById('loadingSpinner').style.display = 'block';
+
+        fetch('/api/recommendations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                student_id: currentStudent.student_id
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('generateBtn').disabled = false;
+
+                if (data.success) {
+                    currentRecommendation = data.data;
+                    displayRecommendationResults(currentRecommendation);
+                    hideError();
+                } else {
+                    showError(data.error || 'Lỗi tạo kế hoạch học tập');
+                }
+            })
+            .catch(error => {
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('generateBtn').disabled = false;
+                showError('Lỗi: ' + error);
+                console.error('Error:', error);
+            });
+    }
+
+    // Display recommendation results
+    function displayRecommendationResults(result) {
+        // Summary
+        document.getElementById('resultTotalCourses').textContent = result.recommended_courses?.length || 0;
+        document.getElementById('resultTotalCredits').textContent = result.total_recommended_credits || 0;
+        document.getElementById('resultNextSemester').textContent = result.next_semester || '-';
+
+        // Recommended courses table
+        const coursesList = document.getElementById('recommendedCoursesList');
+        coursesList.innerHTML = '';
+
+        (result.recommended_courses || []).forEach((course, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${index + 1}</td>
+            <td><strong>${course.code}</strong></td>
+            <td>${course.name}</td>
+            <td>${course.credits}</td>
+            <td>${course.reasons?.join(', ') || '-'}</td>
+        `;
+            coursesList.appendChild(row);
+        });
+
+        // Algorithm details
+        document.getElementById('heuristicFormula').textContent = result.heuristic_formula || 'N/A';
+        document.getElementById('beamSearchDetails').textContent = result.beam_search_details || 'Beam Search width=8';
+
+        // Show results section
+        document.getElementById('resultsSection').style.display = 'block';
+
+        // Scroll to results
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Export results as JSON
+    function exportResults() {
+        if (!currentRecommendation) return;
+
+        const dataStr = JSON.stringify(currentRecommendation, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `kehoach_${currentStudent.student_id}_${new Date().getTime()}.json`;
+        link.click();
+    }
+
+    // Print results
+    function printResults() {
+        window.print();
+    }
+
+    // Reset form
+    function resetForm() {
+        currentStudent = null;
+        currentRecommendation = null;
+        document.getElementById('studentSearch').value = '';
+        document.getElementById('studentSelect').value = '';
+        document.getElementById('studentProfileSection').style.display = 'none';
+        document.getElementById('recommendationActionSection').style.display = 'none';
+        document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    // Show error message
+    function showError(message) {
+        const errorDiv = document.getElementById('errorMessage');
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+    }
+
+    // Hide error message
+    function hideError() {
+        document.getElementById('errorMessage').style.display = 'none';
+    }
+</script>
+
+<style>
+    .students-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .students-container h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    section {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    section h3 {
+        border-bottom: 3px solid #007bff;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .selection-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .search-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .form-select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .profile-card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .profile-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .profile-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        background: white;
+        border-radius: 4px;
+        border-left: 3px solid #007bff;
+    }
+
+    .profile-item label {
+        font-weight: bold;
+        color: #666;
+    }
+
+    .profile-item span {
+        color: #333;
+    }
+
+    .courses-summary {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .summary-box {
+        background: white;
+        padding: 15px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+
+    .summary-box h4 {
+        margin: 0 0 10px 0;
+    }
+
+    .course-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .course-badge {
+        background: #e7f3ff;
+        color: #007bff;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .course-badge.failed {
+        background: #ffe7e7;
+        color: #dc3545;
+    }
+
+    .btn-large {
+        padding: 12px 30px !important;
+        font-size: 16px !important;
+        width: 100%;
+    }
+
+    .loading-spinner {
+        text-align: center;
+        padding: 20px;
+        color: #007bff;
+    }
+
+    .results-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .summary-stat {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    .courses-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    .courses-table thead {
+        background: #007bff;
+        color: white;
+    }
+
+    .courses-table th,
+    .courses-table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .courses-table tbody tr:hover {
+        background: #f5f5f5;
+    }
+
+    .algorithm-details {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+        margin: 20px 0;
+    }
+
+    .details-box {
+        background: white;
+        padding: 15px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 12px;
+        overflow-x: auto;
+    }
+
+    .details-box pre {
+        margin: 10px 0;
+        white-space: pre-wrap;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        justify-content: flex-start;
+    }
+
+    .action-buttons button {
+        width: auto;
+        padding: 8px 20px !important;
+    }
+
+    .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 12px 15px;
+        border: 1px solid #f5c6cb;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .selection-form {
+            grid-template-columns: 1fr;
+        }
+
+        .courses-summary {
+            grid-template-columns: 1fr;
+        }
+
+        .results-summary {
+            grid-template-columns: 1fr;
+        }
+
+        .courses-table {
+            font-size: 12px;
+        }
+    }
+</style>
+{% endblock %}
