@@ -10,7 +10,10 @@
 <body>
     <nav class="navbar">
         <div class="container">
-            <h1 class="brand">Gợi Ý Kế Hoạch Học Tập</h1>
+            <a class="brand brand-logo" href="/" aria-label="Trang chủ">
+                <img class="brand-logo-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Gợi ý Kế Hoạch Học Tập">
+                <span class="brand-text">Gợi ý Kế Hoạch Học Tập</span>
+            </a>
             <ul class="nav-links">
                 <li><a href="/">Trang chủ</a></li>
                 <li><a href="/students">Danh sách sinh viên</a></li>
