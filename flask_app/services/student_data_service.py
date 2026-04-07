@@ -5,6 +5,7 @@ Service for loading and managing student data (JSON/CSV)
 import csv
 import json
 import os
+import re
 from typing import Any, Dict, List, Optional
 
 from flask_app.models.student import StudentProfile
@@ -47,6 +48,28 @@ class StudentDataService:
             if self._normalize_student_id(student.student_id) == normalized_id:
                 return student
         return None
+
+    def get_next_student_id(self, force_reload: bool = True) -> str:
+        """
+        Lay ma sinh vien tiep theo theo format SV0001.
+        Quy tac: lay ma SV co so lon nhat trong du lieu + 1.
+        """
+        students = self.get_all_students(force_reload=force_reload)
+        max_num = 0
+
+        for s in students:
+            raw = str(getattr(s, "student_id", "") or "").strip()
+            match = re.match(r"^\s*SV\s*(\d+)\s*$", raw, flags=re.IGNORECASE)
+            if not match:
+                continue
+            try:
+                num = int(match.group(1))
+            except ValueError:
+                continue
+            if num > max_num:
+                max_num = num
+
+        return f"SV{max_num + 1:04d}"
 
     def create_student(
         self,

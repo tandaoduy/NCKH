@@ -14,7 +14,7 @@
             <div class="add-student-grid">
                 <div class="form-group">
                     <label for="studentId">Mã sinh viên</label>
-                    <input id="studentId" name="student_id" type="text" placeholder="VD: SV0100" required>
+                    <input id="studentId" name="student_id" type="text" placeholder="VD: SV0100" required readonly aria-readonly="true">
                     <small class="field-error" id="studentIdError"></small>
                 </div>
                 <div class="form-group">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label for="major">Ngành học</label>
-                    <input id="major" name="major" type="text" value="Công Nghệ Thông Tin" required>
+                    <input id="major" name="major" type="text" value="Công Nghệ Thông Tin" required readonly aria-readonly="true">
                     <small class="field-error" id="majorError"></small>
                 </div>
                 <div class="form-group">
@@ -385,11 +385,65 @@ const formFieldIds = [
 ];
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await Promise.all([loadCourseCatalog(), loadSpecializations()]);
+    await Promise.all([loadCourseCatalog(), loadSpecializations(), populateNextStudentId()]);
     bindEvents();
     renderCourseTable();
     updateSpecializationState();
 });
+
+async function populateNextStudentId() {
+    const studentIdInput = document.getElementById('studentId');
+    if (!studentIdInput) {
+        return;
+    }
+
+    // Default: keep as view-only
+    studentIdInput.readOnly = true;
+    studentIdInput.setAttribute('aria-readonly', 'true');
+
+    try {
+        const response = await fetch('/api/students/next-id');
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error || 'Không lấy được mã sinh viên tự động');
+        }
+
+        const nextId = (result.data || {}).student_id;
+        if (!nextId) {
+            throw new Error('Không lấy được mã sinh viên tự động');
+        }
+
+        studentIdInput.value = String(nextId).trim().toUpperCase();
+    } catch (error) {
+        // Fallback: compute from current students list
+        try {
+            const resp = await fetch('/api/students');
+            const data = await resp.json();
+            if (!data.success) {
+                throw new Error(data.error || 'Không tải được danh sách sinh viên');
+            }
+
+            const list = Array.isArray(data.data) ? data.data : [];
+            let maxNum = 0;
+            list.forEach(item => {
+                const raw = String((item || {}).student_id || '').trim().toUpperCase();
+                const match = raw.match(/^SV\s*(\d+)$/);
+                if (!match) {
+                    return;
+                }
+                const num = Number(match[1]);
+                if (Number.isFinite(num) && num > maxNum) {
+                    maxNum = num;
+                }
+            });
+
+            studentIdInput.value = `SV${String(maxNum + 1).padStart(4, '0')}`;
+        } catch (fallbackError) {
+            showToast('Không thể tự động tạo mã sinh viên. Vui lòng tải lại trang.', 'warning');
+        }
+    }
+}
 
 function bindEvents() {
     document.getElementById('openCourseModalBtn').addEventListener('click', openCourseModal);
@@ -668,6 +722,7 @@ function resetCreateStudentForm(clearSuccess = true) {
     renderCourseTable();
     updateSpecializationState();
     clearAllFieldErrors();
+    populateNextStudentId();
 }
 
 function hideCreateMessages() {

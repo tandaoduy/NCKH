@@ -37,6 +37,25 @@ def list_students():
         }), 500
 
 
+@bp.route('/next-id', methods=['GET'])
+def get_next_student_id():
+    """Lấy mã sinh viên kế tiếp theo format SV0001"""
+    try:
+        service = current_app.student_data_service
+        next_id = service.get_next_student_id(force_reload=True)
+        return jsonify({
+            'success': True,
+            'data': {
+                'student_id': next_id,
+            }
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+        }), 500
+
+
 @bp.route('', methods=['POST'])
 def create_student():
     """Tạo mới sinh viên và lưu vào JSON"""
