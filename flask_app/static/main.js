@@ -1,13 +1,13 @@
 /**
- * Main JavaScript for Course Recommendation System
- * Hệ Thống Gợi Ý Kế Hoạch Học Tập - Frontend Logic
+ * JavaScript chính cho hệ thống gợi ý kế hoạch học tập
+ * Logic phía giao diện (Frontend)
  */
 
-// ========== GLOBAL VARIABLES ==========
+// ========== BIẾN TOÀN CỤC ==========
 let allStudents = [];
 let selectedStudent = null;
 
-// ========== INITIALIZATION ==========
+// ========== KHỞI TẠO ==========
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Initializing students page...');
     if (document.getElementById('studentSelect')) {
@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
     initFlashToasts();
 });
 
-// ========== NAVBAR SCROLL ANIMATION ==========
+// ========== HIỆU ỨNG CUỘN NAVBAR ==========
 function initNavbarScroll() {
     const navbar = document.querySelector('.navbar');
     if (navbar) {
         window.addEventListener('scroll', () => {
-            // Add 'scrolled' class when page is scrolled down
+            // Thêm class 'scrolled' khi người dùng cuộn trang
             if (window.scrollY > 20) {
                 navbar.classList.add('scrolled');
             } else {
@@ -32,7 +32,7 @@ function initNavbarScroll() {
     }
 }
 
-// ========== STEP 1: LOAD STUDENTS ==========
+// ========== BƯỚC 1: TẢI DANH SÁCH SINH VIÊN ==========
 async function loadAllStudents() {
     try {
         const response = await fetch('/api/students');
@@ -42,7 +42,7 @@ async function loadAllStudents() {
             allStudents = data.data;
             console.log(`Loaded ${allStudents.length} students`);
 
-            // Populate dropdown
+            // Đổ dữ liệu vào ô chọn
             populateStudentSelect();
         } else {
             console.error('Error loading students:', data.error);
@@ -70,7 +70,7 @@ function populateStudentSelect() {
     });
 }
 
-// ========== STEP 1: SEARCH STUDENT ==========
+// ========== BƯỚC 1: TÌM SINH VIÊN ==========
 function searchStudent() {
     const searchInput = document.getElementById('studentSearch');
     const searchTerm = searchInput.value.trim().toUpperCase();
@@ -80,7 +80,7 @@ function searchStudent() {
         return;
     }
 
-    // Find student
+    // Tìm sinh viên
     const student = allStudents.find(s => s.student_id.toUpperCase() === searchTerm);
     if (student) {
         document.getElementById('studentSelect').value = student.student_id;
@@ -90,20 +90,26 @@ function searchStudent() {
     }
 }
 
-// ========== STEP 2: STUDENT SELECTED ==========
+// ========== BƯỚC 2: CHỌN SINH VIÊN ==========
 async function onStudentSelected() {
     const select = document.getElementById('studentSelect');
     const studentId = select.value;
 
     if (!studentId) {
-        // Hide profile section if no student selected
+        // Ẩn thông tin nếu chưa chọn sinh viên
         document.getElementById('studentProfileSection').style.display = 'none';
         document.getElementById('recommendationActionSection').style.display = 'none';
+        document.getElementById('resultsSection').style.display = 'none';
+
+        const eligibleSection = document.getElementById('eligibleCoursesSection');
+        if (eligibleSection) {
+            eligibleSection.style.display = 'none';
+        }
         return;
     }
 
     try {
-        // Fetch full student profile
+        // Lấy hồ sơ chi tiết sinh viên
         const response = await fetch(`/api/students/${studentId}`);
         const data = await response.json();
 
@@ -111,10 +117,15 @@ async function onStudentSelected() {
             selectedStudent = data.data;
             displayStudentProfile(selectedStudent);
 
-            // Show profile and action sections
+            // Hiển thị thông tin và nút thao tác
             document.getElementById('studentProfileSection').style.display = 'block';
             document.getElementById('recommendationActionSection').style.display = 'block';
             document.getElementById('resultsSection').style.display = 'none';
+
+            const eligibleSection = document.getElementById('eligibleCoursesSection');
+            if (eligibleSection) {
+                eligibleSection.style.display = 'none';
+            }
         } else {
             showError('Không thể tải thông tin sinh viên');
         }
@@ -124,7 +135,7 @@ async function onStudentSelected() {
     }
 }
 
-// ========== STEP 2: DISPLAY STUDENT PROFILE ==========
+// ========== BƯỚC 2: HIỂN THỊ HỒ SƠ SINH VIÊN ==========
 function displayStudentProfile(student) {
     document.getElementById('profileStudentId').textContent = student.student_id;
     document.getElementById('profileName').textContent = student.name;
@@ -136,7 +147,7 @@ function displayStudentProfile(student) {
     document.getElementById('profileMaxCredits').textContent = student.max_credits_to_register;
     document.getElementById('profileYearAdmitted').textContent = student.year_admitted;
 
-    // Display passed courses
+    // Hiển thị môn đã học
     const passedCourses = student.passed_courses || [];
     document.getElementById('passedCoursesCount').textContent = `${passedCourses.length} môn`;
     const passedList = document.getElementById('passedCoursesList');
@@ -148,7 +159,7 @@ function displayStudentProfile(student) {
         passedList.appendChild(badge);
     });
 
-    // Display failed courses
+    // Hiển thị môn chưa đạt
     const failedCourses = student.failed_courses || [];
     document.getElementById('failedCoursesCount').textContent = `${failedCourses.length} môn`;
     const failedList = document.getElementById('failedCoursesList');
@@ -161,7 +172,7 @@ function displayStudentProfile(student) {
     });
 }
 
-// ========== STEP 3: GENERATE RECOMMENDATION ==========
+// ========== BƯỚC 3: TẠO GỢI Ý KẾ HOẠCH HỌC TẬP ==========
 async function generateRecommendation() {
     if (!selectedStudent) {
         showError('Vui lòng chọn sinh viên', 'warning');
@@ -203,27 +214,30 @@ async function generateRecommendation() {
     }
 }
 
-// ========== STEP 4: DISPLAY RESULTS ==========
+// ========== BƯỚC 4: HIỂN THỊ KẾT QUẢ GỢI Ý ==========
 function displayRecommendationResults(data) {
-    // Update summary stats
+    // Hiển thị danh sách môn đủ điều kiện học ngay dưới nút "Tạo kế hoạch học tập"
+    displayEligibleCourses(data.eligible_courses || []);
+
+    // Cập nhật thống kê tóm tắt
     const courses = data.recommended_courses || [];
     document.getElementById('resultTotalCourses').textContent = courses.length;
     document.getElementById('resultTotalCredits').textContent = data.total_recommended_credits || 0;
     
-    // Calculate next semester from current student data
+    // Tính học kỳ tiếp theo từ dữ liệu sinh viên
     if (selectedStudent && selectedStudent.current_semester) {
         const nextSemester = selectedStudent.current_semester + 1;
         document.getElementById('resultNextSemester').textContent = nextSemester;
     }
 
-    // Display courses table - use the correct tbody ID
+    // Hiển thị bảng môn học - dùng đúng tbody ID
     const tableBody = document.getElementById('recommendedCoursesList');
     if (tableBody) {
         tableBody.innerHTML = '';
 
         courses.forEach((course, index) => {
             const row = document.createElement('tr');
-            // Model uses: code, name, credits, heuristic_score, reasons (array)
+            // Dữ liệu trả về: code, name, credits, heuristic_score, reasons (array)
             const reasonsText = (course.reasons && Array.isArray(course.reasons))
                 ? course.reasons.join(', ')
                 : '-';
@@ -239,17 +253,58 @@ function displayRecommendationResults(data) {
         });
     }
 
-    // Display algorithm details
+    // Hiển thị chi tiết thuật toán
     const detailsDiv = document.querySelector('.details-box');
     if (detailsDiv && data.explanation) {
         detailsDiv.innerHTML = `<pre>${escapeHtml(data.explanation)}</pre>`;
     }
 }
 
-// ========== HELPER FUNCTIONS ==========
+// ========== HÀM HỖ TRỢ ==========
+
+function displayEligibleCourses(courses) {
+    const section = document.getElementById('eligibleCoursesSection');
+    const countEl = document.getElementById('eligibleCoursesCount');
+    const tbody = document.getElementById('eligibleCoursesList');
+    const empty = document.getElementById('eligibleEmptyState');
+
+    // Không phải trang students hoặc chưa có UI này
+    if (!section || !countEl || !tbody || !empty) {
+        return;
+    }
+
+    const list = Array.isArray(courses) ? courses : [];
+    countEl.textContent = String(list.length);
+    tbody.innerHTML = '';
+
+    if (!list.length) {
+        empty.style.display = 'block';
+        section.style.display = 'block';
+        return;
+    }
+
+    empty.style.display = 'none';
+    list.forEach((course, index) => {
+        const row = document.createElement('tr');
+        const reasonsText = (course.reasons && Array.isArray(course.reasons))
+            ? course.reasons.join(', ')
+            : '-';
+
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${course.code || '-'}</td>
+            <td>${course.name || '-'}</td>
+            <td>${course.credits ?? 0}</td>
+            <td>${reasonsText}</td>
+        `;
+        tbody.appendChild(row);
+    });
+
+    section.style.display = 'block';
+}
 
 /**
- * Translate study goal from Vietnamese
+ * Chuẩn hóa hiển thị mục tiêu học tập
  */
 function translateStudyGoal(goal) {
     const translations = {
@@ -261,14 +316,14 @@ function translateStudyGoal(goal) {
 }
 
 /**
- * Show error message
+ * Hiện thông báo lỗi
  */
 function showError(message, type = 'error') {
     showToast(message, type);
 }
 
 /**
- * Escape HTML special characters
+ * Mã hóa ký tự HTML đặc biệt
  */
 function escapeHtml(text) {
     const div = document.createElement('div');

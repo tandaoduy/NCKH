@@ -3473,5 +3473,29 @@
             }
         ],
         "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0029",
+        "tên sinh viên": "Nguyễn Quang Vinh",
+        "năm vào học": 2023,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 1,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 1,
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
+        "danh sách môn đã học": {
+            "85065": "Giáo dục thể chất (Chạy)"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 5.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
     }
 ]
