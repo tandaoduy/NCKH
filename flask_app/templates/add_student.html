@@ -1,0 +1,828 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Them Sinh Vien{% endblock %}
+
+{% block content %}
+<div class="add-student-page">
+    <div class="add-student-header">
+        <h2>Thêm sinh viên</h2>
+        <p>Tạo hồ sơ sinh viên mới và nhập các môn đã học bằng cửa sổ nổi.</p>
+    </div>
+
+    <section class="add-student-panel">
+        <form id="createStudentForm" novalidate>
+            <div class="add-student-grid">
+                <div class="form-group">
+                    <label for="studentId">Mã sinh viên</label>
+                    <input id="studentId" name="student_id" type="text" placeholder="VD: SV0100" required readonly aria-readonly="true">
+                    <small class="field-error" id="studentIdError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="studentName">Tên sinh viên</label>
+                    <input id="studentName" name="name" type="text" placeholder="Nhập họ tên" required>
+                    <small class="field-error" id="studentNameError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="yearAdmitted">Năm vào học</label>
+                    <input id="yearAdmitted" name="year_admitted" type="number" min="2000" max="2030" value="2023" required>
+                    <small class="field-error" id="yearAdmittedError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="currentSemester">Học kỳ hiện tại</label>
+                    <input id="currentSemester" name="current_semester" type="number" min="1" max="8" value="1" required>
+                    <small class="field-error" id="currentSemesterError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="major">Ngành học</label>
+                    <input id="major" name="major" type="text" value="Công Nghệ Thông Tin" required readonly aria-readonly="true">
+                    <small class="field-error" id="majorError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="specialization">Chuyên ngành</label>
+                    <select id="specialization" name="specialization"></select>
+                    <small id="specializationHint" class="field-hint">Sinh viên học kỳ 1 đến 3 chưa được chọn chuyên ngành.</small>
+                    <small class="field-error" id="specializationError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="studyGoal">Mục tiêu học tập</label>
+                    <select id="studyGoal" name="study_goal">
+                        <option value="đúng hạn">Đúng hạn</option>
+                        <option value="giảm tải">Giảm tải</option>
+                        <option value="học vượt">Học vượt</option>
+                    </select>
+                    <small class="field-error" id="studyGoalError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="maxCredits">Tín chỉ đăng ký tối đa</label>
+                    <input id="maxCredits" type="number" value="27" readonly>
+                </div>
+            </div>
+
+            <div class="course-section">
+                <div class="course-section-header">
+                    <div>
+                        <h3>Danh sách môn đã học</h3>
+                        <p>Điểm môn từ 5 trở lên được tính là đạt và sẽ cộng vào tín chỉ tích lũy.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="openCourseModalBtn">Thêm môn học</button>
+                </div>
+
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <span>Tín chỉ tích lũy</span>
+                        <strong id="accumulatedCreditsValue">0</strong>
+                    </div>
+                    <div class="summary-card">
+                        <span>Số môn đã nhập</span>
+                        <strong id="totalCoursesValue">0</strong>
+                    </div>
+                    <div class="summary-card">
+                        <span>Môn đạt / chưa đạt</span>
+                        <strong id="courseStatusValue">0 / 0</strong>
+                    </div>
+                </div>
+
+                <div class="empty-courses" id="emptyCourseState">Chưa có môn học nào được thêm.</div>
+
+                <div class="table-wrap" id="studentCoursesTableWrap" style="display: none;">
+                    <table class="courses-table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã môn</th>
+                                <th>Tên môn</th>
+                                <th>Tín chỉ</th>
+                                <th>Điểm TB</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentCoursesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Lưu sinh viên</button>
+                <button type="button" class="btn btn-secondary" id="resetCreateFormBtn">Làm mới</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<div class="course-modal-backdrop" id="courseModalBackdrop" style="display: none;">
+    <div class="course-modal">
+        <div class="course-modal-header">
+            <div>
+                <h3>Thêm môn học</h3>
+                <p>Chọn môn học và nhập điểm trung bình môn.</p>
+            </div>
+            <button type="button" class="course-modal-close" id="closeCourseModalBtn">×</button>
+        </div>
+
+        <div class="form-group">
+            <label for="courseSearch">Tìm môn học</label>
+            <input id="courseSearch" type="text" placeholder="Nhập mã môn hoặc tên môn">
+        </div>
+
+        <div class="course-modal-grid">
+            <div class="form-group">
+                <label for="courseSelect">Môn học</label>
+                <select id="courseSelect"></select>
+            </div>
+            <div class="form-group">
+                <label for="courseGrade">Điểm trung bình</label>
+                <input id="courseGrade" type="number" min="0" max="10" step="0.1" placeholder="VD: 7.5">
+            </div>
+        </div>
+
+        <div class="course-info" id="selectedCourseInfo">Chọn môn học để xem thông tin tín chỉ.</div>
+
+        <div class="form-actions">
+            <button type="button" class="btn btn-primary" id="saveCourseBtn">Thêm vào danh sách</button>
+            <button type="button" class="btn btn-secondary" id="cancelCourseBtn">Đóng</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.add-student-page {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.add-student-header {
+    margin-bottom: 24px;
+}
+
+.add-student-header h2 {
+    margin-bottom: 6px;
+    color: #1976d2;
+}
+
+.add-student-header p {
+    color: #666;
+}
+
+.add-student-panel {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.add-student-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 20px;
+}
+
+.field-hint {
+    display: block;
+    margin-top: 6px;
+    color: #666;
+    font-size: 12px;
+}
+
+.field-error {
+    display: block;
+    min-height: 18px;
+    margin-top: 6px;
+    color: #c62828;
+    font-size: 12px;
+}
+
+.add-student-panel input.input-invalid,
+.add-student-panel select.input-invalid {
+    border-color: #c62828;
+    box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.12);
+}
+
+.course-section {
+    margin-top: 28px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 24px;
+}
+
+.course-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.course-section-header h3 {
+    margin-bottom: 4px;
+    color: #1976d2;
+}
+
+.course-section-header p {
+    color: #666;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.summary-card {
+    background: #f8fbff;
+    border: 1px solid #dbe7f3;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.summary-card span {
+    display: block;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.summary-card strong {
+    font-size: 1.5rem;
+    color: #1976d2;
+}
+
+.empty-courses {
+    padding: 16px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    color: #666;
+    background: #fafafa;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.courses-table .status-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.courses-table .status-pill.passed {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.courses-table .status-pill.failed {
+    background: #fdecea;
+    color: #c62828;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.course-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.42);
+    z-index: 1100;
+    padding: 24px;
+}
+
+.course-modal {
+    max-width: 720px;
+    margin: 50px auto 0;
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+.course-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.course-modal-header h3 {
+    color: #1976d2;
+    margin-bottom: 4px;
+}
+
+.course-modal-header p {
+    color: #666;
+}
+
+.course-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+}
+
+.course-modal-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+}
+
+.course-info {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #f8fbff;
+    border: 1px solid #dbe7f3;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .add-student-grid,
+    .summary-cards,
+    .course-modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-section-header,
+    .form-actions,
+    .course-modal-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+</style>
+
+<script>
+const courseCatalog = [];
+const specializationOptions = [];
+let displayedCourses = [];
+let studentCourses = [];
+
+const createForm = document.getElementById('createStudentForm');
+const courseModalBackdrop = document.getElementById('courseModalBackdrop');
+const courseSelect = document.getElementById('courseSelect');
+const courseSearch = document.getElementById('courseSearch');
+const courseGrade = document.getElementById('courseGrade');
+const selectedCourseInfo = document.getElementById('selectedCourseInfo');
+const tableWrap = document.getElementById('studentCoursesTableWrap');
+const tableBody = document.getElementById('studentCoursesTableBody');
+const emptyState = document.getElementById('emptyCourseState');
+const specializationSelect = document.getElementById('specialization');
+const specializationHint = document.getElementById('specializationHint');
+const currentSemesterInput = document.getElementById('currentSemester');
+const formFieldIds = [
+    'studentId',
+    'studentName',
+    'yearAdmitted',
+    'currentSemester',
+    'major',
+    'specialization',
+    'studyGoal',
+];
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await Promise.all([loadCourseCatalog(), loadSpecializations(), populateNextStudentId()]);
+    bindEvents();
+    renderCourseTable();
+    updateSpecializationState();
+});
+
+async function populateNextStudentId() {
+    const studentIdInput = document.getElementById('studentId');
+    if (!studentIdInput) {
+        return;
+    }
+
+    // Default: keep as view-only
+    studentIdInput.readOnly = true;
+    studentIdInput.setAttribute('aria-readonly', 'true');
+
+    try {
+        const response = await fetch('/api/students/next-id');
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error || 'Không lấy được mã sinh viên tự động');
+        }
+
+        const nextId = (result.data || {}).student_id;
+        if (!nextId) {
+            throw new Error('Không lấy được mã sinh viên tự động');
+        }
+
+        studentIdInput.value = String(nextId).trim().toUpperCase();
+    } catch (error) {
+        // Fallback: compute from current students list
+        try {
+            const resp = await fetch('/api/students');
+            const data = await resp.json();
+            if (!data.success) {
+                throw new Error(data.error || 'Không tải được danh sách sinh viên');
+            }
+
+            const list = Array.isArray(data.data) ? data.data : [];
+            let maxNum = 0;
+            list.forEach(item => {
+                const raw = String((item || {}).student_id || '').trim().toUpperCase();
+                const match = raw.match(/^SV\s*(\d+)$/);
+                if (!match) {
+                    return;
+                }
+                const num = Number(match[1]);
+                if (Number.isFinite(num) && num > maxNum) {
+                    maxNum = num;
+                }
+            });
+
+            studentIdInput.value = `SV${String(maxNum + 1).padStart(4, '0')}`;
+        } catch (fallbackError) {
+            showToast('Không thể tự động tạo mã sinh viên. Vui lòng tải lại trang.', 'warning');
+        }
+    }
+}
+
+function bindEvents() {
+    document.getElementById('openCourseModalBtn').addEventListener('click', openCourseModal);
+    document.getElementById('closeCourseModalBtn').addEventListener('click', closeCourseModal);
+    document.getElementById('cancelCourseBtn').addEventListener('click', closeCourseModal);
+    document.getElementById('saveCourseBtn').addEventListener('click', saveCourseFromModal);
+    document.getElementById('resetCreateFormBtn').addEventListener('click', resetCreateStudentForm);
+    courseSearch.addEventListener('input', filterCourseOptions);
+    courseSelect.addEventListener('change', updateSelectedCourseInfo);
+    currentSemesterInput.addEventListener('input', updateSpecializationState);
+    createForm.addEventListener('submit', submitCreateStudentForm);
+    formFieldIds.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.addEventListener('input', () => clearFieldError(fieldId));
+            field.addEventListener('change', () => clearFieldError(fieldId));
+        }
+    });
+    courseModalBackdrop.addEventListener('click', event => {
+        if (event.target === courseModalBackdrop) {
+            closeCourseModal();
+        }
+    });
+}
+
+async function loadCourseCatalog() {
+    try {
+        const response = await fetch('/api/students/courses');
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error || 'Không tải được danh mục môn học');
+        }
+
+        courseCatalog.push(...(result.data || []));
+        displayedCourses = [...courseCatalog];
+        renderCourseOptions(displayedCourses);
+    } catch (error) {
+        showCreateError('Không thể tải danh mục môn học: ' + error.message);
+    }
+}
+
+async function loadSpecializations() {
+    try {
+        const response = await fetch('/api/students/specializations');
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error || 'Không tải được chuyên ngành');
+        }
+
+        specializationOptions.push(...(result.data || []));
+        renderSpecializationOptions();
+    } catch (error) {
+        showCreateError('Không thể tải danh sách chuyên ngành: ' + error.message);
+    }
+}
+
+function renderSpecializationOptions() {
+    specializationSelect.innerHTML = '';
+
+    const defaultOption = document.createElement('option');
+    defaultOption.value = 'Chưa chọn chuyên ngành';
+    defaultOption.textContent = 'Chưa chọn chuyên ngành';
+    specializationSelect.appendChild(defaultOption);
+
+    specializationOptions.forEach(optionValue => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = optionValue;
+        specializationSelect.appendChild(option);
+    });
+}
+
+function updateSpecializationState() {
+    const semester = Number(currentSemesterInput.value || 1);
+    const locked = semester < 4;
+
+    if (locked) {
+        specializationSelect.value = 'Chưa chọn chuyên ngành';
+        specializationSelect.disabled = true;
+        specializationHint.textContent = 'Sinh viên học kỳ 1 đến 3 chưa được chọn chuyên ngành.';
+    } else {
+        specializationSelect.disabled = false;
+        specializationHint.textContent = 'Sinh viên từ học kỳ 4 trở đi có thể chọn chuyên ngành từ danh sách có sẵn.';
+    }
+}
+
+function renderCourseOptions(courses) {
+    courseSelect.innerHTML = '';
+
+    if (!courses.length) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'Không tìm thấy môn học phù hợp';
+        courseSelect.appendChild(option);
+        selectedCourseInfo.textContent = 'Không có dữ liệu môn học để hiển thị.';
+        return;
+    }
+
+    courses.forEach(course => {
+        const option = document.createElement('option');
+        option.value = course.code;
+        option.textContent = `${course.code} - ${course.name}`;
+        courseSelect.appendChild(option);
+    });
+
+    updateSelectedCourseInfo();
+}
+
+function filterCourseOptions() {
+    const keyword = courseSearch.value.trim().toLowerCase();
+    displayedCourses = courseCatalog.filter(course => {
+        const haystack = `${course.code} ${course.name}`.toLowerCase();
+        return haystack.includes(keyword);
+    });
+    renderCourseOptions(displayedCourses);
+}
+
+function updateSelectedCourseInfo() {
+    const selectedCode = courseSelect.value;
+    const selectedCourse = displayedCourses.find(course => course.code === selectedCode)
+        || courseCatalog.find(course => course.code === selectedCode);
+
+    if (!selectedCourse) {
+        selectedCourseInfo.textContent = 'Chọn môn học để xem thông tin tín chỉ.';
+        return;
+    }
+
+    selectedCourseInfo.textContent = `${selectedCourse.code} - ${selectedCourse.name} | ${selectedCourse.credits} tín chỉ`;
+}
+
+function openCourseModal() {
+    hideCreateMessages();
+    courseSearch.value = '';
+    displayedCourses = [...courseCatalog];
+    renderCourseOptions(displayedCourses);
+    courseGrade.value = '';
+    courseModalBackdrop.style.display = 'block';
+}
+
+function closeCourseModal() {
+    courseModalBackdrop.style.display = 'none';
+}
+
+function saveCourseFromModal() {
+    const code = courseSelect.value;
+    const grade = Number(courseGrade.value);
+    const course = courseCatalog.find(item => item.code === code);
+
+    if (!course) {
+        showCreateError('Vui lòng chọn môn học hợp lệ');
+        return;
+    }
+
+    if (Number.isNaN(grade) || grade < 0 || grade > 10) {
+        showCreateError('Điểm trung bình môn phải nằm trong khoảng 0-10');
+        return;
+    }
+
+    if (studentCourses.some(item => item.code === code)) {
+        showCreateError(`Môn học ${code} đã tồn tại trong danh sách`);
+        return;
+    }
+
+    studentCourses.push({
+        code: course.code,
+        name: course.name,
+        credits: Number(course.credits) || 0,
+        grade: grade,
+    });
+
+    renderCourseTable();
+    closeCourseModal();
+    hideCreateMessages();
+}
+
+function renderCourseTable() {
+    tableBody.innerHTML = '';
+
+    if (!studentCourses.length) {
+        tableWrap.style.display = 'none';
+        emptyState.style.display = 'block';
+    } else {
+        tableWrap.style.display = 'block';
+        emptyState.style.display = 'none';
+    }
+
+    studentCourses.forEach((course, index) => {
+        const passed = course.grade >= 5;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td><strong>${course.code}</strong></td>
+            <td>${course.name}</td>
+            <td>${course.credits}</td>
+            <td>${formatGrade(course.grade)}</td>
+            <td><span class="status-pill ${passed ? 'passed' : 'failed'}">${passed ? 'Đạt' : 'Chưa đạt'}</span></td>
+            <td><button type="button" class="btn btn-secondary remove-course-btn" data-code="${course.code}">Xóa</button></td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    tableBody.querySelectorAll('button[data-code]').forEach(button => {
+        button.addEventListener('click', () => removeCourse(button.dataset.code));
+    });
+
+    updateCreditSummary();
+}
+
+function updateCreditSummary() {
+    const accumulatedCredits = studentCourses
+        .filter(course => course.grade >= 5)
+        .reduce((sum, course) => sum + course.credits, 0);
+    const passedCount = studentCourses.filter(course => course.grade >= 5).length;
+    const failedCount = studentCourses.length - passedCount;
+
+    document.getElementById('accumulatedCreditsValue').textContent = accumulatedCredits;
+    document.getElementById('totalCoursesValue').textContent = studentCourses.length;
+    document.getElementById('courseStatusValue').textContent = `${passedCount} / ${failedCount}`;
+}
+
+function removeCourse(code) {
+    studentCourses = studentCourses.filter(course => course.code !== code);
+    renderCourseTable();
+}
+
+async function submitCreateStudentForm(event) {
+    event.preventDefault();
+    hideCreateMessages();
+
+    if (!validateCreateStudentForm()) {
+        return;
+    }
+
+    const payload = {
+        student_id: document.getElementById('studentId').value.trim().toUpperCase(),
+        name: document.getElementById('studentName').value.trim(),
+        year_admitted: Number(document.getElementById('yearAdmitted').value),
+        current_semester: Number(document.getElementById('currentSemester').value),
+        major: document.getElementById('major').value.trim(),
+        specialization: specializationSelect.disabled
+            ? 'Chưa chọn chuyên ngành'
+            : (specializationSelect.value || 'Chưa chọn chuyên ngành'),
+        study_goal: document.getElementById('studyGoal').value,
+        courses: studentCourses.map(course => ({ code: course.code, grade: course.grade })),
+    };
+
+    try {
+        const response = await fetch('/api/students', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error || 'Không lưu được sinh viên');
+        }
+
+        showToast(`${result.message}. Sinh viên đã được thêm vào nguồn dữ liệu.`, 'success');
+        resetCreateStudentForm(false);
+    } catch (error) {
+        showCreateError(error.message);
+    }
+}
+
+function resetCreateStudentForm(clearSuccess = true) {
+    createForm.reset();
+    document.getElementById('studyGoal').value = 'đúng hạn';
+    document.getElementById('yearAdmitted').value = '2023';
+    document.getElementById('currentSemester').value = '1';
+    document.getElementById('major').value = 'Công Nghệ Thông Tin';
+    specializationSelect.value = 'Chưa chọn chuyên ngành';
+    studentCourses = [];
+    renderCourseTable();
+    updateSpecializationState();
+    clearAllFieldErrors();
+    populateNextStudentId();
+}
+
+function hideCreateMessages() {
+    return;
+}
+
+function showCreateError(message) {
+    showToast(message, 'error');
+}
+
+function formatGrade(value) {
+    return Number(value).toFixed(1);
+}
+
+function validateCreateStudentForm() {
+    clearAllFieldErrors();
+
+    const studentId = document.getElementById('studentId').value.trim();
+    const studentName = document.getElementById('studentName').value.trim();
+    const yearAdmitted = Number(document.getElementById('yearAdmitted').value);
+    const currentSemester = Number(document.getElementById('currentSemester').value);
+    const major = document.getElementById('major').value.trim();
+    const specialization = specializationSelect.value;
+
+    const validations = [
+        {
+            fieldId: 'studentId',
+            valid: Boolean(studentId),
+            message: 'Vui lòng nhập mã sinh viên.',
+        },
+        {
+            fieldId: 'studentName',
+            valid: Boolean(studentName),
+            message: 'Vui lòng nhập tên sinh viên.',
+        },
+        {
+            fieldId: 'yearAdmitted',
+            valid: Number.isFinite(yearAdmitted) && yearAdmitted >= 2000 && yearAdmitted <= 2030,
+            message: 'Năm vào học phải trong khoảng 2000 đến 2030.',
+        },
+        {
+            fieldId: 'currentSemester',
+            valid: Number.isFinite(currentSemester) && currentSemester >= 1 && currentSemester <= 8,
+            message: 'Học kỳ hiện tại phải từ 1 đến 8.',
+        },
+        {
+            fieldId: 'major',
+            valid: Boolean(major),
+            message: 'Vui lòng nhập ngành học.',
+        },
+        {
+            fieldId: 'specialization',
+            valid: currentSemester < 4 ? specialization === 'Chưa chọn chuyên ngành' : Boolean(specialization),
+            message: currentSemester < 4
+                ? 'Học kỳ 1 đến 3 chưa được chọn chuyên ngành.'
+                : 'Vui lòng chọn chuyên ngành.',
+        },
+    ];
+
+    const firstInvalid = validations.find(item => !item.valid);
+    if (!firstInvalid) {
+        return true;
+    }
+
+    setFieldError(firstInvalid.fieldId, firstInvalid.message);
+    showToast(firstInvalid.message, 'warning');
+
+    const field = document.getElementById(firstInvalid.fieldId);
+    if (field) {
+        field.focus();
+        field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    return false;
+}
+
+function setFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    const errorElement = document.getElementById(`${fieldId}Error`);
+    if (field) {
+        field.classList.add('input-invalid');
+    }
+    if (errorElement) {
+        errorElement.textContent = message;
+    }
+}
+
+function clearFieldError(fieldId) {
+    const field = document.getElementById(fieldId);
+    const errorElement = document.getElementById(`${fieldId}Error`);
+    if (field) {
+        field.classList.remove('input-invalid');
+    }
+    if (errorElement) {
+        errorElement.textContent = '';
+    }
+}
+
+function clearAllFieldErrors() {
+    formFieldIds.forEach(clearFieldError);
+}
+</script>
+{% endblock %}

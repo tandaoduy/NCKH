@@ -1,0 +1,410 @@
+{% extends "base.html" %}
+
+{% block title %}Chi tiết danh sách môn{% endblock %}
+
+{% block content %}
+<div class="course-history-page">
+    <div class="course-history-header">
+        <h2>Chi tiết danh sách môn</h2>
+        <a href="/students" class="btn btn-secondary">Quay lại</a>
+    </div>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+        {% if student %}
+            <div class="ch-profile" aria-label="Thông tin sinh viên">
+                <div class="ch-avatar" aria-hidden="true">
+                    {% if student.name %}{{ student.name[:1] | upper }}{% else %}SV{% endif %}
+                </div>
+                <div class="ch-profile-meta">
+                    <div class="ch-profile-id">{{ student.student_id }}</div>
+                    <div class="ch-profile-name">{{ student.name }}</div>
+                </div>
+            </div>
+        {% endif %}
+
+        <section class="ch-section">
+            <div class="ch-section-head">
+                <div>
+                    <h3>Danh sách môn</h3>
+                    <p class="ch-muted">Đạt: {{ passed_rows | length }} | Chưa đạt: {{ failed_rows | length }} | Tổng: {{ total_rows }}</p>
+                </div>
+            </div>
+
+            {% if paged_rows and (paged_rows | length) > 0 %}
+                <div class="ch-table-wrap" role="region" aria-label="Bảng danh sách môn" tabindex="0">
+                    <table class="ch-table">
+                        <thead>
+                            <tr>
+                                <th class="ch-col-stt">STT</th>
+                                <th class="ch-col-code">Mã môn học</th>
+                                <th>Tên môn học đầy đủ</th>
+                                <th class="ch-col-credit">Số tín chỉ</th>
+                                <th class="ch-col-grade">Điểm số</th>
+                                <th class="ch-col-status">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in paged_rows %}
+                                <tr>
+                                    <td class="ch-col-stt">{{ start_index + loop.index }}</td>
+                                    <td class="ch-col-code ch-mono">{{ row.code }}</td>
+                                    <td class="ch-col-name">{{ row.name }}</td>
+                                    <td class="ch-col-credit">
+                                        {% if row.credits is not none %}{{ row.credits }}{% else %}-{% endif %}
+                                    </td>
+                                    <td class="ch-col-grade">
+                                        {% if row.grade is not none %}{{ row.grade }}{% else %}-{% endif %}
+                                    </td>
+                                    <td class="ch-col-status">
+                                        {% if row.status == 'Đạt' %}
+                                            <span class="ch-pill ch-pill-success">Đạt</span>
+                                        {% else %}
+                                            <span class="ch-pill ch-pill-danger">Chưa đạt</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="ch-pagination" role="navigation" aria-label="Phân trang">
+                    <div class="ch-pagination-info">
+                        Hiển thị {{ display_from }} đến {{ display_to }} của {{ total_rows }} môn học
+                    </div>
+
+                    <div class="ch-pagination-controls">
+                        <div class="ch-pages" aria-label="Chọn trang">
+                            {% if page > 1 %}
+                                <a class="ch-page-link" href="{{ base_url }}?page={{ page - 1 }}&per_page={{ page_size }}">Trước</a>
+                            {% else %}
+                                <span class="ch-page-link is-disabled" aria-disabled="true">Trước</span>
+                            {% endif %}
+
+                            {% for p in page_numbers %}
+                                {% if p is none %}
+                                    <span class="ch-page-ellipsis" aria-hidden="true">…</span>
+                                {% else %}
+                                    {% if p == page %}
+                                        <span class="ch-page-link is-active" aria-current="page">{{ p }}</span>
+                                    {% else %}
+                                        <a class="ch-page-link" href="{{ base_url }}?page={{ p }}&per_page={{ page_size }}">{{ p }}</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page < total_pages %}
+                                <a class="ch-page-link" href="{{ base_url }}?page={{ page + 1 }}&per_page={{ page_size }}">Sau</a>
+                            {% else %}
+                                <span class="ch-page-link is-disabled" aria-disabled="true">Sau</span>
+                            {% endif %}
+                        </div>
+
+                        <form class="ch-perpage" method="get" action="{{ base_url }}" aria-label="Chọn số dòng mỗi trang">
+                            <input type="hidden" name="page" value="1">
+                            <select name="per_page" class="ch-perpage-select" onchange="this.form.submit()">
+                                <option value="10" {% if page_size == 10 %}selected{% endif %}>10 / trang</option>
+                                <option value="20" {% if page_size == 20 %}selected{% endif %}>20 / trang</option>
+                                <option value="50" {% if page_size == 50 %}selected{% endif %}>50 / trang</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <div class="ch-empty" role="status" aria-label="Không có dữ liệu môn học">
+                    <div class="ch-empty-icon" aria-hidden="true">
+                        <svg width="46" height="46" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 14h20l8 8v28a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M38 14v10h10" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M22 34h20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M22 42h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="ch-empty-body">
+                        <div class="ch-empty-title">Chưa có dữ liệu</div>
+                        <div class="ch-empty-sub">Danh sách môn hiện đang trống.</div>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+    {% endif %}
+</div>
+
+<style>
+.course-history-page {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.course-history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+    margin-top: 18px;
+}
+
+.course-history-header h2 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.ch-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.ch-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-color), #0d47a1);
+    letter-spacing: 0.5px;
+}
+
+.ch-profile-id {
+    font-weight: 800;
+    color: var(--text-color);
+}
+
+.ch-profile-name {
+    color: var(--text-light);
+    margin-top: 2px;
+}
+
+.ch-section {
+    background: white;
+    border-radius: 10px;
+    padding: 18px 18px 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    margin-bottom: 16px;
+}
+
+.ch-section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--primary-color);
+    margin-bottom: 12px;
+}
+
+.ch-section h3 {
+    margin: 0;
+}
+
+.ch-muted {
+    color: var(--text-light);
+    margin: 4px 0 0 0;
+    font-size: 0.95rem;
+}
+
+.ch-table-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.ch-table {
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.ch-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.95rem;
+}
+
+.ch-col-stt,
+.ch-col-credit,
+.ch-col-grade,
+.ch-col-status {
+    white-space: nowrap;
+}
+
+.ch-col-stt,
+.ch-col-credit,
+.ch-col-grade {
+    text-align: center;
+}
+
+.ch-col-status {
+    text-align: right;
+}
+
+.ch-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    line-height: 1;
+    border: 1px solid transparent;
+}
+
+.ch-pill-success {
+    color: #1b5e20;
+    background: #e8f5e9;
+    border-color: rgba(56, 142, 60, 0.25);
+}
+
+.ch-pill-danger {
+    color: #b71c1c;
+    background: #ffebee;
+    border-color: rgba(211, 47, 47, 0.25);
+}
+
+.ch-empty {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 16px;
+    background: #f8f9fa;
+    border: 1px dashed rgba(25, 118, 210, 0.35);
+    border-radius: 10px;
+    color: var(--text-light);
+}
+
+.ch-empty-icon {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    color: var(--primary-color);
+    background: rgba(25, 118, 210, 0.08);
+    flex: 0 0 auto;
+}
+
+.ch-empty-title {
+    font-weight: 800;
+    color: var(--text-color);
+}
+
+.ch-empty-sub {
+    margin-top: 4px;
+    font-size: 0.95rem;
+    color: var(--text-light);
+}
+
+.ch-pagination {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ch-pagination-info {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.ch-pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.ch-pages {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ch-page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    user-select: none;
+}
+
+.ch-page-link:hover {
+    border-color: rgba(25, 118, 210, 0.45);
+}
+
+.ch-page-link.is-active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.ch-page-link.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.ch-page-ellipsis {
+    color: var(--text-light);
+    padding: 0 2px;
+    font-weight: 800;
+}
+
+.ch-perpage {
+    display: flex;
+    align-items: center;
+}
+
+.ch-perpage-select {
+    width: auto;
+    min-width: 110px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+    .course-history-header {
+        align-items: flex-start;
+    }
+
+    .ch-profile {
+        padding: 12px 14px;
+    }
+
+    .ch-pagination {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ch-pagination-controls {
+        justify-content: space-between;
+    }
+}
+</style>
+{% endblock %}
