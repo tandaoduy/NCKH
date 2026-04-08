@@ -5,6 +5,9 @@
 {% block content %}
 <div class="students-container">
     <h2>Quản Lý Kế Hoạch Học Tập Sinh Viên</h2>
+    <div class="students-actions">
+        <a href="/students/new" class="btn btn-primary">Thêm sinh viên</a>
+    </div>
 
     <!-- Bước 1: Chọn hoặc tìm sinh viên -->
     <section class="student-selection">
@@ -356,17 +359,26 @@
     }
 </script>
 
-<style>
+    <style>
     .students-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
+        /* Trang đang được bọc trong <main class="container"> ở base.html.
+           Tránh max-width/padding lồng nhau khiến nội dung hẹp hơn navbar. */
+        max-width: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
 
     .students-container h2 {
         text-align: center;
         color: #333;
         margin-bottom: 30px;
+    }
+
+    .students-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin: -18px 0 18px;
     }
 
     section {

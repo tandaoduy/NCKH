@@ -5,8 +5,11 @@
 {% block content %}
 <div class="add-student-page">
     <div class="add-student-header">
-        <h2>Thêm sinh viên</h2>
-        <p>Tạo hồ sơ sinh viên mới và nhập các môn đã học bằng cửa sổ nổi.</p>
+        <div class="add-student-header-text">
+            <h2>Thêm sinh viên</h2>
+            <p>Tạo hồ sơ sinh viên mới và nhập các môn đã học bằng cửa sổ nổi.</p>
+        </div>
+        <a href="/students" class="btn btn-secondary add-student-back">Quay lại</a>
     </div>
 
     <section class="add-student-panel">
@@ -152,7 +155,17 @@
 }
 
 .add-student-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
     margin-bottom: 24px;
+}
+
+.add-student-back {
+    white-space: nowrap;
+    padding: 0.55rem 1.1rem;
+    margin-top: 24px;
 }
 
 .add-student-header h2 {
@@ -341,6 +354,15 @@
 }
 
 @media (max-width: 768px) {
+    .add-student-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-student-back {
+        align-self: flex-end;
+    }
+
     .add-student-grid,
     .summary-cards,
     .course-modal-grid {
