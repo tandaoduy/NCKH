@@ -39,7 +39,7 @@
                             <tr>
                                 <th class="ch-col-stt">STT</th>
                                 <th class="ch-col-code">Mã môn học</th>
-                                <th>Tên môn học đầy đủ</th>
+                                <th>Tên môn học</th>
                                 <th class="ch-col-credit">Số tín chỉ</th>
                                 <th class="ch-col-grade">Điểm số</th>
                                 <th class="ch-col-status">Trạng thái</th>
@@ -49,7 +49,7 @@
                             {% for row in paged_rows %}
                                 <tr>
                                     <td class="ch-col-stt">{{ start_index + loop.index }}</td>
-                                    <td class="ch-col-code ch-mono">{{ row.code }}</td>
+                                    <td class="ch-col-code">{{ row.code }}</td>
                                     <td class="ch-col-name">{{ row.name }}</td>
                                     <td class="ch-col-credit">
                                         {% if row.credits is not none %}{{ row.credits }}{% else %}-{% endif %}
@@ -225,8 +225,20 @@
     border-radius: 0;
 }
 
+.ch-table th,
+.ch-table td {
+    /* Đồng bộ chiều cao hàng/padding với bảng "Danh sách môn đủ điều kiện học" */
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    vertical-align: middle;
+}
+
 .ch-mono {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    /* Ép về font có số 0 bình thường (tránh glyph "0" có gạch chéo ở một số monospace). */
+    font-family: "Courier New", Courier, monospace;
+    font-variant-numeric: normal;
+    font-feature-settings: "zero" 0;
     font-size: 0.95rem;
 }
 

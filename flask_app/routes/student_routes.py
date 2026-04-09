@@ -1,4 +1,4 @@
-﻿"""
+"""
 Routes for Student data management
 """
 

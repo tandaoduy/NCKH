@@ -1,4 +1,4 @@
-﻿"""
+"""
 Service for loading and managing student data (JSON/CSV)
 """
 
@@ -257,7 +257,14 @@ class StudentDataService:
     def _parse_student_dict(self, data: Dict[str, Any]) -> Optional[StudentProfile]:
         """Parse dict thanh StudentProfile."""
         student_id = None
-        for key in ["mã sinh viên", "mã sinh vien", "ma sinh vien", "student_id", "id", "mÃ£ sinh viÃªn"]:
+        for key in [
+            "mã sinh viên",
+            "mã sinh vien",
+            "ma sinh vien",
+            "student_id",
+            "id",
+            self._legacy_mojibake("mã sinh viên"),
+        ]:
             value = data.get(key)
             if value and str(value).strip():
                 student_id = str(value).strip()
@@ -269,23 +276,38 @@ class StudentDataService:
         name = (
             str(data.get("tên sinh viên", "")).strip()
             or str(data.get("name", "")).strip()
-            or str(data.get("tÃªn sinh viÃªn", "")).strip()
+            or str(data.get(self._legacy_mojibake("tên sinh viên"), "")).strip()
         )
-        year_admitted = self._safe_int(data.get("năm vào học", data.get("nÄƒm vÃ o há»c", 2023)), 2023)
-        major = str(data.get("ngành", data.get("ngÃ nh", "Công Nghệ Thông Tin"))).strip()
+        year_admitted = self._safe_int(
+            data.get("năm vào học", data.get(self._legacy_mojibake("năm vào học"), 2023)), 2023
+        )
+        major = str(data.get("ngành", data.get(self._legacy_mojibake("ngành"), "Công Nghệ Thông Tin"))).strip()
         specialization = str(
-            data.get("chuyên ngành", data.get("chuyÃªn ngÃ nh", "Chưa chọn chuyên ngành"))
+            data.get("chuyên ngành", data.get(self._legacy_mojibake("chuyên ngành"), "Chưa chọn chuyên ngành"))
         ).strip()
         study_goal = self._normalize_study_goal(
-            data.get("mục tiêu học tập", data.get("má»¥c tiÃªu há»c táº­p", "đúng hạn"))
+            data.get("mục tiêu học tập", data.get(self._legacy_mojibake("mục tiêu học tập"), "đúng hạn"))
         )
-        current_semester = self._safe_int(data.get("học kỳ hiện tại", data.get("há»c ká»³ hiá»‡n táº¡i", 1)), 1)
-        total_credits = self._safe_int(data.get("số tín chỉ đã tích lũy", data.get("sá»‘ tÃ­n chá»‰ Ä‘Ã£ tÃ­ch lÅ©y", 0)), 0)
-        max_credits = self._safe_int(data.get("số tín chỉ đăng ký tối đa", data.get("sá»‘ tÃ­n chá»‰ Ä‘Äƒng kÃ½ tá»‘i Ä‘a", 27)), 27)
+        current_semester = self._safe_int(
+            data.get("học kỳ hiện tại", data.get(self._legacy_mojibake("học kỳ hiện tại"), 1)), 1
+        )
+        total_credits = self._safe_int(
+            data.get("số tín chỉ đã tích lũy", data.get(self._legacy_mojibake("số tín chỉ đã tích lũy"), 0)), 0
+        )
+        max_credits = self._safe_int(
+            data.get("số tín chỉ đăng ký tối đa", data.get(self._legacy_mojibake("số tín chỉ đăng ký tối đa"), 27)),
+            27,
+        )
 
-        passed_courses = self._parse_course_list(data.get("danh sách môn đã học", data.get("danh sÃ¡ch mÃ´n Ä‘Ã£ há»c", [])))
-        failed_courses = self._parse_course_list(data.get("danh sách môn chưa đạt", data.get("danh sÃ¡ch mÃ´n chÆ°a Ä‘áº¡t", [])))
-        grades = self._parse_grades(data.get("điểm từng môn", data.get("Ä‘iá»ƒm tá»«ng mÃ´n", [])))
+        passed_courses = self._parse_course_list(
+            data.get("danh sách môn đã học", data.get(self._legacy_mojibake("danh sách môn đã học"), []))
+        )
+        failed_courses = self._parse_course_list(
+            data.get("danh sách môn chưa đạt", data.get(self._legacy_mojibake("danh sách môn chưa đạt"), []))
+        )
+        grades = self._parse_grades(
+            data.get("điểm từng môn", data.get(self._legacy_mojibake("điểm từng môn"), []))
+        )
         passed_courses -= failed_courses
 
         return StudentProfile(
@@ -314,7 +336,7 @@ class StudentDataService:
         elif isinstance(data, list):
             for item in data:
                 if isinstance(item, dict):
-                    code = item.get("mã môn học", item.get("mÃ£ mÃ´n há»c", ""))
+                    code = item.get("mã môn học", item.get(self._legacy_mojibake("mã môn học"), ""))
                 elif isinstance(item, str):
                     code = item
                 else:
@@ -335,8 +357,8 @@ class StudentDataService:
             if not isinstance(item, dict):
                 continue
 
-            code = item.get("mã môn học", item.get("mÃ£ mÃ´n há»c", ""))
-            grade = item.get("điểm", item.get("Ä‘iá»ƒm", 0))
+            code = item.get("mã môn học", item.get(self._legacy_mojibake("mã môn học"), ""))
+            grade = item.get("điểm", item.get(self._legacy_mojibake("điểm"), 0))
             if code and str(code).strip():
                 try:
                     grades[str(code).strip().upper()] = float(grade)
@@ -379,11 +401,22 @@ class StudentDataService:
             "giam tai": "giảm tải",
             "học vượt": "học vượt",
             "hoc vuot": "học vượt",
-            "Ä‘Ãºng háº¡n": "đúng hạn",
-            "giáº£m táº£i": "giảm tải",
-            "há»c vÆ°á»£t": "học vượt",
         }
+        # Tương thích dữ liệu cũ bị mojibake (dữ liệu UTF-8 bị decode nhầm Latin-1).
+        normalized.update({StudentDataService._legacy_mojibake(k): v for k, v in normalized.items()})
         return normalized.get(goal, "đúng hạn")
+
+    @staticmethod
+    def _legacy_mojibake(text: str) -> str:
+        """
+        Sinh key/value "lỗi encoding" để tương thích dữ liệu cũ (UTF-8 bị decode nhầm Latin-1).
+
+        Ví dụ: "mã sinh viên" -> (chuỗi bị lỗi encoding kiểu mojibake)
+        """
+        try:
+            return text.encode("utf-8").decode("latin1")
+        except Exception:
+            return text
 
     @staticmethod
     def _display_study_goal(value: str) -> str:
