@@ -9,8 +9,9 @@ let selectedStudent = null;
 
 // ========== KHỞI TẠO ==========
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Initializing students page...');
-    if (document.getElementById('studentSelect')) {
+    console.log('Initializing page...');
+    // Nếu trang đã có logic load sinh viên riêng (như students.html) thì không chạy load chung ở đây
+    if (document.getElementById('studentSelect') && typeof window.currentStudent === 'undefined') {
         loadAllStudents();
     }
     initNavbarScroll();
@@ -223,7 +224,7 @@ function displayRecommendationResults(data) {
     const courses = data.recommended_courses || [];
     document.getElementById('resultTotalCourses').textContent = courses.length;
     document.getElementById('resultTotalCredits').textContent = data.total_recommended_credits || 0;
-    
+
     // Tính học kỳ tiếp theo từ dữ liệu sinh viên
     if (selectedStudent && selectedStudent.current_semester) {
         const nextSemester = selectedStudent.current_semester + 1;
@@ -342,7 +343,7 @@ function initFlashToasts() {
     });
 }
 
-function showToast(message, type = 'info', duration = 5000) {
+function showToast(message, type = 'info', duration = 1500) {
     const container = document.getElementById('toastContainer');
     if (!container || !message) {
         return;
