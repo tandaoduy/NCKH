@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Hệ Thống Gợi Ý Kế Hoạch Học Tập{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -35,13 +36,5 @@
 
     <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <footer>
-        <p>
-            © 2026 Nhóm Nghiên cứu Khoa học | Khoa Công Nghệ Thông Tin <br>
-            Trường Đại học Nha Trang
-        </p>
-    </footer>
-
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

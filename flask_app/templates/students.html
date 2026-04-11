@@ -1,22 +1,22 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block title %}Quản Lý Sinh Viên - Gợi Ý Kế Hoạch Học Tập{% endblock %}
 
 {% block content %}
-<div class="students-container">
+<div class="students-container" id="mainStudentsContent" style="opacity: 0; transition: opacity 0.3s ease-in;">
     <h2>Quản Lý Kế Hoạch Học Tập Sinh Viên</h2>
     <div class="students-actions">
-        <a href="/students/new" class="btn btn-primary">Thêm sinh viên</a>
+        <a href="/students/new" onclick="saveState(true)" class="btn btn-primary">Thêm sinh viên</a>
     </div>
 
     <!-- Bước 1: Chọn hoặc tìm sinh viên -->
-    <section class="student-selection">
+    <section class="student-selection" style="min-height: 250px;">
         <h3>Bước 1: Chọn hoặc tìm sinh viên</h3>
         <div class="selection-form">
             <div class="form-group">
                 <label>Tìm kiếm mã sinh viên:</label>
                 <div class="search-row">
-                    <input type="text" id="studentSearch" placeholder="VD: SV0001" class="form-input">
+                    <input type="text" id="studentSearch" placeholder="VD: SV0001" class="form-input" autocomplete="off">
                     <button onclick="searchStudent()" class="btn btn-primary">Tìm</button>
                 </div>
             </div>
@@ -167,43 +167,142 @@
 </div>
 
 <script>
-    // Lưu dữ liệu sinh viên hiện tại
-    let currentStudent = null;
+    // ========== SESSION STORAGE KEY ==========
+    const SESSION_KEY = 'studentPageState';
+
+    // Đặt vào window để main.js nhận biết và không chạy logic load đè
+    window.currentStudent = null; 
     let currentRecommendation = null;
 
+    // ========== LƯU / KHÔI PHỤC STATE ==========
+    function saveState(shouldRestore = false) {
+        try {
+            const state = {
+                searchTerm: document.getElementById('studentSearch').value,
+                selectValue: document.getElementById('studentSelect').value,
+                currentStudent: window.currentStudent,
+                currentRecommendation: currentRecommendation,
+                showProfile: document.getElementById('studentProfileSection').style.display !== 'none',
+                showAction: document.getElementById('recommendationActionSection').style.display !== 'none',
+                showResults: document.getElementById('resultsSection').style.display !== 'none'
+            };
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(state));
+            if (shouldRestore) {
+                sessionStorage.setItem('shouldRestore', 'true');
+            }
+            console.log("State saved. Should restore:", shouldRestore);
+        } catch (e) { console.error("Save state error:", e); }
+    }
+
+    function restoreState() {
+        try {
+            // Chỉ khôi phục nếu có cờ 'shouldRestore'
+            const shouldRestore = sessionStorage.getItem('shouldRestore') === 'true';
+            if (!shouldRestore) {
+                sessionStorage.removeItem(SESSION_KEY);
+                return false;
+            }
+
+            const raw = sessionStorage.getItem(SESSION_KEY);
+            if (!raw) return false;
+            
+            const state = JSON.parse(raw);
+            console.log("Restoring state...");
+
+            // Khôi phục ô tìm kiếm
+            if (state.searchTerm) {
+                document.getElementById('studentSearch').value = state.searchTerm;
+            }
+
+            // Khôi phục dữ liệu sinh viên
+            if (state.currentStudent) {
+                window.currentStudent = state.currentStudent;
+                displayStudentProfile(window.currentStudent);
+
+                // Đồng bộ dropdown sau khi profile đã được hiển thị
+                const sel = document.getElementById('studentSelect');
+                if (state.selectValue) sel.value = state.selectValue;
+            }
+
+            // Khôi phục kết quả gợi ý nếu có
+            if (state.currentRecommendation) {
+                currentRecommendation = state.currentRecommendation;
+                displayRecommendationResults(currentRecommendation);
+            }
+
+            // Điều chỉnh hiển thị section
+            document.getElementById('studentProfileSection').style.display = state.showProfile ? 'block' : 'none';
+            document.getElementById('recommendationActionSection').style.display = state.showAction ? 'block' : 'none';
+            document.getElementById('resultsSection').style.display = state.showResults ? 'block' : 'none';
+
+            // Xóa cờ sau khi đã dùng
+            sessionStorage.removeItem('shouldRestore');
+            return true;
+        } catch (e) {
+            console.error("Restore state error:", e);
+            sessionStorage.removeItem(SESSION_KEY);
+            return false;
+        }
+    }
+
     // Tải danh sách sinh viên khi trang được mở
-    document.addEventListener('DOMContentLoaded', function () {
-        loadStudentList();
+    document.addEventListener('DOMContentLoaded', async function () {
+        const content = document.getElementById('mainStudentsContent');
+        try {
+            // Chờ tải xong danh sách sinh viên mới khôi phục state đầy đủ
+            await loadStudentList();
+            restoreState();
+        } finally {
+            // Hiện trang sau khi đã load xong mọi thứ để tránh nháy
+            if (content) content.style.opacity = '1';
+        }
+
+        // Auto-search với debounce khi người dùng gõ mã sinh viên
+        let searchDebounceTimer = null;
+        const searchInput = document.getElementById('studentSearch');
+
+        searchInput.addEventListener('input', function () {
+            clearTimeout(searchDebounceTimer);
+            if (!this.value.trim()) return;
+            searchDebounceTimer = setTimeout(searchStudent, 400);
+        });
+
+        // Vẫn hỗ trợ nhấn Enter
+        searchInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                clearTimeout(searchDebounceTimer);
+                searchStudent();
+            }
+        });
     });
 
-    // Đổ danh sách sinh viên vào ô chọn
-    function loadStudentList() {
-        fetch('/api/students')
-            .then(response => response.json())
-            .then(data => {
-                const select = document.getElementById('studentSelect');
-                const students = data.data || [];
+    // Đổ danh sách sinh viên vào ô chọn (Async)
+    async function loadStudentList() {
+        try {
+            const response = await fetch('/api/students');
+            const data = await response.json();
+            const select = document.getElementById('studentSelect');
+            const students = data.data || [];
 
-                students.forEach(student => {
-                    const option = document.createElement('option');
-                    option.value = student.student_id;
-                    option.textContent = `${student.student_id} - ${student.name}`;
-                    select.appendChild(option);
-                });
-            })
-            .catch(error => {
-                showError('Lỗi tải danh sách sinh viên: ' + error, 'error');
-                console.error('Error:', error);
+            select.innerHTML = '<option value="">-- Chọn sinh viên --</option>';
+            students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.student_id;
+                option.textContent = `${student.student_id} - ${student.name}`;
+                select.appendChild(option);
             });
+            return true;
+        } catch (error) {
+            showError('Lỗi tải danh sách sinh viên: ' + error, 'error');
+            console.error('Error:', error);
+            return false;
+        }
     }
 
     // Tìm sinh viên theo mã
     function searchStudent() {
         const studentId = document.getElementById('studentSearch').value.trim();
-        if (!studentId) {
-            showError('Vui lòng nhập mã sinh viên', 'warning');
-            return;
-        }
+        if (!studentId) return;
         loadStudent(studentId);
     }
 
@@ -221,9 +320,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    currentStudent = data.data;
-                    displayStudentProfile(currentStudent);
+                    window.currentStudent = data.data;
+                    displayStudentProfile(window.currentStudent);
                     hideError();
+                    saveState();
                 } else {
                     showError(data.error || 'Không tìm thấy sinh viên', 'warning');
                 }
@@ -236,21 +336,32 @@
 
     // Hiển thị hồ sơ sinh viên
     function displayStudentProfile(student) {
-        document.getElementById('profileStudentId').textContent = student.student_id;
-        document.getElementById('profileName').textContent = student.name;
-        document.getElementById('profileMajor').textContent = student.major;
-        document.getElementById('profileSpecialization').textContent = student.specialization;
-        document.getElementById('profileGoal').textContent = student.study_goal;
-        document.getElementById('profileSemester').textContent = student.current_semester;
-        document.getElementById('profileCredits').textContent = student.total_credits_accumulated;
-        document.getElementById('profileMaxCredits').textContent = student.max_credits_to_register;
+        if (!student) return;
+
+        // Cập nhật các trường text
+        const mapping = {
+            'profileStudentId': student.student_id,
+            'profileName': student.name,
+            'profileMajor': student.major || '-',
+            'profileSpecialization': student.specialization || 'Chưa chọn',
+            'profileGoal': student.study_goal || '-',
+            'profileSemester': student.current_semester,
+            'profileCredits': student.total_credits_accumulated,
+            'profileMaxCredits': student.max_credits_to_register,
+            'profileYearAdmitted': student.year_admitted || '-'
+        };
+
+        for (const [id, value] of Object.entries(mapping)) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        }
 
         // Hiển thị môn đã học
         const passedList = student.passed_courses || [];
         document.getElementById('passedCoursesCount').textContent = `${passedList.length} môn`;
-        document.getElementById('passedCoursesList').innerHTML = passedList.slice(0, 10)
+        document.getElementById('passedCoursesList').innerHTML = passedList.slice(0, 15)
             .map(c => `<span class="course-badge">${c}</span>`)
-            .join('');
+            .join('') + (passedList.length > 15 ? ' <span class="more">...</span>' : '');
 
         // Hiển thị môn chưa đạt
         const failedList = student.failed_courses || [];
@@ -263,10 +374,17 @@
         document.getElementById('studentProfileSection').style.display = 'block';
         document.getElementById('recommendationActionSection').style.display = 'block';
         document.getElementById('resultsSection').style.display = 'none';
+        
+        // Ẩn danh sách môn đủ điều kiện của sinh viên trước đó (nếu có)
+        const eligibleSection = document.getElementById('eligibleCoursesSection');
+        if (eligibleSection) eligibleSection.style.display = 'none';
+        
+        // Luôn lưu lại state khi profile thay đổi
+        saveState();
     }
 
     function openCourseHistory() {
-        const studentIdFromInline = currentStudent && currentStudent.student_id ? currentStudent.student_id : '';
+        const studentIdFromInline = window.currentStudent && window.currentStudent.student_id ? window.currentStudent.student_id : '';
         const studentIdFromMainJs = window.selectedStudent && window.selectedStudent.student_id ? window.selectedStudent.student_id : '';
         const studentIdFromSelect = (document.getElementById('studentSelect') || {}).value || '';
         const studentIdFromSearch = ((document.getElementById('studentSearch') || {}).value || '').trim();
@@ -278,12 +396,14 @@
             return;
         }
 
+        // Lưu state trước khi điều hướng để khôi phục khi quay lại
+        saveState(true);
         window.location.href = `/students/${encodeURIComponent(studentId)}/course-history`;
     }
 
     // Tạo gợi ý kế hoạch học tập
     function generateRecommendation() {
-        if (!currentStudent) {
+        if (!window.currentStudent) {
             showError('Vui lòng chọn sinh viên', 'warning');
             return;
         }
@@ -297,7 +417,7 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                student_id: currentStudent.student_id
+                student_id: window.currentStudent.student_id
             })
         })
             .then(response => response.json())
@@ -309,6 +429,7 @@
                     currentRecommendation = data.data;
                     displayRecommendationResults(currentRecommendation);
                     hideError();
+                    saveState();
                 } else {
                     showError(data.error || 'Lỗi tạo kế hoạch học tập', 'error');
                 }
@@ -346,15 +467,11 @@
             coursesList.appendChild(row);
         });
 
-        // Chi tiết thuật toán
-        document.getElementById('heuristicFormula').textContent = result.heuristic_formula || 'N/A';
-        document.getElementById('beamSearchDetails').textContent = result.beam_search_details || 'Tìm kiếm chùm (độ rộng = 8)';
-
         // Hiển thị khu vực kết quả
         document.getElementById('resultsSection').style.display = 'block';
 
-        // Cuộn đến khu vực kết quả
-        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        // Lưu lại state khi có kết quả gợi ý
+        saveState();
     }
 
     function displayEligibleCourses(courses) {
@@ -396,10 +513,11 @@
 
 
 
-    // Đặt lại form
+    // Đặt lại form (xóa luôn state đã lưu)
     function resetForm() {
         currentStudent = null;
         currentRecommendation = null;
+        sessionStorage.removeItem(SESSION_KEY);
         document.getElementById('studentSearch').value = '';
         document.getElementById('studentSelect').value = '';
         document.getElementById('studentProfileSection').style.display = 'none';
@@ -442,14 +560,21 @@
     }
 
     section {
+        margin-bottom: 2rem;
         background: white;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Hiệu ứng mượt mà */
+        animation: sectionFadeIn 0.4s ease-out;
     }
 
-    section h3 {
+    @keyframes sectionFadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .recommendation-steps h2 {
         border-bottom: 3px solid #007bff;
         padding-bottom: 10px;
         margin-bottom: 15px;
@@ -474,6 +599,22 @@
     .search-row {
         display: flex;
         gap: 10px;
+        align-items: center;
+    }
+
+    .search-indicator {
+        font-size: 18px;
+        min-width: 24px;
+        transition: opacity 0.2s;
+    }
+
+    .search-indicator.searching {
+        animation: spin-pulse 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes spin-pulse {
+        from { opacity: 0.4; }
+        to   { opacity: 1; }
     }
 
     .form-input {
@@ -761,3 +902,6 @@
     }
 </style>
 {% endblock %}
+
+{% block footer %}{% endblock %}
+

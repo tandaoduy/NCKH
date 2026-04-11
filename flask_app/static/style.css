@@ -1,8 +1,11 @@
-/* Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    overflow-y: scroll; /* Luôn hiện thanh cuộn để tránh dựt ngang khi content dài ra */
 }
 
 :root {
@@ -17,9 +20,11 @@
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Phân bổ không gian: Header (tự động) - Content (dãn rộng) - Footer (tự động) */
     min-height: 100vh;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
@@ -129,9 +134,9 @@ body {
 
 /* Main Content */
 main {
-    flex: 1 0 auto;
     margin: 2rem auto;
     width: 100%;
+    min-height: 500px; /* Đảm bảo luôn có chiều cao tối thiểu để giữ form */
 }
 
 /* Buttons */
