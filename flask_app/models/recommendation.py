@@ -51,6 +51,8 @@ class RecommendationResult:
     
     # Cảnh báo và giải thích
     warnings: List[str] = field(default_factory=list)
+    prerequisite_warnings: List[str] = field(default_factory=list)
+    specialization_warning: str = ""
     beam_search_details: str = ""
     heuristic_formula: str = ""
     

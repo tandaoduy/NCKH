@@ -322,7 +322,12 @@ class RecommendationEngine:
         
         # Lọc danh sách môn hợp lệ theo hạn ngạch
         eligible_courses = self._filter_by_elective_quota(valid_courses, remaining_elective_counts)
-        
+        prerequisite_warnings, specialization_warning = self._build_context_warnings(
+            student,
+            passed_courses,
+            valid_courses,
+        )
+
         # Chọn ngẫu nhiên môn tự chọn (nếu cần)
         beam_candidates = self._random_select_electives(
             eligible_courses, remaining_elective_counts, study_goal, rng
@@ -361,6 +366,14 @@ class RecommendationEngine:
             elective_quota_remaining=remaining_elective_counts,
             finalized_elective_counts=finalized_elective_counts,
         )
+
+        if specialization_warning:
+            result.specialization_warning = specialization_warning
+            result.warnings.append(specialization_warning)
+
+        if prerequisite_warnings:
+            result.prerequisite_warnings = prerequisite_warnings
+            result.warnings.extend(prerequisite_warnings)
 
         result.beam_search_details = (
             f"số_môn_ontology={len(self.course_data)}, hợp_lệ={len(eligible_courses)}, "
@@ -633,6 +646,44 @@ class RecommendationEngine:
                     initial_state['elective_counts'][cat] += 1
         
         return selected_courses
+
+    def _build_context_warnings(
+        self,
+        student: StudentProfile,
+        passed_courses: Set[str],
+        valid_courses: List[RecommendedCourse],
+    ) -> Tuple[List[str], str]:
+        """Tạo cảnh báo ngữ cảnh cho tiên quyết và chuyên ngành."""
+        warnings: List[str] = []
+
+        specialization_warning = ""
+        student_spec = student.specialization.strip() if student.specialization else ""
+        normalized_spec = self._normalize_text(student_spec) if student_spec else ""
+        if not student_spec or normalized_spec == "chua chon chuyen nganh":
+            specialization_warning = (
+                "Sinh viên chưa chọn chuyên ngành; hệ thống chỉ ưu tiên môn bắt buộc và môn chung."
+            )
+
+        valid_codes = {course.code for course in valid_courses}
+        for code, info in self.course_data.items():
+            if code in passed_courses or code in valid_codes:
+                continue
+
+            prereqs = info.get('prereqs', [])
+            if not prereqs:
+                continue
+
+            missing_prereqs = [p for p in prereqs if p not in passed_courses]
+            if not missing_prereqs:
+                continue
+
+            warnings.append(
+                f"Môn {code} - {info.get('name', code)} đang thiếu tiên quyết: {', '.join(missing_prereqs)}"
+            )
+            if len(warnings) >= 5:
+                break
+
+        return warnings, specialization_warning
     
     # Các hàm hỗ trợ
     @staticmethod

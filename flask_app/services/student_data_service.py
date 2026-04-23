@@ -258,7 +258,7 @@ class StudentDataService:
             "số tín chỉ đã tích lũy": student.total_credits_accumulated,
             "số tín chỉ đăng ký tối đa": 27,
             "học kỳ hiện tại": student.current_semester,
-            "học kỳ dự kiến đăng ký tiếp theo": student.current_semester + 1,
+            "học kỳ dự kiến đăng ký tiếp theo": student.next_semester(),
             "danh sách môn đã học": studied_courses,
             "điểm từng môn": grade_entries,
             "danh sách môn chưa đạt": failed_entries,

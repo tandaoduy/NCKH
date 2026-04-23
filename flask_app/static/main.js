@@ -226,10 +226,7 @@ function displayRecommendationResults(data) {
     document.getElementById('resultTotalCredits').textContent = data.total_recommended_credits || 0;
 
     // Tính học kỳ tiếp theo từ dữ liệu sinh viên
-    if (selectedStudent && selectedStudent.current_semester) {
-        const nextSemester = selectedStudent.current_semester + 1;
-        document.getElementById('resultNextSemester').textContent = nextSemester;
-    }
+    document.getElementById('resultNextSemester').textContent = data.next_semester || '-';
 
     // Hiển thị bảng môn học - dùng đúng tbody ID
     const tableBody = document.getElementById('recommendedCoursesList');
@@ -248,12 +245,15 @@ function displayRecommendationResults(data) {
                 <td>${course.code || '-'}</td>
                 <td>${course.name || '-'}</td>
                 <td>${course.credits || 0}</td>
+                <td>${course.is_retake ? '<span class="status-badge status-retake">Học lại</span>' : `<span class="status-badge status-normal">Kỳ ${course.recommended_semester || data.next_semester || '-'}</span>`}</td>
                 <td>${reasonsText}</td>
             `;
             tableBody.appendChild(row);
         });
     }
 
+    displayResultWarnings(data);
+    displayResultInsights(data);
     // Hiển thị chi tiết thuật toán
     renderAlgorithmExplanation(data);
 }
@@ -292,6 +292,90 @@ function renderAlgorithmExplanation(data) {
 
     content.innerHTML = `<pre>${escapeHtml(parts.join('\n\n'))}</pre>`;
     section.style.display = 'block';
+}
+
+function displayResultWarnings(result) {
+    const section = document.getElementById('resultWarningsSection');
+    const list = document.getElementById('resultWarningsList');
+    if (!section || !list) {
+        return;
+    }
+
+    const warnings = [];
+    if (result?.specialization_warning) {
+        warnings.push(result.specialization_warning);
+    }
+    if (Array.isArray(result?.prerequisite_warnings)) {
+        warnings.push(...result.prerequisite_warnings);
+    }
+    if (Array.isArray(result?.warnings)) {
+        result.warnings.forEach(item => {
+            if (item && !warnings.includes(item)) {
+                warnings.push(item);
+            }
+        });
+    }
+
+    if (!warnings.length) {
+        section.style.display = 'none';
+        list.innerHTML = '';
+        return;
+    }
+
+    list.innerHTML = warnings.map(item => `<div class="warning-item">${escapeHtml(item)}</div>`).join('');
+    section.style.display = 'block';
+}
+
+function displayResultInsights(result) {
+    const beamEl = document.getElementById('beamSearchSummary');
+    const quotaEl = document.getElementById('quotaOverviewSummary');
+
+    if (beamEl) {
+        beamEl.innerHTML = result?.beam_search_details
+            ? `<code>${escapeHtml(result.beam_search_details)}</code>`
+            : '<span>-</span>';
+    }
+
+    if (quotaEl) {
+        const quotas = result?.elective_target_quotas || {};
+        const completed = result?.elective_completed_counts || {};
+        const remaining = result?.elective_quota_remaining || {};
+        const finalized = result?.finalized_elective_counts || {};
+
+        const rows = ['general', 'physical', 'foundation', 'specialization'].map(key => {
+            const label = {
+                general: 'Đại cương',
+                physical: 'Thể chất',
+                foundation: 'Cơ sở ngành',
+                specialization: 'Chuyên ngành',
+            }[key] || key;
+
+            return `
+                <tr>
+                    <td>${label}</td>
+                    <td>${completed[key] ?? 0}</td>
+                    <td>${quotas[key] ?? 0}</td>
+                    <td>${remaining[key] ?? 0}</td>
+                    <td>${finalized[key] ?? 0}</td>
+                </tr>
+            `;
+        }).join('');
+
+        quotaEl.innerHTML = `
+            <table class="quota-table">
+                <thead>
+                    <tr>
+                        <th>Danh mục</th>
+                        <th>Đã hoàn</th>
+                        <th>Mục tiêu</th>
+                        <th>Còn thiếu</th>
+                        <th>Đã chọn</th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>
+        `;
+    }
 }
 
 function displayEligibleCourses(courses) {
