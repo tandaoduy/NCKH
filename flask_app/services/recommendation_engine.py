@@ -5,6 +5,8 @@ Tách từ recommend_courses.py để dùng lại trong Flask app
 
 import random
 import unicodedata
+import logging
+import time
 from typing import Dict, Any, List, Set, Optional, Tuple
 from rdflib import Graph, URIRef, Namespace
 from rdflib.namespace import RDF
@@ -14,7 +16,7 @@ from flask_app.models.recommendation import (
     RecommendedCourse, RecommendationResult, BeamSearchState
 )
 
-# URI RDF
+# Định danh RDF
 BASE_URI = "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#"
 
 PROP_courseCode = URIRef(BASE_URI + "courseCode")
@@ -59,15 +61,15 @@ class RecommendationEngine:
                  heuristic_weights: Optional[Dict[str, int]] = None,
                  elective_quotas: Optional[Dict[str, int]] = None):
         """
-        Khởi tạo bộ máy gợi ý
-        
-        Args:
-            ontology_path: Đường dẫn đến file RDF ontology
-            beam_width: Độ rộng tìm kiếm chùm (số trạng thái giữ lại mỗi vòng)
-            max_credits: Tín chỉ tối đa mỗi học kỳ
-            min_credits: Tín chỉ tối thiểu mỗi học kỳ
-            heuristic_weights: Trọng số công thức tính điểm
-            elective_quotas: Mục tiêu hạn ngạch cho mỗi danh mục tự chọn
+        Khởi tạo bộ máy gợi ý.
+
+        Tham số:
+            ontology_path: Đường dẫn đến tệp RDF ontology.
+            beam_width: Độ rộng tìm kiếm chùm, tức số trạng thái giữ lại mỗi vòng.
+            max_credits: Số tín chỉ tối đa mỗi học kỳ.
+            min_credits: Số tín chỉ tối thiểu mỗi học kỳ.
+            heuristic_weights: Trọng số cho công thức tính điểm.
+            elective_quotas: Hạn ngạch mục tiêu cho từng nhóm môn tự chọn.
         """
         self.ontology_path = ontology_path
         self.beam_width = beam_width
@@ -91,6 +93,7 @@ class RecommendationEngine:
         self.course_data: Dict[str, Dict[str, Any]] = {}
         self.dependency_count: Dict[str, int] = {}
         self.specializations_map: Dict[str, str] = {}
+        self.logger = logging.getLogger(__name__)
         
         self._load_ontology()
     
@@ -116,7 +119,7 @@ class RecommendationEngine:
         else:  # Unix/Linux
             ontology_uri = ontology_file.as_uri()
         
-        print(f"[DEBUG] Loading ontology from: {ontology_uri}")
+        self.logger.info("Đang nạp ontology từ %s", ontology_uri)
         self.graph.parse(ontology_uri, format="xml")
         
         # Trích xuất chuyên ngành
@@ -259,18 +262,30 @@ class RecommendationEngine:
             for pr in cinfo.get('prereqs', []):
                 if pr in self.dependency_count:
                     self.dependency_count[pr] += 1
+
+        self.logger.info(
+            "Đã nạp ontology: %s môn học, %s chuyên ngành",
+            len(self.course_data),
+            len(self.specializations_map),
+        )
     
     def get_recommendation(self, student: StudentProfile) -> RecommendationResult:
         """
-        Tạo gợi ý kế hoạch học tập cho sinh viên
-        
-        Args:
-            student: StudentProfile object
-            
-        Returns:
-            RecommendationResult object
+        Tạo gợi ý kế hoạch học tập cho sinh viên.
+
+        Tham số:
+            student: Hồ sơ sinh viên.
+
+        Kết quả:
+            Đối tượng `RecommendationResult`.
         """
         # Tính toán các biến
+        started_at = time.perf_counter()
+        self.logger.info(
+            "Bắt đầu luồng gợi ý cho student_id=%s, học kỳ=%s",
+            student.student_id,
+            student.current_semester,
+        )
         current_sem = max(1, student.current_semester)
         next_sem = current_sem + 1
         sem_type = 1 if next_sem % 2 != 0 else 2
@@ -330,7 +345,7 @@ class RecommendationEngine:
             if cat in ELECTIVE_QUOTA_KEYS:
                 finalized_elective_counts[cat] += 1
         
-        return RecommendationResult(
+        result = RecommendationResult(
             student_id=student.student_id,
             student_name=student.name,
             current_semester=current_sem,
@@ -346,6 +361,30 @@ class RecommendationEngine:
             elective_quota_remaining=remaining_elective_counts,
             finalized_elective_counts=finalized_elective_counts,
         )
+
+        result.beam_search_details = (
+            f"số_môn_ontology={len(self.course_data)}, hợp_lệ={len(eligible_courses)}, "
+            f"ứng_viên_chùm={len(beam_candidates)}, đề_xuất={len(recommended_courses)}, "
+            f"thời_gian_xử_lý_ms={round((time.perf_counter() - started_at) * 1000, 2)}"
+        )
+        result.heuristic_formula = (
+            "H = nợ*1000 + độ_phủ*20 + độ_trễ*50; "
+            "H_tổng = H + đang_mở*50 + gần_khuyến_nghị*10 + điểm_mục_tiêu"
+        )
+
+        if total_recommended_credits < self.min_credits:
+            result.warnings.append(
+                f"Tổng tín chỉ đề xuất {total_recommended_credits} thấp hơn mức tối thiểu {self.min_credits}"
+            )
+
+        self.logger.info(
+            "Đã hoàn tất luồng gợi ý cho %s: hợp_lệ=%s đề_xuất=%s tín_chỉ=%s",
+            student.student_id,
+            len(eligible_courses),
+            len(recommended_courses),
+            total_recommended_credits,
+        )
+        return result
     
     def _normalize_student_data(self, student: StudentProfile) -> Tuple[Set[str], Set[str]]:
         """Chuẩn hóa dữ liệu sinh viên"""

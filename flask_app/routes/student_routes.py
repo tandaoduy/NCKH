@@ -1,79 +1,85 @@
 """
-Routes for Student data management
+Các route quản lý dữ liệu sinh viên.
 """
 
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, current_app, jsonify, request
 
-bp = Blueprint('students', __name__, url_prefix='/api/students')
+bp = Blueprint("students", __name__, url_prefix="/api/students")
 
 
-@bp.route('', methods=['GET'])
+@bp.route("", methods=["GET"])
 def list_students():
-    """Lấy danh sách tất cả sinh viên"""
+    """Trả về danh sách rút gọn của tất cả sinh viên."""
     try:
+        current_app.logger.info("Đã yêu cầu danh sách sinh viên")
         service = current_app.student_data_service
         students = service.get_all_students()
 
         result = [
             {
-                'student_id': s.student_id,
-                'name': s.name,
-                'major': s.major,
-                'specialization': s.specialization,
-                'current_semester': s.current_semester,
+                "student_id": s.student_id,
+                "name": s.name,
+                "major": s.major,
+                "specialization": s.specialization,
+                "current_semester": s.current_semester,
             }
             for s in students
         ]
 
+        current_app.logger.info("Đã trả về %s sinh viên", len(result))
         return jsonify({
-            'success': True,
-            'data': result,
-            'total': len(result),
+            "success": True,
+            "data": result,
+            "total": len(result),
         })
-    except Exception as e:
+    except Exception as exc:
+        current_app.logger.exception("Không thể lấy danh sách sinh viên")
         return jsonify({
-            'success': False,
-            'error': str(e),
+            "success": False,
+            "error": str(exc),
         }), 500
 
 
-@bp.route('/next-id', methods=['GET'])
+@bp.route("/next-id", methods=["GET"])
 def get_next_student_id():
-    """Lấy mã sinh viên kế tiếp theo format SV0001"""
+    """Trả về mã sinh viên kế tiếp theo định dạng SV0001."""
     try:
         service = current_app.student_data_service
         next_id = service.get_next_student_id(force_reload=True)
+        current_app.logger.info("Đã tạo mã sinh viên kế tiếp: %s", next_id)
         return jsonify({
-            'success': True,
-            'data': {
-                'student_id': next_id,
+            "success": True,
+            "data": {
+                "student_id": next_id,
             }
         })
-    except Exception as e:
+    except Exception as exc:
+        current_app.logger.exception("Không thể tạo mã sinh viên kế tiếp")
         return jsonify({
-            'success': False,
-            'error': str(e),
+            "success": False,
+            "error": str(exc),
         }), 500
 
 
-@bp.route('', methods=['POST'])
+@bp.route("", methods=["POST"])
 def create_student():
-    """Tạo mới sinh viên và lưu vào JSON"""
+    """Tạo sinh viên mới và lưu vào nguồn JSON."""
     try:
-        payload = request.get_json() or {}
+        payload = request.get_json(silent=True) or {}
         if not payload:
             return jsonify({
-                'success': False,
-                'error': 'Không nhận được dữ liệu sinh viên',
+                "success": False,
+                "error": "Không nhận được dữ liệu sinh viên",
             }), 400
 
         engine = current_app.recommendation_engine
         if engine is None:
             return jsonify({
-                'success': False,
-                'error': 'Recommendation engine chưa sẵn sàng để tải dữ liệu',
+                "success": False,
+                "error": "Bộ máy gợi ý chưa sẵn sàng để tải dữ liệu",
             }), 500
 
+        current_app.logger.info("Yêu cầu tạo sinh viên: %s", payload.get("student_id"))
         course_catalog = _get_course_catalog(engine)
         specialization_options = _get_specializations(engine)
         student = current_app.student_data_service.create_student(
@@ -82,96 +88,105 @@ def create_student():
             specialization_options,
         )
 
+        current_app.logger.info("Đã tạo sinh viên thành công: %s", student.student_id)
         return jsonify({
-            'success': True,
-            'message': f'Đã thêm sinh viên {student.student_id}',
-            'data': student.to_dict(),
+            "success": True,
+            "message": f"Đã thêm sinh viên {student.student_id}",
+            "data": student.to_dict(),
         }), 201
-    except ValueError as e:
+    except ValueError as exc:
+        current_app.logger.warning("Xác thực tạo sinh viên thất bại: %s", exc)
         return jsonify({
-            'success': False,
-            'error': str(e),
+            "success": False,
+            "error": str(exc),
         }), 400
-    except Exception as e:
+    except Exception as exc:
+        current_app.logger.exception("Không thể tạo sinh viên")
         return jsonify({
-            'success': False,
-            'error': str(e),
+            "success": False,
+            "error": str(exc),
         }), 500
 
 
-@bp.route('/courses', methods=['GET'])
+@bp.route("/courses", methods=["GET"])
 def list_courses():
-    """Lấy danh mục môn học từ ontology"""
+    """Trả về danh mục môn học trích xuất từ ontology."""
     try:
         engine = current_app.recommendation_engine
         if engine is None:
             return jsonify({
-                'success': False,
-                'error': 'Recommendation engine không khởi tạo được',
+                "success": False,
+                "error": "Bộ máy gợi ý chưa khởi tạo được",
             }), 500
 
         catalog = sorted(
             _get_course_catalog(engine).values(),
-            key=lambda item: (item['code'], item['name'])
+            key=lambda item: (item["code"], item["name"])
         )
+        current_app.logger.info("Đã yêu cầu danh mục môn học: %s môn", len(catalog))
 
         return jsonify({
-            'success': True,
-            'data': catalog,
-            'total': len(catalog),
+            "success": True,
+            "data": catalog,
+            "total": len(catalog),
         })
-    except Exception as e:
+    except Exception as exc:
+        current_app.logger.exception("Không thể lấy danh mục môn học")
         return jsonify({
-            'success': False,
-            'error': str(e),
+            "success": False,
+            "error": str(exc),
         }), 500
 
 
-@bp.route('/specializations', methods=['GET'])
+@bp.route("/specializations", methods=["GET"])
 def list_specializations():
-    """Lấy danh sách chuyên ngành từ ontology"""
+    """Trả về danh sách chuyên ngành trích xuất từ ontology."""
     try:
         engine = current_app.recommendation_engine
         if engine is None:
             return jsonify({
-                'success': False,
-                'error': 'Recommendation engine không khởi tạo được',
+                "success": False,
+                "error": "Bộ máy gợi ý chưa khởi tạo được",
             }), 500
 
         options = _get_specializations(engine)
+        current_app.logger.info("Đã yêu cầu danh sách chuyên ngành: %s lựa chọn", len(options))
         return jsonify({
-            'success': True,
-            'data': options,
-            'total': len(options),
+            "success": True,
+            "data": options,
+            "total": len(options),
         })
-    except Exception as e:
+    except Exception as exc:
+        current_app.logger.exception("Không thể lấy danh sách chuyên ngành")
         return jsonify({
-            'success': False,
-            'error': str(e),
+            "success": False,
+            "error": str(exc),
         }), 500
 
 
-@bp.route('/<student_id>', methods=['GET'])
+@bp.route("/<student_id>", methods=["GET"])
 def get_student(student_id: str):
-    """Lấy thông tin chi tiết một sinh viên"""
+    """Trả về hồ sơ của một sinh viên."""
     try:
+        current_app.logger.info("Đã yêu cầu chi tiết sinh viên: %s", student_id)
         service = current_app.student_data_service
         student = service.get_student(student_id)
 
         if not student:
             return jsonify({
-                'success': False,
-                'error': f'Không tìm thấy sinh viên {student_id}',
+                "success": False,
+                "error": f"Không tìm thấy sinh viên {student_id}",
             }), 404
 
         return jsonify({
-            'success': True,
-            'data': student.to_dict(),
+            "success": True,
+            "data": student.to_dict(),
         })
-    except Exception as e:
+    except Exception as exc:
+        current_app.logger.exception("Không thể lấy chi tiết sinh viên: %s", student_id)
         return jsonify({
-            'success': False,
-            'error': str(e),
+            "success": False,
+            "error": str(exc),
         }), 500
 
 
@@ -179,13 +194,16 @@ def _get_course_catalog(engine) -> dict:
     catalog = {}
     for code, info in engine.course_data.items():
         catalog[code] = {
-            'code': code,
-            'name': info.get('name', code),
-            'credits': info.get('credit', 0),
+            "code": code,
+            "name": info.get("name", code),
+            "credits": info.get("credit", 0),
         }
     return catalog
 
 
 def _get_specializations(engine) -> list:
-    options = sorted({name.strip() for name in engine.specializations_map.values() if isinstance(name, str) and name.strip()})
-    return options
+    return sorted({
+        name.strip()
+        for name in engine.specializations_map.values()
+        if isinstance(name, str) and name.strip()
+    })

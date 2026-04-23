@@ -56,7 +56,7 @@
 
 ---
 
-## PHẦN I: KIẾN TRÚC THƯ MỤC (Folder Structure)
+## PHẦN I: KIẾN TRÚC THƯ MỤC
 
 ```
 NCKH/
@@ -77,7 +77,7 @@ NCKH/
     ├── app.py                     # Điểm vào Flask
     ├── config.py                  # Cấu hình
     │
-    ├── models/                    # Data models
+    ├── models/                    # Mô hình dữ liệu
     │   ├── __init__.py
     │   ├── student.py             # StudentProfile
     │   ├── course.py              # CourseInfo
@@ -90,7 +90,7 @@ NCKH/
     │   ├── recommendation_engine.py # Chuyển recommend_courses.py
     │   └── explanation_generator.py # Tạo giải thích
     │
-    ├── routes/                    # Web endpoints
+    ├── routes/                    # Các điểm cuối web
     │   ├── __init__.py
     │   ├── student_routes.py      # GET/POST sinh viên
     │   ├── recommendation_routes.py # POST gợi ý, GET kết quả
@@ -114,7 +114,7 @@ NCKH/
 
 ---
 
-## PHẦN II: TUẦN TỰ XÂY DỰNG (Step-by-Step)
+## PHẦN II: TUẦN TỰ XÂY DỰNG
 
 ### BƯỚC 1: Refactor Recommendation Engine thành Module
 
@@ -123,7 +123,7 @@ NCKH/
 **File**: `flask_app/services/recommendation_engine.py`
 
 ```python
-# Pseudo-code cấu trúc
+# Mã giả cấu trúc
 class RecommendationEngine:
     def __init__(self, ontology_path: str, ontology_type: str = 'rdf'):
         self.ontology_path = ontology_path
@@ -243,7 +243,7 @@ def list_students():
     students = student_data_service.get_all_students()
     return jsonify([s.to_dict() for s in students])
 
-@app.route('/api/recommend', methods=['POST'])
+@app.route('/api/recommendations', methods=['POST'])
 def get_recommendation():
     """
     POST: {
@@ -293,7 +293,7 @@ def recommendation_ui():
 **File**: `flask_app/templates/student_form.html`
 
 ```html
-<form id="recommendation-form" method="POST" action="/api/recommend">
+<form id="recommendation-form" method="POST" action="/api/recommendations">
     <div class="form-group">
         <label for="student_id">Chọn/Nhập Mã Sinh Viên:</label>
         <datalist id="studentList">
@@ -513,10 +513,10 @@ Constraint Tổ Hợp:
 - [ ] Unit test cho từng module
 
 ### Phase 2: Flask API (Tuần 2)
-- [ ] Tạo routes `/api/students`, `/api/recommend`
+- [ ] Tạo routes `/api/students`, `/api/recommendations` (alias `/api/recommend` nếu cần tương thích demo)
 - [ ] Viết request/response validators
 - [ ] Caching strategy: không tải ontology mỗi request
-- [ ] Integration test: end-to-end flow
+- [ ] Kiểm thử tích hợp: luồng đầu-cuối
 
 ### Phase 3: Frontend UI (Tuần 3)
 - [ ] Form nhập hồ sơ + datalist SV
@@ -578,7 +578,7 @@ class Config:
 
 ## PHẦN VI: Ví Dụ API Request/Response
 
-### POST /api/recommend
+### POST /api/recommendations
 
 **Request:**
 ```json
