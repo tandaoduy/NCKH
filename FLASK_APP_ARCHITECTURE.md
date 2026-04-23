@@ -19,7 +19,7 @@
 │             FLASK WEB APPLICATION                           │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
-│  [Frontend]                    [Backend]                   │
+│  [Giao diện]                   [Máy chủ]                   │
 │  • Form nhập hồ sơ      →      1. Xác thực dữ liệu       │
 │  • Select SV từ DB      →      2. Chuẩn hóa             │
 │  • Hiển thị kết quả     →      3. Gọi Engine            │
@@ -70,7 +70,7 @@ NCKH/
 ├── StudentDataStandardization/   # (giữ nguyên)
 │   ├── DanhSachSinhVien.json
 │   ├── DanhSachSinhVien.csv
-│   ├── recommend_courses.py      # (sẽ refactor thành module)
+│   ├── recommend_courses.py      # legacy/offline, không phải luồng web chính
 │   └── ...
 │
 └── flask_app/                     # NEW: Web application
@@ -85,16 +85,16 @@ NCKH/
     │
     ├── services/                  # Business logic
     │   ├── __init__.py
-    │   ├── ontology_loader.py     # Tải RDF ontology
+│   ├── ontology_loader.py     # Tải ontology RDF
     │   ├── student_data_service.py # Đọc/quản lý DP SV
-    │   ├── recommendation_engine.py # Chuyển recommend_courses.py
-    │   └── explanation_generator.py # Tạo giải thích
+    │   ├── recommendation_engine.py # Lõi gợi ý đang chạy trong Flask
+│   └── explanation_generator.py # Tạo phần giải thích
     │
     ├── routes/                    # Các điểm cuối web
     │   ├── __init__.py
     │   ├── student_routes.py      # GET/POST sinh viên
     │   ├── recommendation_routes.py # POST gợi ý, GET kết quả
-    │   └── report_routes.py       # Export/download báo cáo
+│   └── report_routes.py       # Xuất/tải báo cáo
     │
     ├── templates/                 # HTML Jinja2
     │   ├── base.html
@@ -106,19 +106,19 @@ NCKH/
     │   ├── style.css
     │   └── main.js
     │
-    └── utils/                     # Helper functions
+    └── utils/                     # Hàm trợ giúp
         ├── __init__.py
         ├── constants.py           # WEIGHT_DEBT, MAX_CREDITS, v.v.
-        └── validators.py          # Validate input
+        └── validators.py          # Kiểm tra dữ liệu đầu vào
 ```
 
 ---
 
 ## PHẦN II: TUẦN TỰ XÂY DỰNG
 
-### BƯỚC 1: Refactor Recommendation Engine thành Module
+### BƯỚC 1: Tách Recommendation Engine thành mô-đun
 
-**Mục tiêu**: Tách logic từ `recommend_courses.py` thành class reusable
+**Mục tiêu**: Giữ `RecommendationEngine` là lõi dùng lại được trong Flask, không phụ thuộc CLI/TXT
 
 **File**: `flask_app/services/recommendation_engine.py`
 
@@ -134,7 +134,7 @@ class RecommendationEngine:
     
     def _load_ontology(self):
         """Nạp RDF ontology, trích xuất course_data"""
-        # [Các code từ recommend_courses.py, dòng 244-337]
+        # [Các code tương ứng trong RecommendationEngine]
         pass
     
     def get_recommendation(self, target_student: Dict[str, Any]) -> RecommendationResult:
@@ -159,7 +159,7 @@ class RecommendationEngine:
         pass
 ```
 
-**Các hàm chính (từ recommend_courses.py)**:
+**Các hàm chính trong `RecommendationEngine`**:
 - `_load_ontology()`: dòng 244-337
 - `_normalize_student_data()`: dòng 424-463
 - `_get_valid_courses()`: dòng 471-549
@@ -253,8 +253,13 @@ def get_recommendation():
     
     RESPONSE: {
         "success": true,
-        "result": RecommendationResult,
-        "timestamp": "2026-03-29T10:30:00"
+        "data": {
+            "student_id": "SV0016",
+            "student_name": "Nguyen Van A",
+            "eligible_courses": [...],
+            "recommended_courses": [...],
+            "explanation": "..."
+        }
     }
     """
     data = request.json
@@ -274,16 +279,15 @@ def get_recommendation():
     
     return jsonify({
         "success": True,
-        "result": result.to_dict(),
-        "timestamp": datetime.now().isoformat()
+        "data": {
+            **result.to_dict(),
+            "explanation": explanation_generator.generate_recommendation_summary(result),
+        }
     })
 
-@app.route('/ui/recommendation', methods=['GET'])
-def recommendation_ui():
-    """Giao diện web hiển thị kết quả"""
-    # GET tham số ?student_id=SV0016 từ session hoặc DB
-    result = get_recommendation_from_cache or database query
-    return render_template('recommendation_result.html', result=result)
+# Giao diện web hiện tại không dùng route `/ui/recommendation`.
+# Người dùng chọn sinh viên tại `/students`, sau đó frontend gọi `/api/recommendations`
+# và tự render kết quả ngay trên trang.
 ```
 
 ---
@@ -339,7 +343,7 @@ def recommendation_ui():
    </table>
    ```
 
-2. **Tơ hợp đề xuất** (Recommended Courses - kết quả Beam Search)
+2. **Tổ hợp đề xuất** (Recommended Courses - kết quả Beam Search)
    ```html
    <table class="recommended-courses" style="background-color: #e8f5e9;">
        <!-- Tương tự, nhưng highlight -->
@@ -365,7 +369,7 @@ def recommendation_ui():
 4. **Giải thích thuật toán**
    ```html
    <div class="algorithm-explanation">
-       <h4>Giải Thích Beam Search (Nghiên Cứu Khoa Học)</h4>
+       <h4>Giải thích thuật toán tìm kiếm chùm</h4>
        <pre>{{ beam_search_details }}</pre>
        
        <h5>Công Thức Heuristic:</h5>
@@ -378,7 +382,7 @@ def recommendation_ui():
 
 ---
 
-## PHẦN III: GIẢI THÍCH NGHIÊN CỨU (Research Explanation)
+## PHẦN III: GIẢI THÍCH NGHIÊN CỨU
 
 ### 1. Công Thức Heuristic Scoring
 
@@ -423,7 +427,7 @@ H_total = H + openNow × 50 + recProximity × 10 + goalScore
 
 ---
 
-### 2. Beam Search Algorithm
+### 2. Thuật toán tìm kiếm chùm
 
 ```
 Khởi tạo:
@@ -504,10 +508,10 @@ Constraint Tổ Hợp:
 
 ---
 
-## PHẦN IV: TUẦN TỰ TRIỂN KHAI (Deployment Sequence)
+## PHẦN IV: TRÌNH TỰ TRIỂN KHAI
 
 ### Phase 1: Backend Module (Tuần 1)
-- [ ] Refactor `recommendation_engine.py` từ script
+- [ ] Hoàn thiện `RecommendationEngine` trong Flask
 - [ ] Viết `StudentDataService` đọc JSON/CSV
 - [ ] Viết `OntologyLoader` tách logic Ontology
 - [ ] Unit test cho từng module
@@ -518,7 +522,7 @@ Constraint Tổ Hợp:
 - [ ] Caching strategy: không tải ontology mỗi request
 - [ ] Kiểm thử tích hợp: luồng đầu-cuối
 
-### Phase 3: Frontend UI (Tuần 3)
+### Giai đoạn 3: Giao diện người dùng (Tuần 3)
 - [ ] Form nhập hồ sơ + datalist SV
 - [ ] Hiển thị kết quả 4 phần chính
 - [ ] Động CSS highlight, hover, tooltip
@@ -555,17 +559,17 @@ class Config:
     STUDENT_DATA_JSON = os.path.join(os.path.dirname(__file__), '..', 'StudentDataStandardization', 'DanhSachSinhVien.json')
     STUDENT_DATA_CSV = os.path.join(os.path.dirname(__file__), '..', 'StudentDataStandardization', 'DanhSachSinhVien.csv')
     
-    # Recommendation Engine Parameters
+    # Tham số bộ máy gợi ý
     BEAM_WIDTH = 8
     REGISTER_MAX_CREDITS = 27
     REGISTER_MIN_CREDITS = 10
     
-    # Heuristic Weights
+    # Trọng số heuristic
     WEIGHT_DEBT = 1000
     WEIGHT_LINK = 20
     WEIGHT_DELAY = 50
     
-    # Elective Quotas (default)
+    # Hạn ngạch môn tự chọn (mặc định)
     ELECTIVE_QUOTAS = {
         'general': 1,
         'physical': 2,
@@ -591,7 +595,7 @@ class Config:
 ```json
 {
   "success": true,
-  "result": {
+  "data": {
     "student": {
       "student_id": "SV0016",
       "name": "Nguyễn Văn A",
@@ -632,15 +636,15 @@ class Config:
       "foundation": 1,
       "specialization": 2
     },
-    "beam_search_details": "Beam width=8, final state selected 5 courses, quota filled 2/7 categories..."
-  },
-  "timestamp": "2026-03-29T10:30:00.123456"
+    "beam_search_details": "Beam width=8, final state selected 5 courses, quota filled 2/7 categories...",
+    "explanation": "Tóm tắt lý do chọn môn, quota còn thiếu, và công thức heuristic dùng trong demo."
+  }
 }
 ```
 
 ---
 
-## PHẦN VII: Giải Thích Tại Sao (Why This Architecture)
+## PHẦN VII: Giải Thích Kiến Trúc
 
 | Yếu tố | Giải thích Nghiên Cứu |
 |--------|----------------------|
@@ -655,7 +659,7 @@ class Config:
 ## PHẦN VIII: Bước Tiếp Theo cho Bạn
 
 1. **Hôm nay**: Tạo thư mục `flask_app/` và các file `.py` tương ứng
-2. **Ngày mai**: Refactor `recommend_courses.py` thành `RecommendationEngine` class
+2. **Ngày mai**: Hoàn thiện `RecommendationEngine` trong Flask và giữ `recommend_courses.py` ở vai trò legacy/offline
 3. **Ngày kia**: Viết routes Flask, test API cơ bản
 4. **Tuần sau**: Viết HTML/CSS, hoàn biến kết quả
 

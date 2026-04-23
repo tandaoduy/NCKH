@@ -159,6 +159,11 @@
             </table>
         </div>
 
+        <div class="algorithm-details" id="algorithmDetailsSection" style="display: none;">
+            <h4>Giải thích thuật toán</h4>
+            <div class="details-box" id="algorithmDetailsContent"></div>
+        </div>
+
         <div class="action-buttons">
             <button onclick="resetForm()" class="btn btn-secondary">Chọn sinh viên khác</button>
         </div>
@@ -190,8 +195,8 @@
             if (shouldRestore) {
                 sessionStorage.setItem('shouldRestore', 'true');
             }
-            console.log("State saved. Should restore:", shouldRestore);
-        } catch (e) { console.error("Save state error:", e); }
+            console.log("Đã lưu trạng thái. Có cần khôi phục:", shouldRestore);
+        } catch (e) { console.error("Lỗi lưu trạng thái:", e); }
     }
 
     function restoreState() {
@@ -207,7 +212,7 @@
             if (!raw) return false;
             
             const state = JSON.parse(raw);
-            console.log("Restoring state...");
+            console.log("Đang khôi phục trạng thái...");
 
             // Khôi phục ô tìm kiếm
             if (state.searchTerm) {
@@ -239,7 +244,7 @@
             sessionStorage.removeItem('shouldRestore');
             return true;
         } catch (e) {
-            console.error("Restore state error:", e);
+            console.error("Lỗi khôi phục trạng thái:", e);
             sessionStorage.removeItem(SESSION_KEY);
             return false;
         }
@@ -294,7 +299,7 @@
             return true;
         } catch (error) {
             showError('Lỗi tải danh sách sinh viên: ' + error, 'error');
-            console.error('Error:', error);
+            console.error('Lỗi:', error);
             return false;
         }
     }
@@ -330,7 +335,7 @@
             })
             .catch(error => {
                 showError('Lỗi tải thông tin sinh viên: ' + error, 'error');
-                console.error('Error:', error);
+                console.error('Lỗi:', error);
             });
     }
 
@@ -438,7 +443,7 @@
                 document.getElementById('loadingSpinner').style.display = 'none';
                 document.getElementById('generateBtn').disabled = false;
                 showError('Lỗi: ' + error, 'error');
-                console.error('Error:', error);
+                console.error('Lỗi:', error);
             });
     }
 
@@ -469,9 +474,43 @@
 
         // Hiển thị khu vực kết quả
         document.getElementById('resultsSection').style.display = 'block';
+        renderAlgorithmExplanation(result);
 
         // Lưu lại state khi có kết quả gợi ý
         saveState();
+    }
+
+    function renderAlgorithmExplanation(result) {
+        const section = document.getElementById('algorithmDetailsSection');
+        const content = document.getElementById('algorithmDetailsContent');
+
+        if (!section || !content) {
+            return;
+        }
+
+        const parts = [];
+        if (result && result.explanation) {
+            parts.push(result.explanation);
+        } else {
+            if (result && result.beam_search_details) {
+                parts.push(`Chi tiết chùm: ${result.beam_search_details}`);
+            }
+            if (result && result.heuristic_formula) {
+                parts.push(`Công thức heuristic: ${result.heuristic_formula}`);
+            }
+            if (result && Array.isArray(result.warnings) && result.warnings.length) {
+                parts.push(`Cảnh báo:\n- ${result.warnings.join('\n- ')}`);
+            }
+        }
+
+        if (!parts.length) {
+            section.style.display = 'none';
+            content.innerHTML = '';
+            return;
+        }
+
+        content.innerHTML = `<pre>${escapeHtml(parts.join('\n\n'))}</pre>`;
+        section.style.display = 'block';
     }
 
     function displayEligibleCourses(courses) {

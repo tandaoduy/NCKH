@@ -62,6 +62,15 @@ def get_recommendation():
         result.generated_at = datetime.now().isoformat()
         result.processing_time_ms = round((time.perf_counter() - started_at) * 1000, 2)
 
+        explanation_generator = getattr(current_app, "explanation_generator", None)
+        explanation_text = ""
+        if explanation_generator is not None:
+            max_credits = current_app.config.get("REGISTER_MAX_CREDITS", 27)
+            explanation_text = explanation_generator.generate_recommendation_summary(
+                result,
+                max_credits=max_credits,
+            )
+
         current_app.logger.info(
             "Đã hoàn tất gợi ý: student_id=%s eligible=%s recommended=%s credits=%s duration_ms=%s",
             student_id,
@@ -71,9 +80,12 @@ def get_recommendation():
             result.processing_time_ms,
         )
 
+        payload = result.to_dict()
+        payload["explanation"] = explanation_text
+
         return jsonify({
             "success": True,
-            "data": result.to_dict(),
+            "data": payload,
         })
 
     except Exception as exc:

@@ -1,6 +1,6 @@
 /**
  * JavaScript chính cho hệ thống gợi ý kế hoạch học tập
- * Logic phía giao diện (Frontend)
+ * Logic phía giao diện người dùng.
  */
 
 // ========== BIẾN TOÀN CỤC ==========
@@ -9,7 +9,7 @@ let selectedStudent = null;
 
 // ========== KHỞI TẠO ==========
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Initializing page...');
+    console.log('Đang khởi tạo trang...');
     // Nếu trang đã có logic load sinh viên riêng (như students.html) thì không chạy load chung ở đây
     if (document.getElementById('studentSelect') && typeof window.currentStudent === 'undefined') {
         loadAllStudents();
@@ -41,16 +41,16 @@ async function loadAllStudents() {
 
         if (data.success) {
             allStudents = data.data;
-            console.log(`Loaded ${allStudents.length} students`);
+            console.log(`Đã nạp ${allStudents.length} sinh viên`);
 
             // Đổ dữ liệu vào ô chọn
             populateStudentSelect();
         } else {
-            console.error('Error loading students:', data.error);
+            console.error('Lỗi khi nạp danh sách sinh viên:', data.error);
             showError('Không thể tải danh sách sinh viên');
         }
     } catch (error) {
-        console.error('Fetch error:', error);
+        console.error('Lỗi khi gọi dữ liệu:', error);
         showError('Lỗi kết nối đến server');
     }
 }
@@ -131,7 +131,7 @@ async function onStudentSelected() {
             showError('Không thể tải thông tin sinh viên');
         }
     } catch (error) {
-        console.error('Fetch error:', error);
+        console.error('Lỗi khi gọi dữ liệu:', error);
         showError('Lỗi tải thông tin sinh viên');
     }
 }
@@ -207,7 +207,7 @@ async function generateRecommendation() {
             showError(`Lỗi: ${errorMsg}`);
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Lỗi:', error);
         showError(`Lỗi kế nối: ${error.message}`);
     } finally {
         generateBtn.disabled = false;
@@ -255,13 +255,44 @@ function displayRecommendationResults(data) {
     }
 
     // Hiển thị chi tiết thuật toán
-    const detailsDiv = document.querySelector('.details-box');
-    if (detailsDiv && data.explanation) {
-        detailsDiv.innerHTML = `<pre>${escapeHtml(data.explanation)}</pre>`;
-    }
+    renderAlgorithmExplanation(data);
 }
 
 // ========== HÀM HỖ TRỢ ==========
+
+function renderAlgorithmExplanation(data) {
+    const section = document.getElementById('algorithmDetailsSection');
+    const content = document.getElementById('algorithmDetailsContent');
+
+    if (!section || !content) {
+        return;
+    }
+
+    const parts = [];
+
+    if (data && data.explanation) {
+        parts.push(data.explanation);
+    } else {
+        if (data && data.beam_search_details) {
+            parts.push(`Chi tiết chùm: ${data.beam_search_details}`);
+        }
+        if (data && data.heuristic_formula) {
+            parts.push(`Công thức heuristic: ${data.heuristic_formula}`);
+        }
+        if (data && Array.isArray(data.warnings) && data.warnings.length) {
+            parts.push(`Cảnh báo:\n- ${data.warnings.join('\n- ')}`);
+        }
+    }
+
+    if (!parts.length) {
+        section.style.display = 'none';
+        content.innerHTML = '';
+        return;
+    }
+
+    content.innerHTML = `<pre>${escapeHtml(parts.join('\n\n'))}</pre>`;
+    section.style.display = 'block';
+}
 
 function displayEligibleCourses(courses) {
     const section = document.getElementById('eligibleCoursesSection');

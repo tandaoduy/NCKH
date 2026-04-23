@@ -1,6 +1,6 @@
 # Bảng mô tả quy tắc chọn môn & Beam Search (chi tiết)
 
-Tài liệu này mô tả đúng logic đang chạy trong `recommend_courses.py` tại thời điểm hiện tại.
+Tài liệu này mô tả logic của script CLI legacy `recommend_courses.py`. Luồng web Flask hiện tại dùng `RecommendationEngine` và API JSON, không phụ thuộc TXT làm đầu ra chính.
 
 ---
 
@@ -16,7 +16,7 @@ Tài liệu này mô tả đúng logic đang chạy trong `recommend_courses.py`
 | 6. Tính quota còn thiếu | Chỉ gợi ý phần tự chọn chưa hoàn thành | quota mục tiêu - số đã hoàn thành | `remaining_elective_counts` |
 | 7. Random ứng viên cho tổ hợp cuối | Random chỉ ở giai đoạn tổ hợp cuối | pool môn tự chọn hợp lệ | `beam_candidates` |
 | 8. Beam Search | Chọn tổ hợp cuối không vượt tín chỉ | `beam_candidates`, quota, score | `valid_courses` (tổ hợp cuối) |
-| 9. Xuất kết quả | In terminal + ghi TXT | `eligible_courses`, `valid_courses` | báo cáo terminal và TXT |
+| 9. Xuất kết quả | Terminal + TXT cho script CLI legacy | `eligible_courses`, `valid_courses` | báo cáo terminal và TXT |
 
 ---
 

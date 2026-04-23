@@ -12,7 +12,8 @@ class ExplanationGenerator:
     def generate_beam_search_explanation(self, 
                                          beam_width: int,
                                          iterations: int,
-                                         final_quota_fill: int) -> str:
+                                         final_quota_fill: int,
+                                         total_quota_categories: int = 4) -> str:
         """Giải thích chi tiết thuật toán tìm kiếm chùm"""
         
         explanation = f"""
@@ -21,7 +22,7 @@ class ExplanationGenerator:
 1. TỔNG QUAN:
    - Độ rộng chùm: {beam_width} (giữ {beam_width} trạng thái tốt nhất mỗi vòng)
    - Mục tiêu: Tìm tổ hợp môn tối ưu trong ràng buộc (tín chỉ, hạn ngạch, điểm)
-   - Kết quả: Đạt {final_quota_fill}/4 hạn ngạch danh mục tự chọn
+   - Kết quả: Đạt {final_quota_fill}/{total_quota_categories} hạn ngạch danh mục tự chọn
 
 2. LUỒNG THUẬT TOÁN:
    Vòng lặp (đến khi hội tụ):
@@ -147,75 +148,95 @@ Môn B: SOT350 (Tự chọn)
 """
         return explanation
     
-    def generate_recommendation_summary(self, result: RecommendationResult) -> str:
-        """Tóm tắt kết quả gợi ý"""
-        
-        summary = f"""
-=== TÓM TẮT KẾ HOẠCH HỌC TẬP ===
+    def generate_recommendation_summary(self, result: RecommendationResult, max_credits: int) -> str:
+        """Tóm tắt kết quả gợi ý.
+
+        `max_credits` được truyền từ cấu hình để tránh hardcode giới hạn tín chỉ.
+        """
+        sections = [
+            self._build_summary_header(result),
+            self._build_summary_result(result, max_credits),
+            self._build_quota_section(result),
+        ]
+
+        if result.warnings:
+            sections.append(self._build_warning_section(result.warnings))
+
+        return "\n\n".join(section for section in sections if section).strip()
+
+    def _build_summary_header(self, result: RecommendationResult) -> str:
+        return f"""=== TÓM TẮT KẾ HOẠCH HỌC TẬP ===
 
 Sinh viên: {result.student_name} ({result.student_id})
 Học kỳ hiện tại: {result.current_semester} → Đăng ký kỳ: {result.next_semester}
-Mục tiêu học: {result.study_goal}
+Mục tiêu học: {result.study_goal}"""
 
-KẾT QUẢ:
-─────────
+    def _build_summary_result(self, result: RecommendationResult, max_credits: int) -> str:
+        lines = [
+            "KẾT QUẢ:",
+            "─────────",
+            "",
+            "Danh sách môn hợp lệ (đầu vào tìm kiếm chùm):",
+            f"  • Tổng số: {result.total_eligible_count} môn",
+            "  • Gồm: môn bắt buộc, tự chọn, học lại",
+            "  • Những môn này đã thỏa 8 điều kiện kinh doanh:",
+            "    ✓ Chưa đạt",
+            "    ✓ Tiên quyết OK",
+            "    ✓ Kỳ mở phù hợp",
+            "    ✓ Kỳ khuyến nghị phù hợp mục tiêu",
+            "    ✓ Chuyên ngành khớp",
+            "    ✓ Tín chỉ không quá tải",
+            "    ✓ Không vi phạm ràng buộc cứng kỳ 8 vs kỳ 7",
+            "    + Hạn ngạch tự chọn chưa đầy",
+            "",
+            "Tổ hợp đề xuất (kết quả tìm kiếm chùm):",
+            f"  • Tổng số: {result.total_recommended_count} môn",
+            f"  • Tổng tín chỉ: {result.total_recommended_credits}/{max_credits}",
+            "  • Danh sách:",
+        ]
 
-Danh sách môn hợp lệ (đầu vào tìm kiếm chùm):
-  • Tổng số: {result.total_eligible_count} môn
-  • Gồm: môn bắt buộc, tự chọn, học lại
-  • Những môn này đã thỏa 8 điều kiện kinh doanh:
-    ✓ Chưa đạt
-    ✓ Tiên quyết OK
-    ✓ Kỳ mở phù hợp
-    ✓ Kỳ khuyến nghị phù hợp mục tiêu
-    ✓ Chuyên ngành khớp
-    ✓ Tín chỉ không quá tải
-    ✓ Không vi phạm ràng buộc cứng kỳ 8 vs kỳ 7
-    + Hạn ngạch tự chọn chưa đầy
-
-Tổ hợp đề xuất (kết quả tìm kiếm chùm):
-  • Tổng số: {result.total_recommended_count} môn
-  • Tổng tín chỉ: {result.total_recommended_credits}/27
-  • Danh sách:
-"""
-        
         for i, course in enumerate(result.recommended_courses, 1):
             status = "Học lại" if course.is_retake else f"S{course.recommended_semester}"
-            summary += f"\n    {i}. {course.code} - {course.name}\n"
-            summary += f"       TC: {course.credits} | {status} | Điểm: {course.total_priority_score:.0f}\n"
-            summary += f"       Lý do: {', '.join(course.reasons)}\n"
-        
-        summary += f"""
+            lines.extend([
+                "",
+                f"    {i}. {course.code} - {course.name}",
+                f"       TC: {course.credits} | {status} | Điểm: {course.total_priority_score:.0f}",
+                f"       Lý do: {', '.join(course.reasons)}",
+            ])
 
-TIẾN ĐỘ HẠN NGẠCH MÔN TỰ CHỌN:
-─────────────────────
+        return "\n".join(lines)
 
-Danh mục           | Đã Hoàn | Mục Tiêu | Còn Thiếu | Đã Chọn
-─────────────────────────────────────────────────────────
-"""
-        
+    def _build_quota_section(self, result: RecommendationResult) -> str:
+        lines = [
+            "TIẾN ĐỘ HẠN NGẠCH MÔN TỰ CHỌN:",
+            "─────────────────────",
+            "",
+            "Danh mục           | Đã Hoàn | Mục Tiêu | Còn Thiếu | Đã Chọn",
+            "─────────────────────────────────────────────────────────",
+        ]
+
         for cat in ['general', 'physical', 'foundation', 'specialization']:
             completed = result.elective_completed_counts.get(cat, 0)
             target = result.elective_target_quotas.get(cat, 0)
             remaining = result.elective_quota_remaining.get(cat, 0)
             finalized = result.finalized_elective_counts.get(cat, 0)
-            
+
             cat_name = {
                 'general': 'Đại cương',
                 'physical': 'Thể chất',
                 'foundation': 'Cơ sở ngành',
                 'specialization': 'Chuyên ngành',
             }.get(cat, cat)
-            
-            summary += f"{cat_name:15} | {completed:7} | {target:8} | {remaining:9} | {finalized:8}\n"
-        
-        if result.warnings:
-            summary += f"""
 
-CẢNH BÁO:
-─────────
-"""
-            for warning in result.warnings:
-                summary += f"  ⚠ {warning}\n"
-        
-        return summary
+            lines.append(f"{cat_name:15} | {completed:7} | {target:8} | {remaining:9} | {finalized:8}")
+
+        return "\n".join(lines)
+
+    def _build_warning_section(self, warnings: List[str]) -> str:
+        lines = [
+            "CẢNH BÁO:",
+            "─────────",
+        ]
+        for warning in warnings:
+            lines.append(f"  ⚠ {warning}")
+        return "\n".join(lines)
