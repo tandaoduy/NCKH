@@ -1,6 +1,6 @@
-"""
+﻿"""
 Dịch vụ bộ máy gợi ý
-Tách từ recommend_courses.py để dùng lại trong Flask app
+Tách từ legacy/recommend_source.py để dùng lại trong Flask app
 """
 
 import random

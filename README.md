@@ -1,4 +1,7 @@
-# Đề tài gợi ý kế hoạch học tập dựa trên Ontology
+﻿# Đề tài gợi ý kế hoạch học tập dựa trên Ontology
+
+Tài liệu này là nguồn mô tả chính của project. Phần kiến trúc và hướng dẫn triển khai đã được gộp vào đây để tránh trùng lặp.
+
 
 ## 1) Mục tiêu đề tài
 
@@ -22,33 +25,36 @@ Hệ thống trả về:
 ```text
 Code/
 ├─ owl/
-│  ├─ ontology_v18.rdf
-│  ├─ ontology_v18.properties
-│  ├─ TrainingProgramOntology_v18.owl
-│  ├─ ... (các version ontology cũ hơn)
+│  ├─ current/
+│  │  ├─ ontology_v18.rdf
+│  │  ├─ ontology_v18.properties
+│  │  └─ TrainingProgramOntology_v18.owl
+│  └─ archive/
+│     └─ ... (các version ontology cũ hơn)
 │
-├─ StudentDataStandardization/
-│  ├─ recommend_courses.py
-│  ├─ TestSPARQL.py
+├─ data/
 │  ├─ DanhSachSinhVien.json
-│  ├─ DanhSachSinhVien.csv
-│  ├─ BANG_MO_TA_QUY_TAC_CHON_MON.md
-│  ├─ Output_TestSPARQL.txt
-│  ├─ recommend_courses_report_*.txt
-│  └─ ...
+│  └─ DanhSachSinhVien.csv
 │
-└─ README.md  (tài liệu này)
+├─ legacy/
+│  ├─ recommend_source.py
+│  ├─ test_sparql.py
+│  ├─ BANG_MO_TA_QUY_TAC_CHON_MON.md
+│  └─ outputs/
+│     └─ Output_TestSPARQL.txt
+│
+└─ README.md
 ```
 
 Các thành phần quan trọng:
 
-- Ontology chính đang dùng: [owl/ontology_v18.rdf](owl/ontology_v18.rdf)
+- Ontology chính đang dùng: [owl/current/ontology_v18.rdf](owl/current/ontology_v18.rdf)
 - Bộ máy gợi ý đang chạy trong web app: [flask_app/services/recommendation_engine.py](flask_app/services/recommendation_engine.py)
-- Script CLI cũ chỉ còn giữ lại để tham khảo/offline: [StudentDataStandardization/recommend_courses.py](StudentDataStandardization/recommend_courses.py)
-- Script kiểm tra SPARQL: [StudentDataStandardization/TestSPARQL.py](StudentDataStandardization/TestSPARQL.py)
-- Dữ liệu sinh viên JSON: [StudentDataStandardization/DanhSachSinhVien.json](StudentDataStandardization/DanhSachSinhVien.json)
-- Dữ liệu sinh viên CSV (fallback): [StudentDataStandardization/DanhSachSinhVien.csv](StudentDataStandardization/DanhSachSinhVien.csv)
-- Mô tả quy tắc chi tiết hiện hành: [StudentDataStandardization/BANG_MO_TA_QUY_TAC_CHON_MON.md](StudentDataStandardization/BANG_MO_TA_QUY_TAC_CHON_MON.md)
+- Script CLI cũ chỉ còn giữ lại để tham khảo/offline: [legacy/recommend_source.py](legacy/recommend_source.py)
+- Script kiểm tra SPARQL: [legacy/test_sparql.py](legacy/test_sparql.py)
+- Dữ liệu sinh viên JSON: [data/DanhSachSinhVien.json](data/DanhSachSinhVien.json)
+- Dữ liệu sinh viên CSV (fallback): [data/DanhSachSinhVien.csv](data/DanhSachSinhVien.csv)
+- Mô tả quy tắc chi tiết hiện hành: [legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md](legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md)
 
 ---
 
@@ -90,7 +96,7 @@ Nếu không tìm thấy sinh viên trong JSON, hệ thống mới dùng CSV fal
 
 ### Bước 2: Nạp ontology và dựng dữ liệu môn học
 
-Từ [owl/ontology_v18.rdf](owl/ontology_v18.rdf), hệ thống dựng course_data gồm:
+Từ [owl/current/ontology_v18.rdf](owl/current/ontology_v18.rdf), hệ thống dựng course_data gồm:
 
 - Prerequisite, corequisite
 - Kỳ mở, kỳ khuyến nghị
@@ -160,9 +166,9 @@ Sử dụng tìm kiếm chùm (Beam Search) để chọn tổ hợp cuối cùng
 Hệ thống xuất:
 
 - Kết quả tóm tắt ra terminal chỉ dùng để debug/đối chiếu khi chạy script legacy
-- Báo cáo chi tiết ra file txt chỉ còn là đầu ra của script CLI cũ trong `StudentDataStandardization`
+- Báo cáo chi tiết ra file txt chỉ còn là đầu ra của script CLI cũ trong `legacy`
 
-Các file báo cáo mẫu: [StudentDataStandardization](StudentDataStandardization)
+Các file báo cáo mẫu: [legacy](legacy)
 
 ---
 
@@ -171,7 +177,7 @@ Các file báo cáo mẫu: [StudentDataStandardization](StudentDataStandardizati
 ### 5.1 Module gợi ý môn
 
 - File đang chạy trong web app: [flask_app/services/recommendation_engine.py](flask_app/services/recommendation_engine.py)
-- File CLI cũ chỉ còn để tham khảo: [StudentDataStandardization/recommend_courses.py](StudentDataStandardization/recommend_courses.py)
+- File CLI cũ chỉ còn để tham khảo: [legacy/recommend_source.py](legacy/recommend_source.py)
 - Nhiệm vụ:
   - Nạp dữ liệu sinh viên + ontology
   - Lọc môn hợp lệ
@@ -181,7 +187,7 @@ Các file báo cáo mẫu: [StudentDataStandardization](StudentDataStandardizati
 
 ### 5.2 Module kiểm thử SPARQL
 
-- File: [StudentDataStandardization/TestSPARQL.py](StudentDataStandardization/TestSPARQL.py)
+- File: [legacy/test_sparql.py](legacy/test_sparql.py)
 - Nhiệm vụ:
   - Chạy các truy vấn SPARQL kiểm tra dữ liệu ontology
   - Kiểm tra môn theo học kỳ, tiên quyết, song hành, nhóm chuyên ngành
@@ -189,7 +195,7 @@ Các file báo cáo mẫu: [StudentDataStandardization](StudentDataStandardizati
 
 ### 5.3 Tài liệu quy tắc nghiệp vụ
 
-- File: [StudentDataStandardization/BANG_MO_TA_QUY_TAC_CHON_MON.md](StudentDataStandardization/BANG_MO_TA_QUY_TAC_CHON_MON.md)
+- File: [legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md](legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md)
 - Nhiệm vụ:
   - Mô tả đầy đủ quy tắc lọc, scoring, quota, beam search
   - Là tài liệu đối chiếu với code
@@ -200,7 +206,7 @@ Các file báo cáo mẫu: [StudentDataStandardization](StudentDataStandardizati
 
 ### 6.1 Hồ sơ sinh viên
 
-Nguồn chính: [StudentDataStandardization/DanhSachSinhVien.json](StudentDataStandardization/DanhSachSinhVien.json)
+Nguồn chính: [data/DanhSachSinhVien.json](data/DanhSachSinhVien.json)
 
 Các trường thường dùng:
 
@@ -242,13 +248,13 @@ Sau đó mở:
 Nếu cần chạy script CLI legacy để đối chiếu offline:
 
 ```bash
-python StudentDataStandardization/recommend_courses.py --student-id SV0016
+python legacy/recommend_source.py --student-id SV0016
 ```
 
 Chạy kiểm tra SPARQL:
 
 ```bash
-python StudentDataStandardization/TestSPARQL.py --ontology owl/ontology_v18.rdf
+python legacy/test_sparql.py --ontology owl/current/ontology_v18.rdf
 ```
 
 ---
@@ -266,10 +272,10 @@ Hiển thị:
 
 ### 8.2 Báo cáo txt (legacy)
 
-File TXT chỉ còn là đầu ra của script CLI cũ trong [StudentDataStandardization/recommend_courses.py](StudentDataStandardization/recommend_courses.py).  
+File TXT chỉ còn là đầu ra của script CLI cũ trong [legacy/recommend_source.py](legacy/recommend_source.py).  
 Trong web app Flask hiện tại, đầu ra chính là JSON API và giao diện HTML.
 
-Nếu vẫn chạy script legacy này, file report có timestamp sẽ nằm trong thư mục [StudentDataStandardization](StudentDataStandardization), gồm:
+Nếu vẫn chạy script legacy này, file report có timestamp sẽ nằm trong thư mục [legacy](legacy), gồm:
 
 - Tập môn hợp lệ đầu vào
 - Tổ hợp môn cuối cùng
@@ -298,7 +304,7 @@ Nếu vẫn chạy script legacy này, file report có timestamp sẽ nằm tron
 
 - [README.md](README.md)
 - [owl](owl)
-- [StudentDataStandardization/recommend_courses.py](StudentDataStandardization/recommend_courses.py)
-- [StudentDataStandardization/TestSPARQL.py](StudentDataStandardization/TestSPARQL.py)
-- [StudentDataStandardization/BANG_MO_TA_QUY_TAC_CHON_MON.md](StudentDataStandardization/BANG_MO_TA_QUY_TAC_CHON_MON.md)
-- [StudentDataStandardization/Output_TestSPARQL.txt](StudentDataStandardization/Output_TestSPARQL.txt)
+- [legacy/recommend_source.py](legacy/recommend_source.py)
+- [legacy/test_sparql.py](legacy/test_sparql.py)
+- [legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md](legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md)
+- [legacy/outputs/Output_TestSPARQL.txt](legacy/outputs/Output_TestSPARQL.txt)

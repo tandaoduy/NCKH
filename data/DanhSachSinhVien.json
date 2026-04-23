@@ -1,0 +1,3616 @@
+[
+    {
+        "mã sinh viên": "SV0001",
+        "tên sinh viên": "Nguyễn Trường Sinh",
+        "năm vào học": 2023,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Giảm tải",
+        "số tín chỉ đã tích lũy": 21,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 2,
+        "học kỳ dự kiến đăng ký tiếp theo": 3,
+        "danh sách môn đã học": {
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "INS330": "Cơ sở dữ liệu",
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "POL310": "Lịch sử Đảng Cộng sản Việt Nam",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT315": "Nhập môn lập trình",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "SOT332": "Toán rời rạc"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 4.2,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 3.9,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL310",
+                "Tên môn học": "Lịch sử Đảng Cộng sản Việt Nam",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 8.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT332",
+                "Tên môn học": "Toán rời rạc",
+                "điểm": 4.7,
+                "Trạng thái": "Chưa đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1"
+            },
+            {
+                "mã môn học": "SOT332",
+                "Tên môn học": "Toán rời rạc"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0002",
+        "tên sinh viên": "Trường Thịnh Giã",
+        "năm vào học": 2021,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Công nghệ phần mềm",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 81,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 6,
+        "học kỳ dự kiến đăng ký tiếp theo": 7,
+        "danh sách môn đã học": {
+            "85065": "Giáo dục thể chất (Chạy)",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "INS330": "Cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê",
+            "MAT327": "Toán 1",
+            "MAT328": "Toán 2",
+            "NEC321": "Kiến trúc máy tính",
+            "NEC329": "Mạng máy tính",
+            "PHY310": "Vật lý đại cương 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "POL310": "Lịch sử Đảng Cộng sản Việt Nam",
+            "POL333": "Tư tưởng Hồ Chí Minh",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT315": "Nhập môn lập trình",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "SOT331": "Lập trình hướng đối tượng",
+            "SOT332": "Toán rời rạc",
+            "SOT347": "Thiết kế Web",
+            "SOT355": "Phát triển ứng dụng Web",
+            "SOT375": "Tiếng Anh chuyên ngành (CN thông tin)",
+            "SOT380": "Kiến trúc và thiết kế phần mềm",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "SSH378": "Tư duy phản biện",
+            "SSH379": "Ngôn ngữ học thuật"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC329",
+                "Tên môn học": "Mạng máy tính",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 6.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL310",
+                "Tên môn học": "Lịch sử Đảng Cộng sản Việt Nam",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL333",
+                "Tên môn học": "Tư tưởng Hồ Chí Minh",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT332",
+                "Tên môn học": "Toán rời rạc",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT347",
+                "Tên môn học": "Thiết kế Web",
+                "điểm": 8.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT355",
+                "Tên môn học": "Phát triển ứng dụng Web",
+                "điểm": 8.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT375",
+                "Tên môn học": "Tiếng Anh chuyên ngành (CN thông tin)",
+                "điểm": 7.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT380",
+                "Tên môn học": "Kiến trúc và thiết kế phần mềm",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH379",
+                "Tên môn học": "Ngôn ngữ học thuật",
+                "điểm": 7.9,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0003",
+        "tên sinh viên": "Trần Tiến Phát",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 4,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 1,
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
+        "danh sách môn đã học": {
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0004",
+        "tên sinh viên": "Từ Công Tiến",
+        "năm vào học": 2023,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Giảm tải",
+        "số tín chỉ đã tích lũy": 30,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 3,
+        "học kỳ dự kiến đăng ký tiếp theo": 4,
+        "danh sách môn đã học": {
+            "FLS314": "Tiếng Anh B1.1",
+            "FLS315": "Tiếng Anh B1.2",
+            "MAT322": "Xác suất - Thống kê",
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "POL310": "Lịch sử Đảng Cộng sản Việt Nam",
+            "POL333": "Tư tưởng Hồ Chí Minh",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT315": "Nhập môn lập trình",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "SOT331": "Lập trình hướng đối tượng",
+            "SOT332": "Toán rời rạc",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "SSH378": "Tư duy phản biện"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 6.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 6.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 4.5,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "POL310",
+                "Tên môn học": "Lịch sử Đảng Cộng sản Việt Nam",
+                "điểm": 7.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL333",
+                "Tên môn học": "Tư tưởng Hồ Chí Minh",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 4.8,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 4.6,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "SOT332",
+                "Tên môn học": "Toán rời rạc",
+                "điểm": 4.7,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng"
+            },
+            {
+                "mã môn học": "SOT332",
+                "Tên môn học": "Toán rời rạc"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0005",
+        "tên sinh viên": "Võ Trường Sơn",
+        "năm vào học": 2024,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Hệ Thống Thông Tin",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 57,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 5,
+        "học kỳ dự kiến đăng ký tiếp theo": 6,
+        "danh sách môn đã học": {
+            "INS325": "Hệ điều hành",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "INS330": "Cơ sở dữ liệu",
+            "INS339": "Hệ quản trị cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê",
+            "MAT327": "Toán 1",
+            "MAT328": "Toán 2",
+            "NEC321": "Kiến trúc máy tính",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "POL310": "Lịch sử Đảng Cộng sản Việt Nam",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT315": "Nhập môn lập trình",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "SOT331": "Lập trình hướng đối tượng",
+            "SOT336": "Kỹ thuật đồ họa",
+            "SOT347": "Thiết kế Web",
+            "SOT375": "Tiếng Anh chuyên ngành (CN thông tin)",
+            "SOT381": "Tin học đại cương A (LT+TH)"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS339",
+                "Tên môn học": "Hệ quản trị cơ sở dữ liệu",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 6.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 6.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 6.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL310",
+                "Tên môn học": "Lịch sử Đảng Cộng sản Việt Nam",
+                "điểm": 8.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 7.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 6.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT336",
+                "Tên môn học": "Kỹ thuật đồ họa",
+                "điểm": 7.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT347",
+                "Tên môn học": "Thiết kế Web",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT375",
+                "Tên môn học": "Tiếng Anh chuyên ngành (CN thông tin)",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0006",
+        "tên sinh viên": "Nguyễn Hoàng Ly",
+        "năm vào học": 2022,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Truyền thông và Mạng máy tính",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 45,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 5,
+        "học kỳ dự kiến đăng ký tiếp theo": 6,
+        "danh sách môn đã học": {
+            "INS325": "Hệ điều hành",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "MAT322": "Xác suất - Thống kê",
+            "MAT327": "Toán 1",
+            "MAT328": "Toán 2",
+            "NEC321": "Kiến trúc máy tính",
+            "NEC326": "An toàn và bảo mật thông tin",
+            "NEC329": "Mạng máy tính",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "POL310": "Lịch sử Đảng Cộng sản Việt Nam",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT315": "Nhập môn lập trình",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "SOT331": "Lập trình hướng đối tượng"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 6.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC326",
+                "Tên môn học": "An toàn và bảo mật thông tin",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC329",
+                "Tên môn học": "Mạng máy tính",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL310",
+                "Tên môn học": "Lịch sử Đảng Cộng sản Việt Nam",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0007",
+        "tên sinh viên": "Vương Anh Minh",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 12,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 1,
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
+        "danh sách môn đã học": {
+            "85065": "Giáo dục thể chất (Chạy)",
+            "FLS314": "Tiếng Anh B1.1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0008",
+        "tên sinh viên": "Trần Anh Tuấn",
+        "năm vào học": 2023,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 28,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 3,
+        "học kỳ dự kiến đăng ký tiếp theo": 4,
+        "danh sách môn đã học": {
+            "FLS314": "Tiếng Anh B1.1",
+            "FLS315": "Tiếng Anh B1.2",
+            "INS325": "Hệ điều hành",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "INS330": "Cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "SSH378": "Tư duy phản biện"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 4.8,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 5.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 6.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0009",
+        "tên sinh viên": "Nguyễn Minh Đức",
+        "năm vào học": 2022,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Công nghệ phần mềm",
+        "mục tiêu học tập": "Giảm tải",
+        "số tín chỉ đã tích lũy": 42,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 5,
+        "học kỳ dự kiến đăng ký tiếp theo": 6,
+        "danh sách môn đã học": {
+            "FLS314": "Tiếng Anh B1.1",
+            "FLS315": "Tiếng Anh B1.2",
+            "INS325": "Hệ điều hành",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "INS330": "Cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê",
+            "POL307": "Triết học Mâc-Lênin",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "POL310": "Lịch sử Đảng Cộng sản Việt Nam",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT315": "Nhập môn lập trình",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "SSH378": "Tư duy phản biện"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 5.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 6.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL310",
+                "Tên môn học": "Lịch sử Đảng Cộng sản Việt Nam",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 4.3,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 7.7,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0010",
+        "tên sinh viên": "Trần Minh Viễn",
+        "năm vào học": 2024,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 33,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 4,
+        "học kỳ dự kiến đăng ký tiếp theo": 5,
+        "danh sách môn đã học": {
+            "FLS314": "Tiếng Anh B1.1",
+            "FLS315": "Tiếng Anh B1.2",
+            "MAT322": "Xác suất - Thống kê",
+            "MAT327": "Toán 1",
+            "MAT328": "Toán 2",
+            "NEC321": "Kiến trúc máy tính",
+            "NEC329": "Mạng máy tính",
+            "PHY310": "Vật lý đại cương 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "SSH378": "Tư duy phản biện"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 6.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 6.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC329",
+                "Tên môn học": "Mạng máy tính",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 6.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 7.6,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0011",
+        "tên sinh viên": "Lại Văn Minh",
+        "năm vào học": 2021,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Hệ Thống Thông Tin",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 72,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 7,
+        "học kỳ dự kiến đăng ký tiếp theo": 8,
+        "danh sách môn đã học": {
+            "FLS314": "Tiếng Anh B1.1",
+            "FLS315": "Tiếng Anh B1.2",
+            "INS325": "Hệ điều hành",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "INS330": "Cơ sở dữ liệu",
+            "INS339": "Hệ quản trị cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê",
+            "MAT327": "Toán 1",
+            "MAT328": "Toán 2",
+            "NEC321": "Kiến trúc máy tính",
+            "NEC329": "Mạng máy tính",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "POL310": "Lịch sử Đảng Cộng sản Việt Nam",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT315": "Nhập môn lập trình",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "SOT331": "Lập trình hướng đối tượng",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "SSH378": "Tư duy phản biện"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 7.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS339",
+                "Tên môn học": "Hệ quản trị cơ sở dữ liệu",
+                "điểm": 7.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 6.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 6.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC329",
+                "Tên môn học": "Mạng máy tính",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL310",
+                "Tên môn học": "Lịch sử Đảng Cộng sản Việt Nam",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 7.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 7.9,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0012",
+        "tên sinh viên": "Đào Văn Kiên",
+        "năm vào học": 2023,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 36,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 4,
+        "học kỳ dự kiến đăng ký tiếp theo": 5,
+        "danh sách môn đã học": {
+            "FLS314": "Tiếng Anh B1.1",
+            "FLS315": "Tiếng Anh B1.2",
+            "INS325": "Hệ điều hành",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "INS330": "Cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT315": "Nhập môn lập trình",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "SOT331": "Lập trình hướng đối tượng",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "SSH378": "Tư duy phản biện"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 6.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 6.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 7.6,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 7.7,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0013",
+        "tên sinh viên": "Võ Minh Anh",
+        "năm vào học": 2024,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Giảm tải",
+        "số tín chỉ đã tích lũy": 18,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 2,
+        "học kỳ dự kiến đăng ký tiếp theo": 3,
+        "danh sách môn đã học": {
+            "FLS314": "Tiếng Anh B1.1",
+            "FLS315": "Tiếng Anh B1.2",
+            "MAT322": "Xác suất - Thống kê",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "SSH378": "Tư duy phản biện"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 4.6,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 5.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 6.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0014",
+        "tên sinh viên": "Nguyễn Khả Ngân",
+        "năm vào học": 2022,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Hệ Thống Thông Tin",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 54,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 6,
+        "học kỳ dự kiến đăng ký tiếp theo": 7,
+        "danh sách môn đã học": {
+            "FLS314": "Tiếng Anh B1.1",
+            "FLS315": "Tiếng Anh B1.2",
+            "INS325": "Hệ điều hành",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "INS330": "Cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê",
+            "MAT327": "Toán 1",
+            "MAT328": "Toán 2",
+            "NEC321": "Kiến trúc máy tính",
+            "NEC329": "Mạng máy tính",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "SSH378": "Tư duy phản biện"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 7.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 6.4,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 6.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 6.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 7.2,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC329",
+                "Tên môn học": "Mạng máy tính",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 6.8,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 6.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 7.3,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.7,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 7.8,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0015",
+        "tên sinh viên": "Trịnh Vân Anh",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Giảm tải",
+        "số tín chỉ đã tích lũy": 14,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 1,
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
+        "danh sách môn đã học": {
+            "FLS314": "Tiếng Anh B1.1",
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 4.5,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 4.5,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 7.9,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0016",
+        "tên sinh viên": "Nguyễn Hoàng Thiên Ý",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 0,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 0,
+        "học kỳ dự kiến đăng ký tiếp theo": 1,
+        "danh sách môn đã học": {},
+        "điểm từng môn": [],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0016",
+        "tên sinh viên": "Nguyễn Hoàng Thiên Ý",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 0,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 0,
+        "học kỳ dự kiến đăng ký tiếp theo": 1,
+        "danh sách môn đã học": {},
+        "điểm từng môn": [],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0017",
+        "tên sinh viên": "Nguyễn Trung Quân",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 5,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 1,
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
+        "danh sách môn đã học": {
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "85065": "Giáo dục thể chất (Chạy)"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 7.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 4.5,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 3.5,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 4.9,
+                "Trạng thái": "Chưa đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0019",
+        "tên sinh viên": "Phạm Huỳnh Nhật Đan",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 27,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 2,
+        "học kỳ dự kiến đăng ký tiếp theo": 3,
+        "danh sách môn đã học": {
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "85065": "Giáo dục thể chất (Chạy)",
+            "SOT315": "Nhập môn lập trình",
+            "FLS314": "Tiếng Anh B1.1",
+            "INS325": "Hệ điều hành",
+            "NEC321": "Kiến trúc máy tính",
+            "SSH378": "Tư duy phản biện",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "85066": "Giáo dục thể chất (Bơi)"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 9.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 4.9,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 3.5,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "85066",
+                "Tên môn học": "Giáo dục thể chất (Bơi)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0020",
+        "tên sinh viên": "Huỳnh Thị Thuỳ Dương",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 30,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 2,
+        "học kỳ dự kiến đăng ký tiếp theo": 3,
+        "danh sách môn đã học": {
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "85065": "Giáo dục thể chất (Chạy)",
+            "SOT315": "Nhập môn lập trình",
+            "FLS314": "Tiếng Anh B1.1",
+            "INS325": "Hệ điều hành",
+            "NEC321": "Kiến trúc máy tính",
+            "SSH378": "Tư duy phản biện",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "85066": "Giáo dục thể chất (Bơi)"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 9.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85066",
+                "Tên môn học": "Giáo dục thể chất (Bơi)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0021",
+        "tên sinh viên": "Huỳnh Thị Thuỳ Dương",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 48,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 3,
+        "học kỳ dự kiến đăng ký tiếp theo": 4,
+        "danh sách môn đã học": {
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "85065": "Giáo dục thể chất (Chạy)",
+            "SOT315": "Nhập môn lập trình",
+            "FLS314": "Tiếng Anh B1.1",
+            "INS325": "Hệ điều hành",
+            "NEC321": "Kiến trúc máy tính",
+            "SSH378": "Tư duy phản biện",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "85066": "Giáo dục thể chất (Bơi)",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "INS330": "Cơ sở dữ liệu",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "SSH379": "Ngôn ngữ học thuật",
+            "FLS315": "Tiếng Anh B1.2",
+            "MKT372": "Nhập môn Marketing",
+            "MAT328": "Toán 2"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 9.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85066",
+                "Tên môn học": "Giáo dục thể chất (Bơi)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 4.7,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH379",
+                "Tên môn học": "Ngôn ngữ học thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 4.0,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "MKT372",
+                "Tên môn học": "Nhập môn Marketing",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0022",
+        "tên sinh viên": "Huỳnh Thị Thuỳ Duyên",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 55,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 3,
+        "học kỳ dự kiến đăng ký tiếp theo": 4,
+        "danh sách môn đã học": {
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "85065": "Giáo dục thể chất (Chạy)",
+            "SOT315": "Nhập môn lập trình",
+            "FLS314": "Tiếng Anh B1.1",
+            "INS325": "Hệ điều hành",
+            "NEC321": "Kiến trúc máy tính",
+            "SSH378": "Tư duy phản biện",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "85066": "Giáo dục thể chất (Bơi)",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "INS330": "Cơ sở dữ liệu",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "SSH379": "Ngôn ngữ học thuật",
+            "FLS315": "Tiếng Anh B1.2",
+            "MKT372": "Nhập môn Marketing",
+            "MAT328": "Toán 2"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 9.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85066",
+                "Tên môn học": "Giáo dục thể chất (Bơi)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH379",
+                "Tên môn học": "Ngôn ngữ học thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MKT372",
+                "Tên môn học": "Nhập môn Marketing",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0023",
+        "tên sinh viên": "Lê Hoàng Anh",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Công nghệ phần mềm",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 70,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 4,
+        "học kỳ dự kiến đăng ký tiếp theo": 5,
+        "danh sách môn đã học": {
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "85065": "Giáo dục thể chất (Chạy)",
+            "SOT315": "Nhập môn lập trình",
+            "FLS314": "Tiếng Anh B1.1",
+            "INS325": "Hệ điều hành",
+            "NEC321": "Kiến trúc máy tính",
+            "SSH378": "Tư duy phản biện",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "85066": "Giáo dục thể chất (Bơi)",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "INS330": "Cơ sở dữ liệu",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "SSH379": "Ngôn ngữ học thuật",
+            "FLS315": "Tiếng Anh B1.2",
+            "MKT372": "Nhập môn Marketing",
+            "MAT328": "Toán 2",
+            "SOT331": "Lập trình hướng đối tượng",
+            "SOT345": "Lập trình thiết bị nhúng",
+            "SOT375": "Tiếng Anh chuyên ngành (CN thông tin)",
+            "SOT347": "Thiết kế Web",
+            "INS339": "Hệ quản trị cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 9.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85066",
+                "Tên môn học": "Giáo dục thể chất (Bơi)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH379",
+                "Tên môn học": "Ngôn ngữ học thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MKT372",
+                "Tên môn học": "Nhập môn Marketing",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT345",
+                "Tên môn học": "Lập trình thiết bị nhúng",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS347",
+                "Tên môn học": "Lập trình web",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT375",
+                "Tên môn học": "Tiếng Anh chuyên ngành (CN thông tin)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS339",
+                "Tên môn học": "Hệ quản trị cơ sở dữ liệu",
+                "điểm": 3.2,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "INS339",
+                "Tên môn học": "Hệ quản trị cơ sở dữ liệu",
+                "điểm": 3.2,
+                "Trạng thái": "Chưa đạt"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0024",
+        "tên sinh viên": "Biện Quốc Bảo",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Truyền thông và Mạng máy tính",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 70,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 4,
+        "học kỳ dự kiến đăng ký tiếp theo": 5,
+        "danh sách môn đã học": {
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "85065": "Giáo dục thể chất (Chạy)",
+            "SOT315": "Nhập môn lập trình",
+            "FLS314": "Tiếng Anh B1.1",
+            "INS325": "Hệ điều hành",
+            "NEC321": "Kiến trúc máy tính",
+            "SSH378": "Tư duy phản biện",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "85066": "Giáo dục thể chất (Bơi)",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "INS330": "Cơ sở dữ liệu",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "SSH379": "Ngôn ngữ học thuật",
+            "FLS315": "Tiếng Anh B1.2",
+            "MKT372": "Nhập môn Marketing",
+            "MAT328": "Toán 2",
+            "SOT331": "Lập trình hướng đối tượng",
+            "SOT345": "Lập trình thiết bị nhúng",
+            "SOT375": "Tiếng Anh chuyên ngành (CN thông tin)",
+            "SOT347": "Thiết kế Web",
+            "INS339": "Hệ quản trị cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 9.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85066",
+                "Tên môn học": "Giáo dục thể chất (Bơi)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH379",
+                "Tên môn học": "Ngôn ngữ học thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MKT372",
+                "Tên môn học": "Nhập môn Marketing",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT345",
+                "Tên môn học": "Lập trình thiết bị nhúng",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT347",
+                "Tên môn học": "Lập trình web",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT375",
+                "Tên môn học": "Tiếng Anh chuyên ngành (CN thông tin)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS339",
+                "Tên môn học": "Hệ quản trị cơ sở dữ liệu",
+                "điểm": 3.2,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "INS339",
+                "Tên môn học": "Hệ quản trị cơ sở dữ liệu",
+                "điểm": 3.2,
+                "Trạng thái": "Chưa đạt"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0025",
+        "tên sinh viên": "Trần Minh Tú",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Truyền thông và Mạng máy tính",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 70,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 4,
+        "học kỳ dự kiến đăng ký tiếp theo": 5,
+        "danh sách môn đã học": {
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "85065": "Giáo dục thể chất (Chạy)",
+            "SOT315": "Nhập môn lập trình",
+            "FLS314": "Tiếng Anh B1.1",
+            "INS325": "Hệ điều hành",
+            "NEC321": "Kiến trúc máy tính",
+            "SSH378": "Tư duy phản biện",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "85066": "Giáo dục thể chất (Bơi)",
+            "85097": "Giáo dục thể chất (Bóng đá)",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "INS330": "Cơ sở dữ liệu",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "SSH379": "Ngôn ngữ học thuật",
+            "FLS315": "Tiếng Anh B1.2",
+            "MKT372": "Nhập môn Marketing",
+            "MAT328": "Toán 2",
+            "SOT331": "Lập trình hướng đối tượng",
+            "SOT345": "Lập trình thiết bị nhúng",
+            "SOT375": "Tiếng Anh chuyên ngành (CN thông tin)",
+            "SOT347": "Thiết kế Web",
+            "INS339": "Hệ quản trị cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 9.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85066",
+                "Tên môn học": "Giáo dục thể chất (Bơi)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85097",
+                "Tên môn học": "Giáo dục thể chất (Bóng đá)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH379",
+                "Tên môn học": "Ngôn ngữ học thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MKT372",
+                "Tên môn học": "Nhập môn Marketing",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT345",
+                "Tên môn học": "Lập trình thiết bị nhúng",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT347",
+                "Tên môn học": "Lập trình web",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT375",
+                "Tên môn học": "Tiếng Anh chuyên ngành (CN thông tin)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS339",
+                "Tên môn học": "Hệ quản trị cơ sở dữ liệu",
+                "điểm": 3.2,
+                "Trạng thái": "Chưa đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": [
+            {
+                "mã môn học": "INS339",
+                "Tên môn học": "Hệ quản trị cơ sở dữ liệu",
+                "điểm": 3.2,
+                "Trạng thái": "Chưa đạt"
+            }
+        ]
+    },
+    {
+        "mã sinh viên": "SV0026",
+        "tên sinh viên": "Lê Hoàng Minh Khang",
+        "năm vào học": 2025,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Công nghệ phần mềm",
+        "mục tiêu học tập": "Học vượt",
+        "số tín chỉ đã tích lũy": 70,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 5,
+        "học kỳ dự kiến đăng ký tiếp theo": 6,
+        "danh sách môn đã học": {
+            "MAT327": "Toán 1",
+            "POL307": "Triết học Mâc-Lênin",
+            "SOT301": "Nhập môn ngành Công nghệ thông tin",
+            "SOT381": "Tin học đại cương A (LT+TH)",
+            "SSH313": "Pháp luật đại cương",
+            "85065": "Giáo dục thể chất (Chạy)",
+            "SOT315": "Nhập môn lập trình",
+            "FLS314": "Tiếng Anh B1.1",
+            "INS325": "Hệ điều hành",
+            "NEC321": "Kiến trúc máy tính",
+            "SSH378": "Tư duy phản biện",
+            "POL309": "Kinh tế Chính trị Mác - Lênin",
+            "85066": "Giáo dục thể chất (Bơi)",
+            "SOT320": "Kỹ thuật lập trình (2LT + 1LT)",
+            "INS330": "Cơ sở dữ liệu",
+            "POL308": "Chủ nghĩa xã hội khoa học",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "PHY310": "Vật lý đại cương 1",
+            "PHY311": "T.Hành Vật lý đại cương 1",
+            "SSH379": "Ngôn ngữ học thuật",
+            "FLS315": "Tiếng Anh B1.2",
+            "MKT372": "Nhập môn Marketing",
+            "MAT328": "Toán 2",
+            "SOT331": "Lập trình hướng đối tượng",
+            "SOT345": "Lập trình thiết bị nhúng",
+            "SOT375": "Tiếng Anh chuyên ngành (CN thông tin)",
+            "SOT347": "Thiết kế Web",
+            "INS339": "Hệ quản trị cơ sở dữ liệu",
+            "MAT322": "Xác suất - Thống kê",
+            "SOT355": "Phát triển ứng dụng Web",
+            "NEC329": "Mạng máy tính",
+            "INS360": "Phân tích thiết kế hệ thống thông tin",
+            "POL333": "Tư tưởng Hồ Chí Minh",
+            "POL310": "Lịch sử Đảng Cộng sản Việt Nam",
+            "INS335": "Thống kê máy tính",
+            "INT6903": "Đồ án cơ sở ngành",
+            "85097": "Giáo dục thể chất (Bóng đá)"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 8.1,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 9.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL307",
+                "Tên môn học": "Triết học Mâc-Lênin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT301",
+                "Tên môn học": "Nhập môn ngành Công nghệ thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT381",
+                "Tên môn học": "Tin học đại cương A (LT+TH)",
+                "điểm": 7.5,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH313",
+                "Tên môn học": "Pháp luật đại cương",
+                "điểm": 8.9,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT315",
+                "Tên môn học": "Nhập môn lập trình",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC321",
+                "Tên môn học": "Kiến trúc máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH378",
+                "Tên môn học": "Tư duy phản biện",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL309",
+                "Tên môn học": "Kinh tế Chính trị Mác - Lênin",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85066",
+                "Tên môn học": "Giáo dục thể chất (Bơi)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85097",
+                "Tên môn học": "Giáo dục thể chất (Bóng đá)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT320",
+                "Tên môn học": "Kỹ thuật lập trình (2LT + 1LT)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL308",
+                "Tên môn học": "Chủ nghĩa xã hội khoa học",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY310",
+                "Tên môn học": "Vật lý đại cương 1",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "PHY311",
+                "Tên môn học": "T.Hành Vật lý đại cương 1",
+                "điểm": 6.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH379",
+                "Tên môn học": "Ngôn ngữ học thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MKT372",
+                "Tên môn học": "Nhập môn Marketing",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS331",
+                "Tên môn học": "Lập trình hướng đối tượng",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT345",
+                "Tên môn học": "Lập trình thiết bị nhúng",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS347",
+                "Tên môn học": "Lập trình web",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT375",
+                "Tên môn học": "Tiếng Anh chuyên ngành (CN thông tin)",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS339",
+                "Tên môn học": "Hệ quản trị cơ sở dữ liệu",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL310",
+                "Tên môn học": "Lịch sử Đảng Cộng sản Việt Nam",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "POL333",
+                "Tên môn học": "Tư tưởng Hồ Chí Minh",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INT6903",
+                "Tên môn học": "Đô án cơ sở ngành",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS360",
+                "Tên môn học": "Phân tích thiết kế hệ thống thông tin",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS335",
+                "Tên môn học": "Thống kê máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "NEC329",
+                "Tên môn học": "Mạng máy tính",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SOT355",
+                "Tên môn học": "Phát triển ứng dụng Web",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0027",
+        "tên sinh viên": "Trần Mai Ngọc Duy",
+        "năm vào học": 2022,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Công nghệ phần mềm",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 3,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 4,
+        "học kỳ dự kiến đăng ký tiếp theo": 5,
+        "danh sách môn đã học": {
+            "SOT366": "Phát triển phần mềm mã nguồn mở"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "SOT366",
+                "Tên môn học": "Phát triển phần mềm mã nguồn mở",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0028",
+        "tên sinh viên": "Ngô Văn Lực",
+        "năm vào học": 2021,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 9,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 1,
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
+        "danh sách môn đã học": {
+            "85065": "Giáo dục thể chất (Chạy)",
+            "INS325": "Hệ điều hành",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "SSH381": "Thường thức mỹ thuật"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 10.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 8.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "SSH381",
+                "Tên môn học": "Thường thức mỹ thuật",
+                "điểm": 10.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0029",
+        "tên sinh viên": "Nguyễn Quang Vinh",
+        "năm vào học": 2023,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Chưa chọn chuyên ngành",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 1,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 1,
+        "học kỳ dự kiến đăng ký tiếp theo": 2,
+        "danh sách môn đã học": {
+            "85065": "Giáo dục thể chất (Chạy)"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 5.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    },
+    {
+        "mã sinh viên": "SV0030",
+        "tên sinh viên": "Võ Chí Danh",
+        "năm vào học": 2023,
+        "ngành": "Công Nghệ Thông Tin",
+        "chuyên ngành": "Công nghệ phần mềm",
+        "mục tiêu học tập": "Đúng hạn",
+        "số tín chỉ đã tích lũy": 36,
+        "số tín chỉ đăng ký tối đa": 27,
+        "học kỳ hiện tại": 6,
+        "học kỳ dự kiến đăng ký tiếp theo": 7,
+        "danh sách môn đã học": {
+            "85065": "Giáo dục thể chất (Chạy)",
+            "85098": "Giáo dục thể chất (Bóng chuyền)",
+            "85108": "Giáo dục thể chất (Taekwondo)",
+            "BUA319": "Nhập môn Quản trị học",
+            "FLS314": "Tiếng Anh B1.1",
+            "FLS315": "Tiếng Anh B1.2",
+            "INS325": "Hệ điều hành",
+            "INS326": "Cấu trúc dữ liệu và giải thuật",
+            "INS330": "Cơ sở dữ liệu",
+            "INS335": "Thống kê máy tính",
+            "INT6903": "Đồ án cơ sở ngành",
+            "MAT322": "Xác suất - Thống kê",
+            "MAT327": "Toán 1",
+            "MAT328": "Toán 2"
+        },
+        "điểm từng môn": [
+            {
+                "mã môn học": "85065",
+                "Tên môn học": "Giáo dục thể chất (Chạy)",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85098",
+                "Tên môn học": "Giáo dục thể chất (Bóng chuyền)",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "85108",
+                "Tên môn học": "Giáo dục thể chất (Taekwondo)",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "BUA319",
+                "Tên môn học": "Nhập môn Quản trị học",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS314",
+                "Tên môn học": "Tiếng Anh B1.1",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "FLS315",
+                "Tên môn học": "Tiếng Anh B1.2",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS325",
+                "Tên môn học": "Hệ điều hành",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS326",
+                "Tên môn học": "Cấu trúc dữ liệu và giải thuật",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS330",
+                "Tên môn học": "Cơ sở dữ liệu",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INS335",
+                "Tên môn học": "Thống kê máy tính",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "INT6903",
+                "Tên môn học": "Đồ án cơ sở ngành",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT322",
+                "Tên môn học": "Xác suất - Thống kê",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT327",
+                "Tên môn học": "Toán 1",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            },
+            {
+                "mã môn học": "MAT328",
+                "Tên môn học": "Toán 2",
+                "điểm": 7.0,
+                "Trạng thái": "Đạt"
+            }
+        ],
+        "danh sách môn chưa đạt": []
+    }
+]
