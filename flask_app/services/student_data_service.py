@@ -1,64 +1,69 @@
 """
-Service for loading and managing student data (JSON/CSV)
+Dịch vụ nạp và quản lý dữ liệu sinh viên từ JSON/CSV.
 """
 
 import csv
 import json
+import logging
 import os
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 
 from flask_app.models.student import StudentProfile
 
 
 class StudentDataService:
-    """Quan ly du lieu sinh vien tu JSON/CSV."""
+    """Nạp, chuẩn hóa và lưu trữ hồ sơ sinh viên."""
 
     def __init__(self, json_path: str, csv_path: str):
         self.json_path = json_path
         self.csv_path = csv_path
         self._students_cache: Optional[List[StudentProfile]] = None
+        self.logger = logging.getLogger(__name__)
 
     def get_all_students(self, force_reload: bool = False) -> List[StudentProfile]:
-        """Lay danh sach tat ca sinh vien."""
+        """Trả về danh sách tất cả sinh viên."""
         if self._students_cache and not force_reload:
             return self._students_cache
 
+        self.logger.info("Đang nạp dữ liệu sinh viên (force_reload=%s)", force_reload)
         students: List[StudentProfile] = []
 
         if os.path.exists(self.json_path):
             try:
                 students = self._load_from_json()
-            except Exception as exc:
-                print(f"Error loading JSON: {exc}")
+                self.logger.info("Đã nạp %s sinh viên từ JSON", len(students))
+            except Exception:
+                self.logger.exception("Lỗi khi nạp dữ liệu sinh viên từ JSON")
 
         if not students and os.path.exists(self.csv_path):
             try:
                 students = self._load_from_csv()
-            except Exception as exc:
-                print(f"Error loading CSV: {exc}")
+                self.logger.info("Đã nạp %s sinh viên từ CSV dự phòng", len(students))
+            except Exception:
+                self.logger.exception("Lỗi khi nạp dữ liệu sinh viên từ CSV")
 
         self._students_cache = students
+        self.logger.info("Đã làm mới bộ nhớ đệm sinh viên với %s bản ghi", len(students))
         return students
 
     def get_student(self, student_id: str) -> Optional[StudentProfile]:
-        """Lay ho so sinh vien theo ma."""
+        """Trả về hồ sơ của một sinh viên theo mã."""
         normalized_id = self._normalize_student_id(student_id)
         for student in self.get_all_students():
             if self._normalize_student_id(student.student_id) == normalized_id:
+                self.logger.info("Đã tìm thấy sinh viên: %s", student_id)
                 return student
+        self.logger.warning("Không tìm thấy sinh viên: %s", student_id)
         return None
 
     def get_next_student_id(self, force_reload: bool = True) -> str:
-        """
-        Lay ma sinh vien tiep theo theo format SV0001.
-        Quy tac: lay ma SV co so lon nhat trong du lieu + 1.
-        """
+        """Trả về mã sinh viên kế tiếp theo định dạng SV0001."""
         students = self.get_all_students(force_reload=force_reload)
         max_num = 0
 
-        for s in students:
-            raw = str(getattr(s, "student_id", "") or "").strip()
+        for student in students:
+            raw = str(getattr(student, "student_id", "") or "").strip()
             match = re.match(r"^\s*SV\s*(\d+)\s*$", raw, flags=re.IGNORECASE)
             if not match:
                 continue
@@ -69,7 +74,9 @@ class StudentDataService:
             if num > max_num:
                 max_num = num
 
-        return f"SV{max_num + 1:04d}"
+        next_id = f"SV{max_num + 1:04d}"
+        self.logger.info("Đã tính mã sinh viên kế tiếp: %s", next_id)
+        return next_id
 
     def create_student(
         self,
@@ -77,7 +84,7 @@ class StudentDataService:
         course_catalog: Dict[str, Dict[str, Any]],
         specialization_options: List[str],
     ) -> StudentProfile:
-        """Tao moi sinh vien va luu vao JSON nguon."""
+        """Tạo sinh viên mới và lưu vào nguồn JSON."""
         student_id = str(student_data.get("student_id", "")).strip().upper()
         if not student_id:
             raise ValueError("Mã sinh viên không được để trống")
@@ -85,6 +92,7 @@ class StudentDataService:
         if self.get_student(student_id):
             raise ValueError(f"Sinh viên {student_id} đã tồn tại")
 
+        self.logger.info("Đang tạo sinh viên: %s", student_id)
         normalized_goal = self._normalize_study_goal(student_data.get("study_goal"))
         current_semester = self._safe_int(student_data.get("current_semester"), 1)
         specialization = str(student_data.get("specialization", "Chưa chọn chuyên ngành")).strip() or "Chưa chọn chuyên ngành"
@@ -153,15 +161,16 @@ class StudentDataService:
 
         self._append_student_to_json(student, course_catalog)
         self._students_cache = None
+        self.logger.info("Đã lưu sinh viên: %s", student.student_id)
         return self.get_student(student.student_id) or student
 
     def _load_from_json(self) -> List[StudentProfile]:
-        """Tai du lieu sinh vien tu JSON."""
+        """Nạp dữ liệu sinh viên từ JSON."""
         with open(self.json_path, "r", encoding="utf-8") as file:
             data = json.load(file)
 
         if not isinstance(data, list):
-            raise ValueError("JSON phải là danh sách")
+            raise ValueError("JSON phải là một danh sách")
 
         students: List[StudentProfile] = []
         for item in data:
@@ -170,14 +179,16 @@ class StudentDataService:
                 if student:
                     students.append(student)
             except Exception as exc:
-                print(f"Warning: Cannot parse student {item.get('mã sinh viên', '?')}: {exc}")
-
+                self.logger.warning(
+                    "Không thể phân tích sinh viên %s: %s",
+                    item.get("mã sinh viên", item.get("ma sinh vien", "?")) if isinstance(item, dict) else "?",
+                    exc,
+                )
         return students
 
     def _load_from_csv(self) -> List[StudentProfile]:
-        """Tai du lieu sinh vien tu CSV."""
+        """Nạp dữ liệu sinh viên từ CSV."""
         students: List[StudentProfile] = []
-
         with open(self.csv_path, "r", encoding="utf-8") as file:
             reader = csv.DictReader(file)
             for row in reader:
@@ -186,16 +197,15 @@ class StudentDataService:
                     if student:
                         students.append(student)
                 except Exception as exc:
-                    print(f"Warning: Cannot parse CSV row: {exc}")
-
+                    self.logger.warning("Không thể phân tích một dòng CSV: %s", exc)
         return students
 
     def _append_student_to_json(
         self,
         student: StudentProfile,
-        course_catalog: Dict[str, Dict[str, Any]]
+        course_catalog: Dict[str, Dict[str, Any]],
     ) -> None:
-        """Them sinh vien vao file JSON nguon."""
+        """Thêm bản ghi sinh viên vào file JSON nguồn."""
         existing_data: List[Dict[str, Any]] = []
 
         if os.path.exists(self.json_path):
@@ -212,9 +222,9 @@ class StudentDataService:
     def _build_student_json_record(
         self,
         student: StudentProfile,
-        course_catalog: Dict[str, Dict[str, Any]]
+        course_catalog: Dict[str, Dict[str, Any]],
     ) -> Dict[str, Any]:
-        """Chuyen StudentProfile thanh dinh dang JSON goc cua du an."""
+        """Chuyển `StudentProfile` về đúng cấu trúc JSON gốc của dự án."""
         studied_courses: Dict[str, str] = {}
         grade_entries: List[Dict[str, Any]] = []
         failed_entries: List[Dict[str, str]] = []
@@ -248,14 +258,14 @@ class StudentDataService:
             "số tín chỉ đã tích lũy": student.total_credits_accumulated,
             "số tín chỉ đăng ký tối đa": 27,
             "học kỳ hiện tại": student.current_semester,
-            "học kỳ dự kiến đăng ký tiếp theo": student.current_semester + 1,
+            "học kỳ dự kiến đăng ký tiếp theo": student.next_semester(),
             "danh sách môn đã học": studied_courses,
             "điểm từng môn": grade_entries,
             "danh sách môn chưa đạt": failed_entries,
         }
 
     def _parse_student_dict(self, data: Dict[str, Any]) -> Optional[StudentProfile]:
-        """Parse dict thanh StudentProfile."""
+        """Phân tích một từ điển thô thành `StudentProfile`."""
         student_id = None
         for key in [
             "mã sinh viên",
@@ -325,9 +335,9 @@ class StudentDataService:
             course_grades=grades,
         )
 
-    def _parse_course_list(self, data: Any) -> set:
-        """Parse danh sach mon tu dict hoac list."""
-        courses = set()
+    def _parse_course_list(self, data: Any) -> Set[str]:
+        """Phân tích danh sách mã môn học từ dạng từ điển hoặc danh sách."""
+        courses: Set[str] = set()
 
         if isinstance(data, dict):
             for code in data.keys():
@@ -348,7 +358,7 @@ class StudentDataService:
         return courses
 
     def _parse_grades(self, data: Any) -> Dict[str, float]:
-        """Parse bang diem."""
+        """Phân tích danh sách điểm."""
         grades: Dict[str, float] = {}
         if not isinstance(data, list):
             return grades
@@ -369,7 +379,7 @@ class StudentDataService:
 
     @staticmethod
     def _safe_int(value: Any, default: int) -> int:
-        """Chuyen value thanh int an toan."""
+        """Chuyển đổi sang số nguyên an toàn."""
         try:
             if isinstance(value, int):
                 return value
@@ -387,12 +397,12 @@ class StudentDataService:
 
     @staticmethod
     def _normalize_student_id(student_id: str) -> str:
-        """Normalize student ID for comparison."""
-        return student_id.strip().lower().replace("sv", "")
+        """Chuẩn hóa mã sinh viên để so sánh."""
+        return str(student_id or "").strip().lower().replace("sv", "")
 
     @staticmethod
     def _normalize_study_goal(value: Any) -> str:
-        """Chuan hoa muc tieu hoc tap."""
+        """Chuẩn hóa mục tiêu học tập."""
         goal = str(value or "").strip().lower()
         normalized = {
             "đúng hạn": "đúng hạn",
@@ -402,17 +412,12 @@ class StudentDataService:
             "học vượt": "học vượt",
             "hoc vuot": "học vượt",
         }
-        # Tương thích dữ liệu cũ bị mojibake (dữ liệu UTF-8 bị decode nhầm Latin-1).
         normalized.update({StudentDataService._legacy_mojibake(k): v for k, v in normalized.items()})
         return normalized.get(goal, "đúng hạn")
 
     @staticmethod
     def _legacy_mojibake(text: str) -> str:
-        """
-        Sinh key/value "lỗi encoding" để tương thích dữ liệu cũ (UTF-8 bị decode nhầm Latin-1).
-
-        Ví dụ: "mã sinh viên" -> (chuỗi bị lỗi encoding kiểu mojibake)
-        """
+        """Sinh khóa tương thích với dữ liệu cũ bị lệch mã hóa."""
         try:
             return text.encode("utf-8").decode("latin1")
         except Exception:
@@ -420,7 +425,7 @@ class StudentDataService:
 
     @staticmethod
     def _display_study_goal(value: str) -> str:
-        """Hien thi muc tieu hoc tap theo dinh dang luu JSON."""
+        """Trả về chuỗi hiển thị đẹp cho mục tiêu học tập."""
         mapping = {
             "đúng hạn": "Đúng hạn",
             "giảm tải": "Giảm tải",

@@ -15,10 +15,9 @@ class Config:
     # Đường dẫn - Tạo động theo vị trí file hiện tại
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     
-    ONTOLOGY_PATH = os.path.join(BASE_DIR, 'owl', 'ontology_v18.rdf')
-    STUDENT_DATA_JSON = os.path.join(BASE_DIR, 'StudentDataStandardization', 'DanhSachSinhVien.json')
-    STUDENT_DATA_CSV = os.path.join(BASE_DIR, 'StudentDataStandardization', 'DanhSachSinhVien.csv')
-    REPORT_OUTPUT_DIR = os.path.join(BASE_DIR, 'StudentDataStandardization', 'reports')
+    ONTOLOGY_PATH = os.path.join(BASE_DIR, 'owl', 'current', 'ontology_v18.rdf')
+    STUDENT_DATA_JSON = os.path.join(BASE_DIR, 'data', 'DanhSachSinhVien.json')
+    STUDENT_DATA_CSV = os.path.join(BASE_DIR, 'data', 'DanhSachSinhVien.csv')
     
     # Tham số bộ máy gợi ý
     BEAM_WIDTH = 8

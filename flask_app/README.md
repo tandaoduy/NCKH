@@ -1,4 +1,4 @@
-# Flask App (Web) - Gợi Ý Kế Hoạch Học Tập
+﻿# Flask App (Web) - Gợi Ý Kế Hoạch Học Tập
 
 Ứng dụng Flask cung cấp giao diện web và API cho hệ thống gợi ý kế hoạch học tập (dựa trên ontology).
 
@@ -34,6 +34,9 @@ Mặc định chạy tại: `http://localhost:5000`
 - `GET /api/students/specializations` Danh sách chuyên ngành (từ ontology)
 - `GET /api/students/next-id` Lấy mã SV kế tiếp (SVxxxx)
 - `POST /api/recommendations` Tạo gợi ý kế hoạch học tập
+- `POST /api/recommend` Bí danh tương thích cho buổi demo và tài liệu cũ
+- `GET /api/health` Kiểm tra trạng thái hệ thống
+- `GET /api/debug/pipeline/<student_id>` Kiểm tra luồng đầu-cuối
 
 Ví dụ test nhanh:
 
@@ -45,6 +48,5 @@ curl http://localhost:5000/api/students
 
 Các đường dẫn quan trọng nằm trong [config.py](./config.py):
 
-- `owl/ontology_v18.rdf`
-- `StudentDataStandardization/DanhSachSinhVien.json`
-
+- `owl/current/ontology_v18.rdf`
+- `data/DanhSachSinhVien.json`

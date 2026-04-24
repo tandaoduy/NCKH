@@ -1,1 +1,1 @@
-# Flask App Package
+# Gói Flask của ứng dụng

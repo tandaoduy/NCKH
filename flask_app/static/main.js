@@ -1,6 +1,6 @@
 /**
  * JavaScript chính cho hệ thống gợi ý kế hoạch học tập
- * Logic phía giao diện (Frontend)
+ * Logic phía giao diện người dùng.
  */
 
 // ========== BIẾN TOÀN CỤC ==========
@@ -9,7 +9,7 @@ let selectedStudent = null;
 
 // ========== KHỞI TẠO ==========
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Initializing page...');
+    console.log('Đang khởi tạo trang...');
     // Nếu trang đã có logic load sinh viên riêng (như students.html) thì không chạy load chung ở đây
     if (document.getElementById('studentSelect') && typeof window.currentStudent === 'undefined') {
         loadAllStudents();
@@ -41,16 +41,16 @@ async function loadAllStudents() {
 
         if (data.success) {
             allStudents = data.data;
-            console.log(`Loaded ${allStudents.length} students`);
+            console.log(`Đã nạp ${allStudents.length} sinh viên`);
 
             // Đổ dữ liệu vào ô chọn
             populateStudentSelect();
         } else {
-            console.error('Error loading students:', data.error);
+            console.error('Lỗi khi nạp danh sách sinh viên:', data.error);
             showError('Không thể tải danh sách sinh viên');
         }
     } catch (error) {
-        console.error('Fetch error:', error);
+        console.error('Lỗi khi gọi dữ liệu:', error);
         showError('Lỗi kết nối đến server');
     }
 }
@@ -131,7 +131,7 @@ async function onStudentSelected() {
             showError('Không thể tải thông tin sinh viên');
         }
     } catch (error) {
-        console.error('Fetch error:', error);
+        console.error('Lỗi khi gọi dữ liệu:', error);
         showError('Lỗi tải thông tin sinh viên');
     }
 }
@@ -207,7 +207,7 @@ async function generateRecommendation() {
             showError(`Lỗi: ${errorMsg}`);
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Lỗi:', error);
         showError(`Lỗi kế nối: ${error.message}`);
     } finally {
         generateBtn.disabled = false;
@@ -226,10 +226,7 @@ function displayRecommendationResults(data) {
     document.getElementById('resultTotalCredits').textContent = data.total_recommended_credits || 0;
 
     // Tính học kỳ tiếp theo từ dữ liệu sinh viên
-    if (selectedStudent && selectedStudent.current_semester) {
-        const nextSemester = selectedStudent.current_semester + 1;
-        document.getElementById('resultNextSemester').textContent = nextSemester;
-    }
+    document.getElementById('resultNextSemester').textContent = data.next_semester || '-';
 
     // Hiển thị bảng môn học - dùng đúng tbody ID
     const tableBody = document.getElementById('recommendedCoursesList');
@@ -248,20 +245,138 @@ function displayRecommendationResults(data) {
                 <td>${course.code || '-'}</td>
                 <td>${course.name || '-'}</td>
                 <td>${course.credits || 0}</td>
+                <td>${course.is_retake ? '<span class="status-badge status-retake">Học lại</span>' : `<span class="status-badge status-normal">Kỳ ${course.recommended_semester || data.next_semester || '-'}</span>`}</td>
                 <td>${reasonsText}</td>
             `;
             tableBody.appendChild(row);
         });
     }
 
+    displayResultWarnings(data);
+    displayResultInsights(data);
     // Hiển thị chi tiết thuật toán
-    const detailsDiv = document.querySelector('.details-box');
-    if (detailsDiv && data.explanation) {
-        detailsDiv.innerHTML = `<pre>${escapeHtml(data.explanation)}</pre>`;
-    }
+    renderAlgorithmExplanation(data);
 }
 
 // ========== HÀM HỖ TRỢ ==========
+
+function renderAlgorithmExplanation(data) {
+    const section = document.getElementById('algorithmDetailsSection');
+    const content = document.getElementById('algorithmDetailsContent');
+
+    if (!section || !content) {
+        return;
+    }
+
+    const parts = [];
+
+    if (data && data.explanation) {
+        parts.push(data.explanation);
+    } else {
+        if (data && data.beam_search_details) {
+            parts.push(`Chi tiết chùm: ${data.beam_search_details}`);
+        }
+        if (data && data.heuristic_formula) {
+            parts.push(`Công thức heuristic: ${data.heuristic_formula}`);
+        }
+        if (data && Array.isArray(data.warnings) && data.warnings.length) {
+            parts.push(`Cảnh báo:\n- ${data.warnings.join('\n- ')}`);
+        }
+    }
+
+    if (!parts.length) {
+        section.style.display = 'none';
+        content.innerHTML = '';
+        return;
+    }
+
+    content.innerHTML = `<pre>${escapeHtml(parts.join('\n\n'))}</pre>`;
+    section.style.display = 'block';
+}
+
+function displayResultWarnings(result) {
+    const section = document.getElementById('resultWarningsSection');
+    const list = document.getElementById('resultWarningsList');
+    if (!section || !list) {
+        return;
+    }
+
+    const warnings = [];
+    if (result?.specialization_warning) {
+        warnings.push(result.specialization_warning);
+    }
+    if (Array.isArray(result?.prerequisite_warnings)) {
+        warnings.push(...result.prerequisite_warnings);
+    }
+    if (Array.isArray(result?.warnings)) {
+        result.warnings.forEach(item => {
+            if (item && !warnings.includes(item)) {
+                warnings.push(item);
+            }
+        });
+    }
+
+    if (!warnings.length) {
+        section.style.display = 'none';
+        list.innerHTML = '';
+        return;
+    }
+
+    list.innerHTML = warnings.map(item => `<div class="warning-item">${escapeHtml(item)}</div>`).join('');
+    section.style.display = 'block';
+}
+
+function displayResultInsights(result) {
+    const beamEl = document.getElementById('beamSearchSummary');
+    const quotaEl = document.getElementById('quotaOverviewSummary');
+
+    if (beamEl) {
+        beamEl.innerHTML = result?.beam_search_details
+            ? `<code>${escapeHtml(result.beam_search_details)}</code>`
+            : '<span>-</span>';
+    }
+
+    if (quotaEl) {
+        const quotas = result?.elective_target_quotas || {};
+        const completed = result?.elective_completed_counts || {};
+        const remaining = result?.elective_quota_remaining || {};
+        const finalized = result?.finalized_elective_counts || {};
+
+        const rows = ['general', 'physical', 'foundation', 'specialization'].map(key => {
+            const label = {
+                general: 'Đại cương',
+                physical: 'Thể chất',
+                foundation: 'Cơ sở ngành',
+                specialization: 'Chuyên ngành',
+            }[key] || key;
+
+            return `
+                <tr>
+                    <td>${label}</td>
+                    <td>${completed[key] ?? 0}</td>
+                    <td>${quotas[key] ?? 0}</td>
+                    <td>${remaining[key] ?? 0}</td>
+                    <td>${finalized[key] ?? 0}</td>
+                </tr>
+            `;
+        }).join('');
+
+        quotaEl.innerHTML = `
+            <table class="quota-table">
+                <thead>
+                    <tr>
+                        <th>Danh mục</th>
+                        <th>Đã hoàn</th>
+                        <th>Mục tiêu</th>
+                        <th>Còn thiếu</th>
+                        <th>Đã chọn</th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>
+        `;
+    }
+}
 
 function displayEligibleCourses(courses) {
     const section = document.getElementById('eligibleCoursesSection');

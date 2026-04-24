@@ -113,6 +113,7 @@
                         <th>Mã môn học</th>
                         <th>Tên môn học</th>
                         <th>Tín chỉ</th>
+                        <th>Trạng thái</th>
                         <th>Lý do</th>
                     </tr>
                 </thead>
@@ -126,6 +127,11 @@
     <!-- Bước 4: Kết quả gợi ý kế hoạch -->
     <section class="recommendation-results" id="resultsSection" style="display: none;">
         <h3>Bước 4: Kết quả gợi ý kế hoạch</h3>
+
+        <div class="result-warnings" id="resultWarningsSection" style="display: none;">
+            <h4>Cảnh báo cần chú ý</h4>
+            <div class="warning-list" id="resultWarningsList"></div>
+        </div>
 
         <div class="results-summary">
             <div class="summary-stat">
@@ -142,6 +148,17 @@
             </div>
         </div>
 
+        <div class="result-insights">
+            <div class="insight-card">
+                <h4>Beam Search</h4>
+                <div class="insight-body" id="beamSearchSummary">-</div>
+            </div>
+            <div class="insight-card">
+                <h4>Hạn ngạch tự chọn</h4>
+                <div class="insight-body" id="quotaOverviewSummary">-</div>
+            </div>
+        </div>
+
         <div class="recommended-courses">
             <h4>Danh sách được gợi ý</h4>
             <table class="courses-table">
@@ -151,12 +168,18 @@
                         <th>Mã môn học</th>
                         <th>Tên môn học</th>
                         <th>Tín chỉ</th>
+                        <th>Trạng thái</th>
                         <th>Lý do</th>
                     </tr>
                 </thead>
                 <tbody id="recommendedCoursesList">
                 </tbody>
             </table>
+        </div>
+
+        <div class="algorithm-details" id="algorithmDetailsSection" style="display: none;">
+            <h4>Giải thích thuật toán</h4>
+            <div class="details-box" id="algorithmDetailsContent"></div>
         </div>
 
         <div class="action-buttons">
@@ -190,8 +213,8 @@
             if (shouldRestore) {
                 sessionStorage.setItem('shouldRestore', 'true');
             }
-            console.log("State saved. Should restore:", shouldRestore);
-        } catch (e) { console.error("Save state error:", e); }
+            console.log("Đã lưu trạng thái. Có cần khôi phục:", shouldRestore);
+        } catch (e) { console.error("Lỗi lưu trạng thái:", e); }
     }
 
     function restoreState() {
@@ -207,7 +230,7 @@
             if (!raw) return false;
             
             const state = JSON.parse(raw);
-            console.log("Restoring state...");
+            console.log("Đang khôi phục trạng thái...");
 
             // Khôi phục ô tìm kiếm
             if (state.searchTerm) {
@@ -239,7 +262,7 @@
             sessionStorage.removeItem('shouldRestore');
             return true;
         } catch (e) {
-            console.error("Restore state error:", e);
+            console.error("Lỗi khôi phục trạng thái:", e);
             sessionStorage.removeItem(SESSION_KEY);
             return false;
         }
@@ -294,7 +317,7 @@
             return true;
         } catch (error) {
             showError('Lỗi tải danh sách sinh viên: ' + error, 'error');
-            console.error('Error:', error);
+            console.error('Lỗi:', error);
             return false;
         }
     }
@@ -330,7 +353,7 @@
             })
             .catch(error => {
                 showError('Lỗi tải thông tin sinh viên: ' + error, 'error');
-                console.error('Error:', error);
+                console.error('Lỗi:', error);
             });
     }
 
@@ -438,7 +461,7 @@
                 document.getElementById('loadingSpinner').style.display = 'none';
                 document.getElementById('generateBtn').disabled = false;
                 showError('Lỗi: ' + error, 'error');
-                console.error('Error:', error);
+                console.error('Lỗi:', error);
             });
     }
 
@@ -450,6 +473,8 @@
         document.getElementById('resultNextSemester').textContent = result.next_semester || '-';
 
         displayEligibleCourses(result.eligible_courses || []);
+        displayResultWarnings(result);
+        displayResultInsights(result);
 
         // Bảng danh sách môn được gợi ý
         const coursesList = document.getElementById('recommendedCoursesList');
@@ -462,6 +487,7 @@
             <td>${course.code}</td>
             <td>${course.name}</td>
             <td>${course.credits}</td>
+            <td>${course.is_retake ? '<span class="status-badge status-retake">Học lại</span>' : `<span class="status-badge status-normal">Kỳ ${course.recommended_semester || result.next_semester || '-'}</span>`}</td>
             <td>${course.reasons?.join(', ') || '-'}</td>
         `;
             coursesList.appendChild(row);
@@ -469,9 +495,127 @@
 
         // Hiển thị khu vực kết quả
         document.getElementById('resultsSection').style.display = 'block';
+        renderAlgorithmExplanation(result);
 
         // Lưu lại state khi có kết quả gợi ý
         saveState();
+    }
+
+    function renderAlgorithmExplanation(result) {
+        const section = document.getElementById('algorithmDetailsSection');
+        const content = document.getElementById('algorithmDetailsContent');
+
+        if (!section || !content) {
+            return;
+        }
+
+        const parts = [];
+        if (result && result.explanation) {
+            parts.push(result.explanation);
+        } else {
+            if (result && result.beam_search_details) {
+                parts.push(`Chi tiết chùm: ${result.beam_search_details}`);
+            }
+            if (result && result.heuristic_formula) {
+                parts.push(`Công thức heuristic: ${result.heuristic_formula}`);
+            }
+            if (result && Array.isArray(result.warnings) && result.warnings.length) {
+                parts.push(`Cảnh báo:\n- ${result.warnings.join('\n- ')}`);
+            }
+        }
+
+        if (!parts.length) {
+            section.style.display = 'none';
+            content.innerHTML = '';
+            return;
+        }
+
+        content.innerHTML = `<pre>${escapeHtml(parts.join('\n\n'))}</pre>`;
+        section.style.display = 'block';
+    }
+
+    function displayResultWarnings(result) {
+        const section = document.getElementById('resultWarningsSection');
+        const list = document.getElementById('resultWarningsList');
+        if (!section || !list) {
+            return;
+        }
+
+        const warnings = [];
+        if (result?.specialization_warning) {
+            warnings.push(result.specialization_warning);
+        }
+        if (Array.isArray(result?.prerequisite_warnings)) {
+            warnings.push(...result.prerequisite_warnings);
+        }
+        if (Array.isArray(result?.warnings)) {
+            result.warnings.forEach(item => {
+                if (item && !warnings.includes(item)) {
+                    warnings.push(item);
+                }
+            });
+        }
+
+        if (!warnings.length) {
+            section.style.display = 'none';
+            list.innerHTML = '';
+            return;
+        }
+
+        list.innerHTML = warnings.map(item => `<div class="warning-item">${escapeHtml(item)}</div>`).join('');
+        section.style.display = 'block';
+    }
+
+    function displayResultInsights(result) {
+        const beamEl = document.getElementById('beamSearchSummary');
+        const quotaEl = document.getElementById('quotaOverviewSummary');
+
+        if (beamEl) {
+            beamEl.innerHTML = result?.beam_search_details
+                ? `<code>${escapeHtml(result.beam_search_details)}</code>`
+                : '<span>-</span>';
+        }
+
+        if (quotaEl) {
+            const quotas = result?.elective_target_quotas || {};
+            const completed = result?.elective_completed_counts || {};
+            const remaining = result?.elective_quota_remaining || {};
+            const finalized = result?.finalized_elective_counts || {};
+
+            const rows = ['general', 'physical', 'foundation', 'specialization'].map(key => {
+                const label = {
+                    general: 'Đại cương',
+                    physical: 'Thể chất',
+                    foundation: 'Cơ sở ngành',
+                    specialization: 'Chuyên ngành',
+                }[key] || key;
+
+                return `
+                    <tr>
+                        <td>${label}</td>
+                        <td>${completed[key] ?? 0}</td>
+                        <td>${quotas[key] ?? 0}</td>
+                        <td>${remaining[key] ?? 0}</td>
+                        <td>${finalized[key] ?? 0}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            quotaEl.innerHTML = `
+                <table class="quota-table">
+                    <thead>
+                        <tr>
+                            <th>Danh mục</th>
+                            <th>Đã hoàn</th>
+                            <th>Mục tiêu</th>
+                            <th>Còn thiếu</th>
+                            <th>Đã chọn</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
     }
 
     function displayEligibleCourses(courses) {
@@ -496,11 +640,15 @@
         empty.style.display = 'none';
         list.forEach((course, index) => {
             const row = document.createElement('tr');
+            const statusLabel = course.is_retake
+                ? 'Học lại'
+                : `Kỳ ${course.recommended_semester || '-'}`;
             row.innerHTML = `
                 <td>${index + 1}</td>
                 <td>${course.code || '-'}</td>
                 <td>${course.name || '-'}</td>
                 <td>${course.credits ?? 0}</td>
+                <td>${course.is_retake ? '<span class="status-badge status-retake">Học lại</span>' : `<span class="status-badge status-normal">${statusLabel}</span>`}</td>
                 <td>${course.reasons?.join(', ') || '-'}</td>
             `;
             tbody.appendChild(row);
@@ -738,6 +886,100 @@
         opacity: 0.9;
     }
 
+    .result-warnings {
+        background: #fff8e6;
+        border: 1px solid #f1d28a;
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin-bottom: 18px;
+    }
+
+    .warning-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .warning-item {
+        background: #fff;
+        border-left: 4px solid #ffb100;
+        border-radius: 8px;
+        padding: 10px 12px;
+        color: #6b4f00;
+        line-height: 1.5;
+    }
+
+    .result-insights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .insight-card {
+        background: #f8f9fa;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 16px;
+    }
+
+    .insight-card h4 {
+        margin: 0 0 10px 0;
+    }
+
+    .insight-body {
+        color: #333;
+        font-size: 0.95rem;
+        line-height: 1.55;
+    }
+
+    .insight-body code {
+        display: block;
+        white-space: pre-wrap;
+        background: #fff;
+        border-radius: 8px;
+        padding: 10px 12px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .quota-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .quota-table th,
+    .quota-table td {
+        padding: 8px 10px;
+        text-align: left;
+        border-bottom: 1px solid #edf2f7;
+        font-size: 0.92rem;
+    }
+
+    .quota-table thead {
+        background: #eaf2ff;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+    }
+
+    .status-retake {
+        background: #fff0f0;
+        color: #c0392b;
+    }
+
+    .status-normal {
+        background: #e8f7ee;
+        color: #1e7d4c;
+    }
+
     .courses-table {
         width: 100%;
         border-collapse: collapse;
@@ -833,6 +1075,15 @@
     .eligible-courses .courses-table td:nth-child(4) {
         width: 80px;
         text-align: center;
+    }
+
+    .recommended-courses .courses-table th:nth-child(5),
+    .recommended-courses .courses-table td:nth-child(5),
+    .eligible-courses .courses-table th:nth-child(5),
+    .eligible-courses .courses-table td:nth-child(5) {
+        min-width: 120px;
+        text-align: center;
+        white-space: nowrap;
     }
 
     .algorithm-details {
