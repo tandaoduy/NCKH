@@ -411,7 +411,6 @@ td:last-child {
 }
 
 .info-section,
-.research-section,
 .quick-start {
     background-color: white;
     padding: 2rem;
@@ -421,16 +420,9 @@ td:last-child {
 }
 
 .info-section h3,
-.research-section h3,
 .quick-start h3 {
     color: var(--primary-color);
     margin-bottom: 1.5rem;
-}
-
-.research-section h4 {
-    color: var(--text-color);
-    margin: 1rem 0 0.5rem;
-    margin-top: 1.5rem;
 }
 
 pre {
@@ -454,102 +446,6 @@ pre {
 
 .quick-start .btn {
     margin-top: 1rem;
-}
-
-/* Student Form */
-.student-card {
-    background-color: white;
-    padding: 1.5rem;
-    margin: 1rem 0;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: box-shadow 0.3s;
-}
-
-.student-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.student-name {
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.student-info-text {
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-/* Result Page */
-.student-info {
-    background-color: white;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid var(--primary-color);
-}
-
-.result-section {
-    background-color: white;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.eligible-section {
-    border-left: 4px solid var(--warning-color);
-}
-
-.recommended-section {
-    border-left: 4px solid var(--secondary-color);
-    background-color: #f1f8f4;
-}
-
-.score-high {
-    color: var(--secondary-color);
-    font-weight: bold;
-}
-
-.score-low {
-    color: var(--text-light);
-}
-
-.explanation-section {
-    border-left: 4px solid var(--primary-color);
-}
-
-details {
-    margin: 1rem 0;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 1rem;
-}
-
-summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: var(--primary-color);
-    padding: 0.5rem;
-}
-
-summary:hover {
-    background-color: var(--light-bg);
-    border-radius: 4px;
-}
-
-/* Footer */
-footer {
-    flex-shrink: 0;
-    background-color: var(--text-color);
-    color: white;
-    text-align: center;
-    padding: 2rem;
-    margin-top: auto;
-    border-top: 4px solid var(--primary-color);
 }
 
 /* Responsive */
