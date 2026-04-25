@@ -1,4 +1,4 @@
-/**
+﻿/**
  * JavaScript chính cho hệ thống gợi ý kế hoạch học tập
  * Logic phía giao diện người dùng.
  */

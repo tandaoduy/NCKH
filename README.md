@@ -2,6 +2,19 @@
 
 Tài liệu này là nguồn mô tả chính của project. Phần kiến trúc và hướng dẫn triển khai đã được gộp vào đây để tránh trùng lặp.
 
+## Bộ nộp chính
+
+Bộ mã nguồn chính dùng để báo cáo và nghiệm thu gồm:
+
+- `README.md`
+- `run_app.py`
+- `flask_app/`
+- `data/`
+- `owl/`
+- `requirements.txt`
+
+Các phần còn lại như `legacy/` chỉ giữ để tham khảo hoặc đối chiếu lịch sử.
+
 
 ## 1) Mục tiêu đề tài
 
@@ -25,12 +38,10 @@ Hệ thống trả về:
 ```text
 Code/
 ├─ owl/
-│  ├─ current/
-│  │  ├─ ontology_v18.rdf
-│  │  ├─ ontology_v18.properties
-│  │  └─ TrainingProgramOntology_v18.owl
-│  └─ archive/
-│     └─ ... (các version ontology cũ hơn)
+│  ├─ ontology_v18.rdf
+│  ├─ ontology_v18.properties
+│  ├─ TrainingProgramOntology_v18.owl
+│  └─ TrainingProgramOntology_v18.properties
 │
 ├─ data/
 │  ├─ DanhSachSinhVien.json
@@ -46,15 +57,15 @@ Code/
 └─ README.md
 ```
 
+Trong đó, phần được xem là bộ nộp chính chỉ gồm `README.md`, `run_app.py`, `flask_app/`, `data/`, `owl/` và `requirements.txt`.
+
 Các thành phần quan trọng:
 
-- Ontology chính đang dùng: [owl/current/ontology_v18.rdf](owl/current/ontology_v18.rdf)
+- Ontology chính đang dùng: [owl/ontology_v18.rdf](owl/ontology_v18.rdf)
 - Bộ máy gợi ý đang chạy trong web app: [flask_app/services/recommendation_engine.py](flask_app/services/recommendation_engine.py)
-- Script CLI cũ chỉ còn giữ lại để tham khảo/offline: [legacy/recommend_source.py](legacy/recommend_source.py)
-- Script kiểm tra SPARQL: [legacy/test_sparql.py](legacy/test_sparql.py)
 - Dữ liệu sinh viên JSON: [data/DanhSachSinhVien.json](data/DanhSachSinhVien.json)
 - Dữ liệu sinh viên CSV (fallback): [data/DanhSachSinhVien.csv](data/DanhSachSinhVien.csv)
-- Mô tả quy tắc chi tiết hiện hành: [legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md](legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md)
+- `legacy/` chỉ để tham khảo và đối chiếu lịch sử
 
 ---
 
@@ -96,7 +107,7 @@ Nếu không tìm thấy sinh viên trong JSON, hệ thống mới dùng CSV fal
 
 ### Bước 2: Nạp ontology và dựng dữ liệu môn học
 
-Từ [owl/current/ontology_v18.rdf](owl/current/ontology_v18.rdf), hệ thống dựng course_data gồm:
+Từ [owl/ontology_v18.rdf](owl/ontology_v18.rdf), hệ thống dựng course_data gồm:
 
 - Prerequisite, corequisite
 - Kỳ mở, kỳ khuyến nghị
@@ -254,7 +265,7 @@ python legacy/recommend_source.py --student-id SV0016
 Chạy kiểm tra SPARQL:
 
 ```bash
-python legacy/test_sparql.py --ontology owl/current/ontology_v18.rdf
+python legacy/test_sparql.py --ontology owl/ontology_v18.rdf
 ```
 
 ---
@@ -270,16 +281,9 @@ Hiển thị:
 - Danh sách môn đề xuất cuối cùng
 - Lý do chọn từng môn
 
-### 8.2 Báo cáo txt (legacy)
+### 8.2 Báo cáo legacy
 
-File TXT chỉ còn là đầu ra của script CLI cũ trong [legacy/recommend_source.py](legacy/recommend_source.py).  
-Trong web app Flask hiện tại, đầu ra chính là JSON API và giao diện HTML.
-
-Nếu vẫn chạy script legacy này, file report có timestamp sẽ nằm trong thư mục [legacy](legacy), gồm:
-
-- Tập môn hợp lệ đầu vào
-- Tổ hợp môn cuối cùng
-- Mô tả logic beam search đã áp dụng
+`legacy/` chỉ là phần tham khảo, không phải đầu ra chính của web app Flask.
 
 ---
 
@@ -304,7 +308,4 @@ Nếu vẫn chạy script legacy này, file report có timestamp sẽ nằm tron
 
 - [README.md](README.md)
 - [owl](owl)
-- [legacy/recommend_source.py](legacy/recommend_source.py)
-- [legacy/test_sparql.py](legacy/test_sparql.py)
-- [legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md](legacy/BANG_MO_TA_QUY_TAC_CHON_MON.md)
-- [legacy/outputs/Output_TestSPARQL.txt](legacy/outputs/Output_TestSPARQL.txt)
+- [legacy](legacy)
